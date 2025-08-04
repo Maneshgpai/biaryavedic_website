@@ -1,4 +1,288 @@
 <!-- Features Section Component -->
+<style>
+/* CSS Variables */
+:root {
+    --primary-color: #145b6f;
+    --gradient-light: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9));
+    --section-padding: 5rem 0;
+    --container-max-width: 1200px;
+    --heading-size-medium: 2.5rem;
+}
+
+/* Features Section Styles */
+.features {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #145b6f;
+    margin-bottom: 3rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #145b6f, #5996c5);
+    border-radius: 2px;
+}
+
+.features-carousel {
+    overflow: hidden;
+    position: relative;
+    margin-top: 3rem;
+    padding: 1rem 0;
+}
+
+.features-carousel::before,
+.features-carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.features-carousel::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.9), transparent);
+}
+
+.features-carousel::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.9), transparent);
+}
+
+.features-track {
+    display: flex;
+    animation: scroll-left 30s linear infinite;
+    width: max-content;
+}
+
+.features-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 25px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    width: 350px;
+    margin-right: 2rem;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.feature-image-container {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 25px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.feature-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover .feature-image {
+    transform: scale(1.1);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(20, 91, 111, 0.8), rgba(89, 150, 197, 0.7));
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .image-overlay {
+    opacity: 0.95;
+    background: linear-gradient(135deg, rgba(20, 91, 111, 0.9), rgba(89, 150, 197, 0.8));
+}
+
+.feature-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    color: white;
+    z-index: 2;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+}
+
+.feature-card h3 {
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.feature-card p {
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.know-more-btn {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9);
+    color: #145b6f;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.know-more-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.know-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 1);
+    color: #145b6f;
+}
+
+.know-more-btn:hover::before {
+    left: 100%;
+}
+
+.know-more-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(89, 150, 197, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .features-carousel {
+        margin-top: 2rem;
+        padding: 0.5rem 0;
+    }
+    
+    .feature-card {
+        width: 300px;
+        margin-right: 1.5rem;
+    }
+    
+    .feature-image-container {
+        height: 350px;
+    }
+    
+    .feature-content {
+        padding: 1.5rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .know-more-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .features-carousel {
+        margin-top: 1.5rem;
+    }
+    
+    .feature-card {
+        width: 280px;
+        margin-right: 1rem;
+    }
+    
+    .feature-image-container {
+        height: 300px;
+    }
+    
+    .feature-content {
+        padding: 1.2rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .feature-card p {
+        font-size: 0.9rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .know-more-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+</style>
+
 <section class="features" id="features">
     <div class="container">
         <h2 class="section-title">Why Choose Bio-Aryavedic Naturals?</h2>

@@ -1,95 +1,183 @@
 <!-- Products Section Component -->
-<section class="products" id="products">
-    <div class="container">
-        <h2 class="section-title">Our Products</h2>
-        <div class="products-grid">
+<section class="products" id="products" style="padding: 5rem 0; background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); position: relative; transition: all 0.3s ease;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2;">
+        <h2 class="section-title" style="text-align: center; font-size: 2.5rem; color: #145b6f; margin-bottom: 3rem; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-weight: 600;">Our Products</h2>
+        <div class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 3rem; max-width: 1200px; margin: 0 auto;">
             <!-- Product 1: B2B Eco-Friendly Fabric Sizing Agent -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="assets/images/product_BN160.webp" alt="B2B Eco-Friendly Fabric Sizing Agent" class="product-image">
-                    <div class="product-badge">B2B</div>
+            <div class="product-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; border: 1px solid #f0f0f0; display: flex; flex-direction: column;">
+                <div class="product-image-container" style="position: relative; height: 300px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    <img src="assets/images/product_BN160.webp" alt="B2B Eco-Friendly Fabric Sizing Agent" class="product-image" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                    <div class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #145b6f; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">B2B</div>
                 </div>
-                <div class="product-content">
-                    <div class="product-category">Industrial Fabric Care</div>
-                    <h3 class="product-title">B2B Eco-Friendly Fabric Sizing Agent</h3>
-                    <div class="product-rating">
-                        <div class="stars">
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star">★</span>
+                <div class="product-content" style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column;">
+                    <div class="product-category" style="color: #6c757d; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">Industrial Fabric Care</div>
+                    <h3 class="product-title" style="color: #2c3e50; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.3;">B2B Eco-Friendly Fabric Sizing Agent</h3>
+                    <div class="product-rating" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <div class="stars" style="display: flex; gap: 2px;">
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star" style="color: #ddd; font-size: 1rem;">★</span>
                         </div>
-                        <span class="rating-text">4.2 (18 reviews)</span>
+                        <span class="rating-text" style="color: #6c757d; font-size: 0.875rem;">4.2 (18 reviews)</span>
                     </div>
-                    <div class="product-price">
-                        <span class="current-price">₹2,500</span>
-                        <span class="original-price">₹3,200</span>
-                        <span class="discount">22% OFF</span>
+                    <div class="product-price" style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.75rem;">
+                        <span class="current-price" style="font-size: 1.5rem; font-weight: 700; color: #2c3e50;">₹2,500</span>
+                        <span class="original-price" style="font-size: 1rem; color: #6c757d; text-decoration: line-through;">₹3,200</span>
+                        <span class="discount" style="background: #dc3545; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">22% OFF</span>
                     </div>
-                    <div class="promo-badge">
-                        <span class="promo-text">Website Order Promo</span>
+                    <div class="promo-badge" style="margin-bottom: 0.75rem;">
+                        <span class="promo-text" style="background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3); animation: pulse 2s infinite;">Website Order Promo</span>
                     </div>
-                    <p class="product-description">Revolutionizing the fabric sizing process for a green future. Our industrial solution forms a uniform layer of protective coating over warp yarn, minimizes yarn breakage during weaving, and improves yarn strength to resist mechanical stress.</p>
-                    <div class="product-specs">
-                        <p><strong>SKU:</strong> BN160</p>
-                        <p><strong>Volume:</strong> 5L</p>
-                        <p><strong>Application:</strong> Industrial Weaving</p>
+                    <p class="product-description" style="color: #6c757d; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">Revolutionizing the fabric sizing process for a green future. Our industrial solution forms a uniform layer of protective coating over warp yarn, minimizes yarn breakage during weaving, and improves yarn strength to resist mechanical stress.</p>
+                    <div class="product-specs" style="margin-bottom: 1rem;">
+                        <p style="color: #6c757d; font-size: 0.875rem; margin-bottom: 0.25rem;"><strong style="color: #2c3e50;">SKU:</strong> BN160</p>
+                        <p style="color: #6c757d; font-size: 0.875rem; margin-bottom: 0.25rem;"><strong style="color: #2c3e50;">Volume:</strong> 5L</p>
+                        <p style="color: #6c757d; font-size: 0.875rem; margin-bottom: 0.25rem;"><strong style="color: #2c3e50;">Application:</strong> Industrial Weaving</p>
                     </div>
-                    <div class="product-actions">
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                        <button class="buy-now-btn">Buy Now</button>
+                    <div class="product-actions" style="display: flex; gap: 0.75rem; margin-top: auto;">
+                        <button class="add-to-cart-btn" style="flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; background: #ffffff; color: #145b6f; border: 2px solid #145b6f;">Add to Cart</button>
+                        <button class="buy-now-btn" style="flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; background: #145b6f; color: white;">Buy Now</button>
                     </div>
                 </div>
             </div>
 
             <!-- Product 2: Eco-Friendly Instant Fabric Stiffener Spray -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="assets/images/product_BN161.webp" alt="Eco-Friendly Instant Fabric Stiffener Spray" class="product-image">
-                    <div class="product-badge home">Home</div>
+            <div class="product-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; border: 1px solid #f0f0f0; display: flex; flex-direction: column;">
+                <div class="product-image-container" style="position: relative; height: 300px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    <img src="assets/images/product_BN161.webp" alt="Eco-Friendly Instant Fabric Stiffener Spray" class="product-image" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                    <div class="product-badge home" style="position: absolute; top: 12px; left: 12px; background: #28a745; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Home</div>
                 </div>
-                <div class="product-content">
-                    <div class="product-category">Fabric Care for Home Use</div>
-                    <h3 class="product-title">Eco-Friendly Instant Fabric Stiffener Spray</h3>
-                    <div class="product-rating">
-                        <div class="stars">
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star half-filled">★</span>
+                <div class="product-content" style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column;">
+                    <div class="product-category" style="color: #6c757d; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">Fabric Care for Home Use</div>
+                    <h3 class="product-title" style="color: #2c3e50; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.3;">Eco-Friendly Instant Fabric Stiffener Spray</h3>
+                    <div class="product-rating" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <div class="stars" style="display: flex; gap: 2px;">
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star filled" style="color: #ffc107; font-size: 1rem;">★</span>
+                            <span class="star half-filled" style="color: #ffc107; opacity: 0.7; font-size: 1rem;">★</span>
                         </div>
-                        <span class="rating-text">4.3 (23 reviews)</span>
+                        <span class="rating-text" style="color: #6c757d; font-size: 0.875rem;">4.3 (23 reviews)</span>
                     </div>
-                    <div class="product-price">
-                        <span class="current-price">₹530</span>
-                        <span class="original-price">₹650</span>
-                        <span class="discount">18% OFF</span>
-                        <span class="price-per-unit">(₹1,177.78/l)</span>
+                    <div class="product-price" style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.75rem;">
+                        <span class="current-price" style="font-size: 1.5rem; font-weight: 700; color: #2c3e50;">₹530</span>
+                        <span class="original-price" style="font-size: 1rem; color: #6c757d; text-decoration: line-through;">₹650</span>
+                        <span class="discount" style="background: #dc3545; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">18% OFF</span>
+                        <span class="price-per-unit" style="color: #6c757d; font-size: 0.875rem;">(₹1,177.78/l)</span>
                     </div>
-                    <div class="promo-badge">
-                        <span class="promo-text">Website Order Promo</span>
+                    <div class="promo-badge" style="margin-bottom: 0.75rem;">
+                        <span class="promo-text" style="background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3); animation: pulse 2s infinite;">Website Order Promo</span>
                     </div>
-                    <div class="delivery-info">
-                        <span class="delivery-text">Get it in 3 days *</span>
+                    <div class="delivery-info" style="margin-bottom: 1rem;">
+                        <span class="delivery-text" style="color: #28a745; font-size: 0.875rem; font-weight: 500;">Get it in 3 days *</span>
                     </div>
-                    <p class="product-description">Busy mornings, crisp outfits. Transform your ironing experience with our eco-friendly instant fabric stiffener spray. Perfect for time-saving solutions during morning rush before school or work.</p>
-                    <div class="product-specs">
-                        <p><strong>SKU:</strong> BN161</p>
-                        <p><strong>Volume:</strong> 450ml</p>
-                        <p><strong>Type:</strong> 3-in-1 Antimicrobial</p>
+                    <p class="product-description" style="color: #6c757d; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">Busy mornings, crisp outfits. Transform your ironing experience with our eco-friendly instant fabric stiffener spray. Perfect for time-saving solutions during morning rush before school or work.</p>
+                    <div class="product-specs" style="margin-bottom: 1rem;">
+                        <p style="color: #6c757d; font-size: 0.875rem; margin-bottom: 0.25rem;"><strong style="color: #2c3e50;">SKU:</strong> BN161</p>
+                        <p style="color: #6c757d; font-size: 0.875rem; margin-bottom: 0.25rem;"><strong style="color: #2c3e50;">Volume:</strong> 450ml</p>
+                        <p style="color: #6c757d; font-size: 0.875rem; margin-bottom: 0.25rem;"><strong style="color: #2c3e50;">Type:</strong> 3-in-1 Antimicrobial</p>
                     </div>
-                    <div class="how-to-use">
-                        <h4>How to Use:</h4>
-                        <p>Simply apply this spray starch to clothes while ironing to experience the convenience of an anti-wrinkle spray for clothing, ensuring a smoother and more efficient ironing process. For dark colours, starch can be applied inside the clothes rather than visible.</p>
+                    <div class="how-to-use" style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #2c3e50; font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">How to Use:</h4>
+                        <p style="color: #6c757d; font-size: 0.875rem; line-height: 1.5;">Simply apply this spray starch to clothes while ironing to experience the convenience of an anti-wrinkle spray for clothing, ensuring a smoother and more efficient ironing process. For dark colours, starch can be applied inside the clothes rather than visible.</p>
                     </div>
-                    <div class="product-actions">
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                        <button class="buy-now-btn">Buy Now</button>
+                    <div class="product-actions" style="display: flex; gap: 0.75rem; margin-top: auto;">
+                        <button class="add-to-cart-btn" style="flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; background: #ffffff; color: #145b6f; border: 2px solid #145b6f;">Add to Cart</button>
+                        <button class="buy-now-btn" style="flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; background: #145b6f; color: white;">Buy Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section> 
+</section>
+
+<style>
+/* Hover effects and animations that can't be done inline */
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.add-to-cart-btn:hover {
+    background: #145b6f !important;
+    color: white !important;
+}
+
+.buy-now-btn:hover {
+    background: #0f4a5a !important;
+    transform: translateY(-1px);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+    
+    .product-card {
+        flex-direction: column !important;
+    }
+    
+    .product-image-container {
+        height: 250px !important;
+    }
+    
+    .product-content {
+        padding: 1rem !important;
+    }
+    
+    .product-title {
+        font-size: 1.1rem !important;
+    }
+    
+    .product-actions {
+        flex-direction: column !important;
+    }
+    
+    .add-to-cart-btn, .buy-now-btn {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-image-container {
+        height: 200px !important;
+    }
+    
+    .product-content {
+        padding: 0.75rem !important;
+    }
+    
+    .product-title {
+        font-size: 1rem !important;
+    }
+    
+    .current-price {
+        font-size: 1.25rem !important;
+    }
+    
+    .product-description {
+        font-size: 0.8rem !important;
+    }
+}
+</style> 

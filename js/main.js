@@ -158,6 +158,7 @@ function initializeBurgerMenu() {
     }
 }
 
+
 // Initialize all components
 document.addEventListener('DOMContentLoaded', function() {
     // Load components if they exist

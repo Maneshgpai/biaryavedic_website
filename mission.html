@@ -108,7 +108,7 @@
                 <div class="impact-text">
                     <h2>Our Impact</h2>
                     <p>
-                        Through our innovative approach to sustainable textile production, we're creating lasting positive change across multiple dimensions of environmental and social impact.
+                        Through our innovative approach to sustainable production, we're creating lasting positive change across multiple dimensions of environmental and social impact.
                     </p>
                     <div class="impact-stats">
                         <div class="stat-item">
@@ -129,124 +129,8 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="contact-container">
-            <!-- Left Column - Contact Info and Visual Elements -->
-            <div class="contact-left">
-                <div class="contact-info-card">
-                    <div class="info-header">
-                        <div class="logo-placeholder">
-                            <img src="assets/logo.png" alt="Bio-Aryavedic Naturals Logo" class="logo-image">
-                        </div>
-                        <h2>Get in Touch</h2>
-                        <p class="subtitle">We'd love to hear from you and discuss how we can help with your fabric care needs.</p>
-                    </div>
-                    
-                    <div class="company-info">
-                        <div class="info-item">
-                            <div class="icon-placeholder">
-                                <div class="icon-dot"></div>
-                            </div>
-                            <div class="info-content">
-                                <h4>Bio-Aryavedic Naturals Pvt Ltd</h4>
-                                <p>Eco-friendly fabric care specialists</p>
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="icon-placeholder">
-                                <div class="icon-dot"></div>
-                            </div>
-                            <div class="info-content">
-                                <h4>Address</h4>
-                                <p>Door No: XII / 486 / A,<br>
-                                Ground Floor, KRIBS BIONEST,<br>
-                                Kerala Technology Innovation Zone,<br>
-                                Kinfra Hi-Tech Park,<br>
-                                Kalamassery, Kochi,<br>
-                                Kerala, IN 683 503</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="icon-placeholder">
-                                <div class="icon-dot"></div>
-                            </div>
-                            <div class="info-content">
-                                <h4>Contact</h4>
-                                <p>Email: info@aryavedicnaturals.com<br>
-                                Phone: +91-830-40-82080</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column - Contact Form -->
-            <div class="contact-right">
-                <div class="form-card">
-                    <div class="form-header">
-                        <h2>Send us a Message</h2>
-                        <p>Fill out the form below and we'll get back to you within 24 hours.</p>
-                    </div>
-                    
-                    <form class="contact-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="firstName">First Name</label>
-                                <input type="text" id="firstName" name="firstName" required>
-                                <div class="input-border"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" id="lastName" name="lastName" required>
-                                <div class="input-border"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
-                                <div class="input-border"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" required>
-                                <div class="input-border"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label for="question">Your Message</label>
-                            <textarea id="question" name="question" rows="5" required></textarea>
-                            <div class="input-border"></div>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="submit" class="submit-btn">
-                                <span>Send Message</span>
-                                <div class="btn-arrow">→</div>
-                            </button>
-                        </div>
-                    </form>
-                    
-                    <div class="form-footer">
-                        <div class="trust-indicators">
-                            <div class="trust-item">
-                                <div class="trust-icon">✓</div>
-                                <span>24h Response</span>
-                            </div>
-                            <div class="trust-item">
-                                <div class="trust-icon">🔒</div>
-                                <span>Secure</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Contact Component -->
+    <div id="contact-component"></div>
 
     <!-- Footer Component -->
     <div id="footer-component"></div>
@@ -269,6 +153,12 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('footer-component').innerHTML = data;
+            });
+
+        fetch('components/contact.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('contact-component').innerHTML = data;
             });
     </script>
 </body>

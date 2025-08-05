@@ -1,10 +1,10 @@
 <!-- Header Component -->
 <style>
-/* Header Styles - Matching index.html design */
+/* Header Styles */
 .header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(89, 150, 197, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 0.5rem 0;
@@ -12,14 +12,6 @@
     width: 100%;
     top: 0;
     z-index: 1000;
-    transition: all 0.3s ease;
-}
-
-.header.scrolled {
-    background: rgba(255, 255, 255, 1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .nav-container {
@@ -34,7 +26,6 @@
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
 }
 
 .logo img {
@@ -52,20 +43,18 @@
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
-    align-items: center;
+    gap: 1.5rem;
 }
 
 .nav-menu a {
-    color: white;
+    color: #000000;
     text-decoration: none;
     transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 0.8rem;
     font-weight: 500;
     letter-spacing: 0.5px;
     position: relative;
     font-size: 0.95rem;
-    border-radius: 8px;
 }
 
 .nav-menu a::after {
@@ -75,14 +64,14 @@
     height: 2px;
     bottom: 0;
     left: 50%;
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    background-color: #145b6f;
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
 
 .nav-menu a:hover {
-    color: #22c55e;
-    text-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .nav-menu a:hover::after {
@@ -101,7 +90,7 @@
 .burger-menu span {
     width: 25px;
     height: 3px;
-    background-color: white;
+    background-color: #145b6f;
     margin: 3px 0;
     transition: 0.3s;
     border-radius: 2px;
@@ -128,11 +117,11 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(89, 150, 197, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 0.5rem 0;
     min-width: 200px;
     opacity: 0;
@@ -140,7 +129,7 @@
     transform: translateY(-10px);
     transition: all 0.3s ease;
     z-index: 1000;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     pointer-events: none;
 }
 
@@ -158,7 +147,7 @@
 .dropdown-menu a {
     display: block;
     padding: 0.75rem 1.5rem;
-    color: white;
+    color: #000000;
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 0.9rem;
@@ -167,9 +156,9 @@
 }
 
 .dropdown-menu a:hover {
-    background: rgba(34, 197, 94, 0.1);
-    color: #22c55e;
-    text-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 /* Icon Links Styles */
@@ -180,7 +169,7 @@
 }
 
 .icon-link {
-    color: white;
+    color: #000000;
     text-decoration: none;
     transition: all 0.3s ease;
     padding: 0.5rem;
@@ -188,55 +177,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 .icon-link:hover {
-    color: #22c55e;
-    background: rgba(34, 197, 94, 0.1);
+    color: #145b6f;
+    background: rgba(20, 91, 111, 0.1);
     transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
-}
-
-/* CTA Button */
-.cta-button {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.cta-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-}
-
-.cta-button:hover::before {
-    left: 100%;
-}
-
-.cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
 }
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .burger-menu {
-        display: flex !important;
+        display: flex;
     }
     
     .nav-menu {
@@ -245,21 +197,16 @@
         right: -100%;
         width: 100%;
         height: 100vh;
-        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        background: rgba(89, 150, 197, 0.95);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        display: none;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 2rem;
         transition: 0.3s ease-in-out;
         z-index: 1000;
-    }
-    
-    .nav-menu.active {
-        display: flex;
-        right: 0;
     }
     
     .nav-menu.active {
@@ -293,7 +240,7 @@
     }
     
     .nav-menu a:hover {
-        color: white;
+        color: #145b6f;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 8px;
     }
@@ -319,7 +266,7 @@
     
     .dropdown-menu a:hover {
         background: rgba(255, 255, 255, 0.1);
-        color: white;
+        color: #145b6f;
     }
     
     .icon-links {
@@ -346,12 +293,6 @@
         height: 40px;
         max-width: 200px;
     }
-    
-    .cta-button {
-        margin-top: 1rem;
-        width: 200px;
-        text-align: center;
-    }
 }
 
 @media (max-width: 480px) {
@@ -364,50 +305,13 @@
         padding: 0 1rem;
     }
 }
-
-/* Scrolled state styles */
-.header.scrolled .nav-menu a {
-    color: #1f2937;
-}
-
-.header.scrolled .nav-menu a:hover {
-    color: #22c55e;
-}
-
-.header.scrolled .burger-menu span {
-    background-color: #1f2937;
-}
-
-.header.scrolled .icon-link {
-    color: #1f2937;
-    background: rgba(34, 197, 94, 0.1);
-}
-
-.header.scrolled .icon-link:hover {
-    color: #22c55e;
-}
-
-.header.scrolled .dropdown-menu {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.header.scrolled .dropdown-menu a {
-    color: #1f2937;
-}
-
-.header.scrolled .dropdown-menu a:hover {
-    color: #22c55e;
-    background: rgba(34, 197, 94, 0.1);
-}
 </style>
 
-<header class="header" id="header">
+<header class="header">
     <nav class="nav-container">
         <div class="logo">
-            <a href="index.html" class="flex items-center space-x-2">
-                <img src="assets/logo_symbol.png" alt="Bio-Aryavedic Symbol" class="h-12">
-                <img src="assets/logo_text.png" alt="Bio-Aryavedic" class="h-10">
+            <a href="index.html">
+                <img src="assets/logo.png" alt="Bio-Aryavedic Naturals Logo">
             </a>
         </div>
         
@@ -447,4 +351,32 @@
     </nav>
 </header>
 
- 
+<script>
+// Mobile menu toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const burgerMenu = document.getElementById('burger-menu');
+    const navMenu = document.getElementById('nav-menu');
+    
+    burgerMenu.addEventListener('click', function() {
+        burgerMenu.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!burgerMenu.contains(event.target) && !navMenu.contains(event.target)) {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+});
+</script> 

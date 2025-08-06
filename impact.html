@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Impact - Bio-Aryavedic - Fabrics for a better tomorrow</title>
+    <meta name="description" content="Discover the positive environmental, economic, and social impact we're creating through sustainable textile production and regenerative practices.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-green: #22c55e;
+            --secondary-green: #16a34a;
+            --accent-blue: #3b82f6;
+            --gradient-1: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            --gradient-2: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-3: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-4: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-gradient-primary {
+            background: var(--gradient-1);
+        }
+        
+        .bg-gradient-blue {
+            background: var(--gradient-2);
+        }
+        
+        .bg-gradient-orange {
+            background: var(--gradient-3);
+        }
+        
+        .bg-gradient-purple {
+            background: var(--gradient-4);
+        }
+        
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Pulse glow effect */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        /* Smooth hover transforms */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+        
+        /* Counter animation */
+        .counter {
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+        
+        /* Interactive cards */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        /* Custom button hover effects */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        /* Animated underline */
+        .animated-underline {
+            position: relative;
+        }
+        
+        .animated-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+        }
+        
+        .animated-underline:hover::after {
+            width: 100%;
+        }
+        
+        /* Progress bar animation */
+        @keyframes progress-fill {
+            from { width: 0%; }
+            to { width: var(--progress-width); }
+        }
+        
+        .progress-bar {
+            animation: progress-fill 2s ease-out forwards;
+        }
+        
+        /* Rotating icons */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .rotate-slow {
+            animation: rotate 20s linear infinite;
+        }
+        
+        /* Bouncing animation */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .bounce-animation {
+            animation: bounce 2s infinite;
+        }
+        
+        /* Scale animation on scroll */
+        .scale-on-scroll {
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+        
+        .scale-on-scroll.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        /* Gradient text animation */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(-45deg, #9747ff, #2870f7, #0464e2, #145b6f);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-primary">
+        <div class="text-center text-white">
+            <img src="assets/logo_symbol.png" alt="Bio-Aryavedic" class="h-48 mx-auto mb-4 float-animation">
+            <p class="text-sm opacity-80">Loading Impact Data...</p>
+            <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        </div>
+    </div>
+
+    <!-- Header Component -->
+    <div id="header-component"></div>
+
+    <!-- Hero Section -->
+    <!-- <section class="py-20 bg-gradient-to-br from-green-50 to-blue-50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-green-400/20 to-blue-400/20"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-5xl lg:text-7xl font-bold text-gray-800 mb-6 font-display" data-aos="fade-up">
+                Our <span class="gradient-text">Impact</span>
+            </h1>
+        </div> -->
+        
+        <!-- Floating elements -->
+        <!-- <div class="absolute top-20 left-10 w-20 h-20 bg-green-200 rounded-full opacity-50 float-animation"></div>
+        <div class="absolute bottom-20 right-10 w-16 h-16 bg-blue-200 rounded-full opacity-50 float-animation" style="animation-delay: -2s;"></div>
+        <div class="absolute top-1/2 left-1/4 w-12 h-12 bg-orange-200 rounded-full opacity-50 float-animation" style="animation-delay: -4s;"></div>
+    </section> -->
+
+    <!-- Hero Section -->
+    <section class="py-20" style="background-color: var(--primary-green)">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl lg:text-5xl font-bold text-gray-800 font-display">
+                Our <span class="gradient-text">Impact</span>
+            </h1>
+        </div>
+    </section>
+
+    <!-- Impact Statistics Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+           
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- Farmers Engaged -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center hover-lift card-3d" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <div class="counter text-4xl font-bold text-green-600 mb-2" data-target="15000">0</div>
+                    <p class="text-gray-700 font-semibold">Farmers Engaged</p>
+                    <div class="mt-4 bg-green-200 h-2 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-green-500 h-full rounded-full" style="--progress-width: 75%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Land Coverage -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center hover-lift card-3d" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <div class="counter text-4xl font-bold text-blue-600 mb-2" data-target="25000">0</div>
+                    <p class="text-gray-700 font-semibold">Hectares of Land</p>
+                    <div class="mt-4 bg-blue-200 h-2 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-blue-500 h-full rounded-full" style="--progress-width: 60%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Cotton Bales -->
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 text-center hover-lift card-3d" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+                        <i class="fas fa-seedling text-white text-2xl"></i>
+                    </div>
+                    <div class="counter text-4xl font-bold text-orange-600 mb-2" data-target="50000">0</div>
+                    <p class="text-gray-700 font-semibold">Cotton Bales Produced</p>
+                    <div class="mt-4 bg-orange-200 h-2 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-orange-500 h-full rounded-full" style="--progress-width: 85%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Carbon Credits -->
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center hover-lift card-3d" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+                        <i class="fas fa-leaf text-white text-2xl rotate-slow"></i>
+                    </div>
+                    <div class="counter text-4xl font-bold text-purple-600 mb-2" data-target="12000">0</div>
+                    <p class="text-gray-700 font-semibold">Carbon Credits Issued</p>
+                    <div class="mt-4 bg-purple-200 h-2 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-purple-500 h-full rounded-full" style="--progress-width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environmental Impact Section -->
+    <section class="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
+                    Environmental <span class="text-green-600">Impact</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Leading the way in sustainable practices and environmental restoration
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div data-aos="fade-right">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mr-4 pulse-glow">
+                                <i class="fas fa-cloud text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-800">Carbon Sequestration</h3>
+                                <p class="text-green-600 font-semibold">1 Million Tonnes Target</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Through regenerative agriculture and biochar initiatives, we're sequestering approximately 
+                            1 million tonnes of carbon over three years, including 220,000 tonnes in the first year.
+                        </p>
+                        <div class="bg-green-100 h-4 rounded-full overflow-hidden">
+                            <div class="progress-bar bg-green-500 h-full rounded-full" style="--progress-width: 22%;"></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">22% completed in Year 1</p>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mr-4 pulse-glow">
+                                <i class="fas fa-water text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-800">Water Conservation</h3>
+                                <p class="text-blue-600 font-semibold">30% Reduction Achieved</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Implementing Alternate Wetting and Drying (AWD) techniques reduces water footprint 
+                            by up to 30% in paddy farming while lowering methane emissions by 48%.
+                        </p>
+                        <div class="bg-blue-100 h-4 rounded-full overflow-hidden">
+                            <div class="progress-bar bg-blue-500 h-full rounded-full" style="--progress-width: 30%;"></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">30% water usage reduction</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-tree text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Afforestation</h3>
+                    <p class="text-gray-600 mb-4">200,000 trees planted and 80,000 seed balls dispersed for natural regeneration.</p>
+                    <div class="flex items-center text-emerald-600">
+                        <span class="text-2xl font-bold">200K+</span>
+                        <span class="ml-2">Trees Planted</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-flask text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Reduced Chemicals</h3>
+                    <p class="text-gray-600 mb-4">30% reduction in tillage and minimized chemical usage through natural inputs.</p>
+                    <div class="flex items-center text-orange-600">
+                        <span class="text-2xl font-bold">30%</span>
+                        <span class="ml-2">Less Tillage</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-recycle text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Biodiversity</h3>
+                    <p class="text-gray-600 mb-4">Promoting natural regeneration through crop rotation and sustainable practices.</p>
+                    <div class="flex items-center text-purple-600">
+                        <span class="text-2xl font-bold">100%</span>
+                        <span class="ml-2">Sustainable</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Economic Impact Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
+                    Economic <span class="text-blue-600">Impact</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Driving economic growth through sustainable agricultural practices
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6">Increased Farmer Income</h3>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Through High-Density Planting Systems (HDPS), intercropping, biochar application, 
+                        and regenerative agriculture, we're boosting farmers' income by at least 18%.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-chart-line text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">18% Income Increase</h4>
+                                <p class="text-gray-600">Average farmer income growth</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-handshake text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">20+ Supply Partners</h4>
+                                <p class="text-gray-600">Strong partnership network</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-building text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">5 Corporate Partners</h4>
+                                <p class="text-gray-600">Strategic business alliances</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-8 shadow-lg">
+                        <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Productivity Growth</h4>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Crop Yield</span>
+                                    <span class="text-blue-600 font-bold">+25%</span>
+                                </div>
+                                <div class="bg-blue-200 h-3 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-blue-500 h-full rounded-full" style="--progress-width: 25%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Resource Efficiency</span>
+                                    <span class="text-green-600 font-bold">+40%</span>
+                                </div>
+                                <div class="bg-green-200 h-3 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-green-500 h-full rounded-full" style="--progress-width: 40%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Cost Reduction</span>
+                                    <span class="text-orange-600 font-bold">-20%</span>
+                                </div>
+                                <div class="bg-orange-200 h-3 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-orange-500 h-full rounded-full" style="--progress-width: 20%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Impact Section -->
+    <section class="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
+                    Social <span class="text-purple-600">Impact</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Improving lives and communities through ethical practices and inclusive growth
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+                        <i class="fas fa-female text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Gender Mainstreaming</h3>
+                    <p class="text-gray-600 text-center mb-4">1,000+ women farmers engaged with 40%+ women in management.</p>
+                    <div class="text-center">
+                        <span class="text-3xl font-bold text-pink-600">40%</span>
+                        <p class="text-gray-500">Women in Management</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Improved Living Standards</h3>
+                    <p class="text-gray-600 text-center mb-4">Better literacy, nutrition, and health for farming families.</p>
+                    <div class="text-center">
+                        <span class="text-3xl font-bold text-blue-600">380K+</span>
+                        <p class="text-gray-500">Lives Improved</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Ethical Practices</h3>
+                    <p class="text-gray-600 text-center mb-4">Fair supply chains ensuring ethical treatment throughout.</p>
+                    <div class="text-center">
+                        <span class="text-3xl font-bold text-green-600">100%</span>
+                        <p class="text-gray-500">Ethical Supply Chain</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Community Impact Visualization -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg" data-aos="fade-up">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Community Development Progress</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-4">Education & Health</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Literacy Rate Improvement</span>
+                                    <span class="text-blue-600 font-bold">+35%</span>
+                                </div>
+                                <div class="bg-blue-200 h-3 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-blue-500 h-full rounded-full" style="--progress-width: 35%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Healthcare Access</span>
+                                    <span class="text-green-600 font-bold">+50%</span>
+                                </div>
+                                <div class="bg-green-200 h-3 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-green-500 h-full rounded-full" style="--progress-width: 50%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-4">Economic Empowerment</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Women's Economic Participation</span>
+                                    <span class="text-purple-600 font-bold">+60%</span>
+                                </div>
+                                <div class="bg-purple-200 h-3 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-purple-500 h-full rounded-full" style="--progress-width: 60%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Skill Development Programs</span>
+                                    <span class="text-orange-600 font-bold">+45%</span>
+                                </div>
+                                <div class="bg-orange-200 h-3 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-orange-500 h-full rounded-full" style="--progress-width: 45%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UN SDG Alignment Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
+                    Supporting <span class="text-blue-600">UN SDG Goals</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Our commitment to sustainability aligns with multiple United Nations Sustainable Development Goals
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Climate Action</h3>
+                    <p class="text-gray-600">Reducing carbon footprint through sustainable manufacturing and eco-friendly products.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-water text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Clean Water</h3>
+                    <p class="text-gray-600">Protecting water resources through biodegradable formulations and responsible usage.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-industry text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Innovation</h3>
+                    <p class="text-gray-600">Driving industry innovation through responsible manufacturing and sustainable practices.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-balance-scale text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Gender Equality</h3>
+                    <p class="text-gray-600">Promoting gender equality through inclusive hiring and women's empowerment programs.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Zero Hunger</h3>
+                    <p class="text-gray-600">Supporting sustainable agriculture to improve food security and farmer livelihoods.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-hands-helping text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Partnerships</h3>
+                    <p class="text-gray-600">Building strong partnerships for sustainable development and community growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Component -->
+    <div id="contact-component"></div>
+
+    <!-- Footer Component -->
+    <div id="footer-component"></div>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        });
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header component
+            fetch('components/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-component').innerHTML = html;
+                
+                // Initialize header functionality after component loads
+                const burger = document.getElementById('burger-menu');
+                const navMenu = document.getElementById('nav-menu');
+                const header = document.getElementById('header');
+                
+                if (burger && navMenu) {
+                    burger.addEventListener('click', () => {
+                        burger.classList.toggle('active');
+                        navMenu.classList.toggle('active');
+                    });
+                }
+                
+                // Header scroll effect
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 100) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading header component:', error);
+            });
+
+            // Load contact component
+            fetch('components/contact.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('contact-component').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading contact component:', error);
+            });
+
+            // Load footer component
+            fetch('components/footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-component').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading footer component:', error);
+            });
+
+            // Initialize AOS after components are loaded
+            setTimeout(() => {
+                AOS.init({
+                    duration: 1000,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 100
+                });
+            }, 100);
+
+            // Counter animation
+            function animateCounters() {
+                const counters = document.querySelectorAll('.counter');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const counter = entry.target;
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            const duration = 2000;
+                            const start = 0;
+                            const increment = target / (duration / 16);
+                            
+                            let current = start;
+                            const timer = setInterval(() => {
+                                current += increment;
+                                if (current >= target) {
+                                    current = target;
+                                    clearInterval(timer);
+                                }
+                                counter.textContent = Math.floor(current).toLocaleString();
+                            }, 16);
+                            
+                            observer.unobserve(counter);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                counters.forEach(counter => observer.observe(counter));
+            }
+
+            // Initialize counter animation
+            animateCounters();
+
+            // Scale on scroll animation
+            function initScaleOnScroll() {
+                const elements = document.querySelectorAll('.scale-on-scroll');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                elements.forEach(el => observer.observe(el));
+            }
+
+            // Initialize scale on scroll
+            initScaleOnScroll();
+
+            // Smooth scrolling for anchor links
+            document.addEventListener('click', function(e) {
+                if (e.target.matches('a[href^="#"]')) {
+                    e.preventDefault();
+                    const target = document.querySelector(e.target.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

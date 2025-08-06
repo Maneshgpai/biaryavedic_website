@@ -1,118 +1,605 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B2B Eco-Friendly Fabric Sizing Agent - Bio-Aryavedic Naturals</title>
     <meta name="description" content="Revolutionary eco-friendly fabric sizing agent for industrial weaving. Reduce yarn breakage and enhance fabric quality with our sustainable solution.">
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <!-- Header Component -->
-    <div data-component="header"></div>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-green: #22c55e;
+            --secondary-green: #16a34a;
+            --accent-blue: #3b82f6;
+            --gradient-1: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            --gradient-2: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-3: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-gradient-primary {
+            background: var(--gradient-1);
+        }
+        
+        .bg-gradient-blue {
+            background: var(--gradient-2);
+        }
+        
+        .bg-gradient-orange {
+            background: var(--gradient-3);
+        }
+        
 
+        .gradient-text {
+            background: linear-gradient(-45deg, #9747ff, #2870f7, #0464e2, #145b6f);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }        
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Pulse glow effect */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        /* Smooth hover transforms */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+        
+        /* Animated overlay */
+        .gradient-overlay {
+            background: linear-gradient(-45deg, rgba(34, 197, 94, 0.7), rgba(22, 163, 74, 0.6), rgba(59, 130, 246, 0.5), rgba(29, 78, 216, 0.4));
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Custom button hover effects */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        /* Interactive cards */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Product image gallery */
+        .product-gallery {
+            position: relative;
+        }
+        
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .thumbnail {
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .thumbnail.active {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+        
+        .thumbnail:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Tab styling */
+        .tab-buttons {
+            display: flex;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: var(--primary-green);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-pane.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Star rating */
+        .stars {
+            color: #fbbf24;
+        }
+        
+        /* Price styling */
+        .price-display {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        
+        .current-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        
+        .original-price {
+            font-size: 1.25rem;
+            color: #9ca3af;
+            text-decoration: line-through;
+        }
+        
+        .discount-badge {
+            background: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 24px 0;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-add-cart {
+            background: var(--gradient-2);
+            color: white;
+        }
+        
+        .btn-buy-now {
+            background: var(--gradient-1);
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Product badges */
+        .product-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--gradient-1);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        /* Info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .info-item {
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-top: 4px;
+        }
+        
+        /* Security badges */
+        .security-badges {
+            display: flex;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0fdf4;
+            color: var(--secondary-green);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        /* Stock info */
+        .stock-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: #f0fdf4;
+            border-radius: 10px;
+        }
+        
+        .in-stock {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--secondary-green);
+            font-weight: 600;
+        }
+        
+        .stock-count {
+            color: #dc2626;
+            font-weight: 500;
+        }
+        
+        /* Reviews */
+        .review-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .rating-breakdown {
+            margin-top: 16px;
+        }
+        
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .rating-bar .bar {
+            flex: 1;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .rating-bar .fill {
+            height: 100%;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .security-badges {
+                flex-direction: column;
+            }
+            
+            .tab-buttons {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .tab-btn {
+                min-width: calc(50% - 4px);
+            }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-primary">
+        <div class="text-center text-white">
+            <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4 pulse-glow"></div>
+            <p class="text-sm opacity-80">Loading Product...</p>
+        </div>
+    </div>
+
+    <!-- Header Component -->
+    <div id="header-component"></div>
+    <!-- Hero Section -->
+    <section class="py-20" style="background-color: var(--primary-green)">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl lg:text-5xl font-bold text-gray-800 font-display">
+                Products For <span class="gradient-text">Industry</span>
+            </h1>
+        </div>
+    </section>
     <!-- Product Hero Section -->
-    <section class="product-hero">
-        <div class="container">
-            <div class="product-hero-content">
-                <div class="product-images">
-                    <div class="main-image">
-                        <img src="assets/images/product_BN160.webp" alt="B2B Eco-Friendly Fabric Sizing Agent" id="mainImage">
+    <section class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <!-- Product Images -->
+                <div class="product-gallery" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="relative">
+                        <div class="main-image bg-white rounded-2xl shadow-lg overflow-hidden hover-lift">
+                            <img src="assets/images/product_BN160.webp" alt="B2B Eco-Friendly Fabric Sizing Agent" id="mainImage" class="w-full h-96 object-contain p-8">
+                        </div>
+                        <!-- Decorative elements -->
+                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-green-200 rounded-full opacity-50 float-animation"></div>
+                        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-200 rounded-full opacity-30 float-animation" style="animation-delay: -3s;"></div>
                     </div>
-                    <div class="image-thumbnails">
-                        <img src="assets/images/product_BN160.webp" alt="Product Image 1" class="thumbnail active" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
-                        <img src="assets/images/product_BN160.webp" alt="Product Image 2" class="thumbnail" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
-                        <img src="assets/images/product_BN160.webp" alt="Product Image 3" class="thumbnail" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
-                        <img src="assets/images/product_BN160.webp" alt="Product Image 4" class="thumbnail" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
+                    
+                    <div class="thumbnail-grid mt-4">
+                        <img src="assets/images/product_BN160.webp" alt="Product Image 1" class="thumbnail active w-full h-20 object-cover" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
+                        <img src="assets/images/product_BN160.webp" alt="Product Image 2" class="thumbnail w-full h-20 object-cover" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
+                        <img src="assets/images/product_BN160.webp" alt="Product Image 3" class="thumbnail w-full h-20 object-cover" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
+                        <img src="assets/images/product_BN160.webp" alt="Product Image 4" class="thumbnail w-full h-20 object-cover" onclick="changeImage(this, 'assets/images/product_BN160.webp')">
                     </div>
                 </div>
 
-                <div class="product-details">
+                <!-- Product Details -->
+                <div class="product-details" data-aos="fade-left" data-aos-duration="1000">
                     <div class="product-badge">
                         <i class="fas fa-leaf"></i>
                         <span>Eco-Friendly</span>
                     </div>
                     
-                    <h1 class="product-title">B2B Eco-Friendly Fabric Sizing Agent</h1>
+                    <h1 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-4 font-display">B2B Eco-Friendly Fabric Sizing Agent</h1>
                     
-                    <div class="product-rating">
-                        <div class="stars">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="stars flex">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <span class="rating-text">4.5 out of 5</span>
-                        <span class="reviews-count" onclick="openReviewsModal()">(2,847 customer reviews)</span>
+                        <span class="text-gray-600 font-semibold">4.5 out of 5</span>
+                        <span class="text-blue-600 cursor-pointer hover:underline font-medium" onclick="openReviewsModal()">(2,847 customer reviews)</span>
                     </div>
 
-                    <div class="price-section">
-                        <div class="price">
-                            <span class="currency">₹</span>
-                            <span class="amount">1,299</span>
-                            <span class="original-price">₹1,599</span>
-                            <span class="discount">19% off</span>
+                    <div class="price-display">
+                        <span class="current-price">₹1,299</span>
+                        <span class="original-price">₹1,599</span>
+                        <span class="discount-badge">19% off</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 mb-6 text-green-600">
+                        <i class="fas fa-truck"></i>
+                        <span class="font-semibold">FREE Delivery by <strong>Tomorrow</strong></span>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">SKU</div>
+                            <div class="info-value">BN160</div>
                         </div>
-                        <div class="delivery-info">
-                            <i class="fas fa-truck"></i>
-                            <span>FREE Delivery by <strong>Tomorrow</strong></span>
+                        <div class="info-item">
+                            <div class="info-label">Volume</div>
+                            <div class="info-value">5L</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Application</div>
+                            <div class="info-value">Industrial Weaving</div>
                         </div>
                     </div>
 
-                    <div class="product-info">
-                        <div class="info-item">
-                            <span class="label">SKU:</span>
-                            <span class="value">BN160</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">Volume:</span>
-                            <span class="value">5L</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">Application:</span>
-                            <span class="value">Industrial Weaving</span>
-                        </div>
-                    </div>
-
-                    <div class="coupon-section">
-                        <div class="coupon">
-                            <i class="fas fa-tag"></i>
-                            <span>Save ₹200 with coupon</span>
+                    <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-4 my-6">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-tag text-orange-600"></i>
+                            <span class="text-orange-800 font-semibold">Save ₹200 with coupon</span>
                         </div>
                     </div>
 
                     <div class="security-badges">
-                        <div class="badge">
+                        <div class="security-badge">
                             <i class="fas fa-shield-alt"></i>
                             <span>Secure Transaction</span>
                         </div>
-                        <div class="badge">
+                        <div class="security-badge">
                             <i class="fas fa-undo"></i>
                             <span>Non-Returnable</span>
                         </div>
                     </div>
 
                     <div class="action-buttons">
-                        <button class="btn-add-cart">
+                        <button class="action-btn btn-add-cart btn-primary">
                             <i class="fas fa-shopping-cart"></i>
                             Add to Cart
                         </button>
-                        <button class="btn-buy-now">
+                        <button class="action-btn btn-buy-now btn-primary">
                             <i class="fas fa-bolt"></i>
                             Buy Now
                         </button>
                     </div>
 
                     <div class="stock-info">
-                        <span class="in-stock">
+                        <div class="in-stock">
                             <i class="fas fa-check-circle"></i>
-                            In Stock
-                        </span>
+                            <span>In Stock</span>
+                        </div>
                         <span class="stock-count">Only 15 left in stock</span>
                     </div>
                 </div>
@@ -121,277 +608,378 @@
     </section>
 
     <!-- Product Description -->
-    <section class="product-description">
-        <div class="container">
-            <div class="description-tabs">
-                <button class="tab-btn active" onclick="showTab('description')">Description</button>
-                <button class="tab-btn" onclick="showTab('how-to-use')">How to Use</button>
-                <button class="tab-btn" onclick="showTab('safety')">Safety Info</button>
-                <button class="tab-btn" onclick="showTab('sustainability')">Sustainability</button>
-            </div>
-
-            <div class="tab-content">
-                <div id="description" class="tab-pane active">
-                    <h2>Product Description</h2>
-                    <p>Revolutionizing the fabric sizing process for a green future. Our industrial solution forms a uniform layer of protective coating over warp yarn, minimizes yarn breakage during weaving, and improves yarn strength to resist mechanical stress.</p>
-                    
-                    <h3>Key Features:</h3>
-                    <ul>
-                        <li>Eco-friendly formulation with biodegradable components</li>
-                        <li>Uniform protective coating for warp yarn</li>
-                        <li>Reduces yarn breakage during weaving process</li>
-                        <li>Enhances yarn strength and durability</li>
-                        <li>Compatible with various fabric types</li>
-                        <li>Industrial-grade performance</li>
-                    </ul>
-
-                    <h3>Technical Specifications:</h3>
-                    <ul>
-                        <li><strong>SKU:</strong> BN160</li>
-                        <li><strong>Volume:</strong> 5L</li>
-                        <li><strong>Application:</strong> Industrial Weaving</li>
-                        <li><strong>pH Level:</strong> 6.5-7.5</li>
-                        <li><strong>Storage:</strong> Store in cool, dry place</li>
-                        <li><strong>Shelf Life:</strong> 24 months</li>
-                    </ul>
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showTab('description')">Description</button>
+                    <button class="tab-btn" onclick="showTab('how-to-use')">How to Use</button>
+                    <button class="tab-btn" onclick="showTab('safety')">Safety Info</button>
+                    <button class="tab-btn" onclick="showTab('sustainability')">Sustainability</button>
                 </div>
 
-                <div id="how-to-use" class="tab-pane">
-                    <h2>How to Use</h2>
-                    <h3>Application Process:</h3>
-                    <ol>
-                        <li><strong>Preparation:</strong> Ensure the sizing machine is clean and properly calibrated</li>
-                        <li><strong>Dilution:</strong> Mix the sizing agent with water according to the recommended ratio (1:10)</li>
-                        <li><strong>Application:</strong> Apply the solution to warp yarns using the sizing machine</li>
-                        <li><strong>Drying:</strong> Allow the sized yarns to dry completely before weaving</li>
-                        <li><strong>Weaving:</strong> Proceed with the weaving process using the sized yarns</li>
-                    </ol>
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <div id="description" class="tab-pane active">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 font-display">Product Description</h2>
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">Revolutionizing the fabric sizing process for a green future. Our industrial solution forms a uniform layer of protective coating over warp yarn, minimizes yarn breakage during weaving, and improves yarn strength to resist mechanical stress.</p>
+                        
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Key Features:</h3>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                <span class="text-gray-700">Eco-friendly formulation with biodegradable components</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                <span class="text-gray-700">Uniform protective coating for warp yarn</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                <span class="text-gray-700">Reduces yarn breakage during weaving process</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                <span class="text-gray-700">Enhances yarn strength and durability</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                <span class="text-gray-700">Compatible with various fabric types</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                <span class="text-gray-700">Industrial-grade performance</span>
+                            </li>
+                        </ul>
 
-                    <h3>Recommended Dosage:</h3>
-                    <ul>
-                        <li>Light fabrics: 2-3% concentration</li>
-                        <li>Medium fabrics: 3-5% concentration</li>
-                        <li>Heavy fabrics: 5-8% concentration</li>
-                    </ul>
-                </div>
-
-                <div id="safety" class="tab-pane">
-                    <h2>Safety Information</h2>
-                    <div class="safety-warning">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <strong>Important Safety Information</strong>
-                    </div>
-                    
-                    <h3>Precautions:</h3>
-                    <ul>
-                        <li>Wear appropriate protective equipment (gloves, safety glasses)</li>
-                        <li>Ensure adequate ventilation in the work area</li>
-                        <li>Keep away from heat, sparks, and open flames</li>
-                        <li>Store in original container with tight-fitting lid</li>
-                        <li>Keep out of reach of children and pets</li>
-                    </ul>
-
-                    <h3>First Aid:</h3>
-                    <ul>
-                        <li><strong>Eye Contact:</strong> Rinse immediately with plenty of water for 15 minutes</li>
-                        <li><strong>Skin Contact:</strong> Wash with soap and water</li>
-                        <li><strong>Ingestion:</strong> Do not induce vomiting, seek medical attention</li>
-                        <li><strong>Inhalation:</strong> Move to fresh air, seek medical attention if symptoms persist</li>
-                    </ul>
-                </div>
-
-                <div id="sustainability" class="tab-pane">
-                    <h2>Sustainability Index</h2>
-                    <div class="sustainability-score">
-                        <div class="score-circle">
-                            <span class="score">85</span>
-                            <span class="score-label">Sustainability Score</span>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Technical Specifications:</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-800">SKU:</span>
+                                <span class="text-gray-700 ml-2">BN160</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-800">Volume:</span>
+                                <span class="text-gray-700 ml-2">5L</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-800">Application:</span>
+                                <span class="text-gray-700 ml-2">Industrial Weaving</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-800">pH Level:</span>
+                                <span class="text-gray-700 ml-2">6.5-7.5</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-800">Storage:</span>
+                                <span class="text-gray-700 ml-2">Store in cool, dry place</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-800">Shelf Life:</span>
+                                <span class="text-gray-700 ml-2">24 months</span>
+                            </div>
                         </div>
                     </div>
 
-                    <h3>Environmental Benefits:</h3>
-                    <ul>
-                        <li><strong>Biodegradable:</strong> 95% biodegradable within 28 days</li>
-                        <li><strong>Low VOC:</strong> Minimal volatile organic compound emissions</li>
-                        <li><strong>Water-based:</strong> No harmful solvents</li>
-                        <li><strong>Renewable:</strong> Contains plant-based ingredients</li>
-                        <li><strong>Recyclable:</strong> Packaging is 100% recyclable</li>
-                    </ul>
+                    <div id="how-to-use" class="tab-pane">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 font-display">How to Use</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Application Process:</h3>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold">1</div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Preparation:</h4>
+                                    <p class="text-gray-700">Ensure the sizing machine is clean and properly calibrated</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold">2</div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Dilution:</h4>
+                                    <p class="text-gray-700">Mix the sizing agent with water according to the recommended ratio (1:10)</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold">3</div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Application:</h4>
+                                    <p class="text-gray-700">Apply the solution to warp yarns using the sizing machine</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold">4</div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Drying:</h4>
+                                    <p class="text-gray-700">Allow the sized yarns to dry completely before weaving</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold">5</div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Weaving:</h4>
+                                    <p class="text-gray-700">Proceed with the weaving process using the sized yarns</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <h3>Certifications:</h3>
-                    <ul>
-                        <li>ISO 14001 Environmental Management</li>
-                        <li>OEKO-TEX® Standard 100</li>
-                        <li>GOTS (Global Organic Textile Standard)</li>
-                        <li>REACH Compliant</li>
-                    </ul>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Recommended Dosage:</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="bg-blue-50 p-6 rounded-lg text-center">
+                                <h4 class="font-semibold text-blue-800 mb-2">Light fabrics</h4>
+                                <p class="text-2xl font-bold text-blue-600">2-3%</p>
+                                <p class="text-blue-700 text-sm">concentration</p>
+                            </div>
+                            <div class="bg-green-50 p-6 rounded-lg text-center">
+                                <h4 class="font-semibold text-green-800 mb-2">Medium fabrics</h4>
+                                <p class="text-2xl font-bold text-green-600">3-5%</p>
+                                <p class="text-green-700 text-sm">concentration</p>
+                            </div>
+                            <div class="bg-orange-50 p-6 rounded-lg text-center">
+                                <h4 class="font-semibold text-orange-800 mb-2">Heavy fabrics</h4>
+                                <p class="text-2xl font-bold text-orange-600">5-8%</p>
+                                <p class="text-orange-700 text-sm">concentration</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="safety" class="tab-pane">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 font-display">Safety Information</h2>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8 rounded-lg">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                                <h3 class="font-semibold text-yellow-800">Important Safety Information</h3>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Precautions:</h3>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-shield-alt text-red-600 mt-1"></i>
+                                <span class="text-gray-700">Wear appropriate protective equipment (gloves, safety glasses)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-wind text-red-600 mt-1"></i>
+                                <span class="text-gray-700">Ensure adequate ventilation in the work area</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-fire text-red-600 mt-1"></i>
+                                <span class="text-gray-700">Keep away from heat, sparks, and open flames</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-box text-red-600 mt-1"></i>
+                                <span class="text-gray-700">Store in original container with tight-fitting lid</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-child text-red-600 mt-1"></i>
+                                <span class="text-gray-700">Keep out of reach of children and pets</span>
+                            </li>
+                        </ul>
+
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">First Aid:</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-red-800 mb-2">Eye Contact:</h4>
+                                <p class="text-red-700">Rinse immediately with plenty of water for 15 minutes</p>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-red-800 mb-2">Skin Contact:</h4>
+                                <p class="text-red-700">Wash with soap and water</p>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-red-800 mb-2">Ingestion:</h4>
+                                <p class="text-red-700">Do not induce vomiting, seek medical attention</p>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-red-800 mb-2">Inhalation:</h4>
+                                <p class="text-red-700">Move to fresh air, seek medical attention if symptoms persist</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sustainability" class="tab-pane">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 font-display">Sustainability Index</h2>
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center w-32 h-32 bg-gradient-primary rounded-full text-white mb-4 pulse-glow">
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold">85</div>
+                                    <div class="text-sm opacity-90">Score</div>
+                                </div>
+                            </div>
+                            <p class="text-xl text-gray-600 font-semibold">Sustainability Score</p>
+                        </div>
+
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Environmental Benefits:</h3>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-leaf text-green-600 mt-1"></i>
+                                <div>
+                                    <span class="font-semibold text-gray-800">Biodegradable:</span>
+                                    <span class="text-gray-700 ml-2">95% biodegradable within 28 days</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-cloud text-blue-600 mt-1"></i>
+                                <div>
+                                    <span class="font-semibold text-gray-800">Low VOC:</span>
+                                    <span class="text-gray-700 ml-2">Minimal volatile organic compound emissions</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-tint text-blue-600 mt-1"></i>
+                                <div>
+                                    <span class="font-semibold text-gray-800">Water-based:</span>
+                                    <span class="text-gray-700 ml-2">No harmful solvents</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-seedling text-green-600 mt-1"></i>
+                                <div>
+                                    <span class="font-semibold text-gray-800">Renewable:</span>
+                                    <span class="text-gray-700 ml-2">Contains plant-based ingredients</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-recycle text-green-600 mt-1"></i>
+                                <div>
+                                    <span class="font-semibold text-gray-800">Recyclable:</span>
+                                    <span class="text-gray-700 ml-2">Packaging is 100% recyclable</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Certifications:</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-4 rounded-lg flex items-center gap-3">
+                                <i class="fas fa-certificate text-green-600"></i>
+                                <span class="font-semibold text-green-800">ISO 14001 Environmental Management</span>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg flex items-center gap-3">
+                                <i class="fas fa-certificate text-blue-600"></i>
+                                <span class="font-semibold text-blue-800">OEKO-TEX® Standard 100</span>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg flex items-center gap-3">
+                                <i class="fas fa-certificate text-orange-600"></i>
+                                <span class="font-semibold text-orange-800">GOTS (Global Organic Textile Standard)</span>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg flex items-center gap-3">
+                                <i class="fas fa-certificate text-purple-600"></i>
+                                <span class="font-semibold text-purple-800">REACH Compliant</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Customer Reviews -->
-    <!-- <section class="customer-reviews">
-        <div class="container">
-            <h2>Customer Reviews</h2>
-            <div class="reviews-summary">
-                <div class="overall-rating">
-                    <div class="rating-number">4.5</div>
-                    <div class="rating-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <div class="total-reviews">2,847 total ratings</div>
-                </div>
-                <div class="rating-breakdown">
-                    <div class="rating-bar">
-                        <span>5★</span>
-                        <div class="bar"><div class="fill" style="width: 75%"></div></div>
-                        <span>75%</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span>4★</span>
-                        <div class="bar"><div class="fill" style="width: 15%"></div></div>
-                        <span>15%</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span>3★</span>
-                        <div class="bar"><div class="fill" style="width: 7%"></div></div>
-                        <span>7%</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span>2★</span>
-                        <div class="bar"><div class="fill" style="width: 2%"></div></div>
-                        <span>2%</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span>1★</span>
-                        <div class="bar"><div class="fill" style="width: 1%"></div></div>
-                        <span>1%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
     <!-- Reviews Modal -->
     <div id="reviewsModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Customer Reviews</h2>
-                <span class="close-modal" onclick="closeReviewsModal()">&times;</span>
+            <div class="flex justify-between items-center p-6 border-b">
+                <h2 class="text-2xl font-bold text-gray-800 font-display">Customer Reviews</h2>
+                <button class="text-gray-500 hover:text-gray-700 text-2xl" onclick="closeReviewsModal()">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="reviews-summary">
-                    <div class="overall-rating">
-                        <div class="rating-number">4.5</div>
-                        <div class="rating-stars">
+            <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="text-center">
+                        <div class="text-6xl font-bold text-gray-800 mb-2">4.5</div>
+                        <div class="stars flex justify-center mb-2 text-2xl">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <div class="total-reviews">2,847 total ratings</div>
+                        <div class="text-gray-600">2,847 total ratings</div>
                     </div>
                     <div class="rating-breakdown">
                         <div class="rating-bar">
-                            <span>5★</span>
+                            <span class="w-8">5★</span>
                             <div class="bar"><div class="fill" style="width: 75%"></div></div>
-                            <span>75%</span>
+                            <span class="w-12 text-right">75%</span>
                         </div>
                         <div class="rating-bar">
-                            <span>4★</span>
+                            <span class="w-8">4★</span>
                             <div class="bar"><div class="fill" style="width: 15%"></div></div>
-                            <span>15%</span>
+                            <span class="w-12 text-right">15%</span>
                         </div>
                         <div class="rating-bar">
-                            <span>3★</span>
+                            <span class="w-8">3★</span>
                             <div class="bar"><div class="fill" style="width: 7%"></div></div>
-                            <span>7%</span>
+                            <span class="w-12 text-right">7%</span>
                         </div>
                         <div class="rating-bar">
-                            <span>2★</span>
+                            <span class="w-8">2★</span>
                             <div class="bar"><div class="fill" style="width: 2%"></div></div>
-                            <span>2%</span>
+                            <span class="w-12 text-right">2%</span>
                         </div>
                         <div class="rating-bar">
-                            <span>1★</span>
+                            <span class="w-8">1★</span>
                             <div class="bar"><div class="fill" style="width: 1%"></div></div>
-                            <span>1%</span>
+                            <span class="w-12 text-right">1%</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Sample Reviews -->
-                <div class="reviews-list">
+                <div class="space-y-4">
                     <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-info">
-                                <div class="reviewer-avatar">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="reviewer-details">
-                                    <h4>Rajesh Kumar</h4>
-                                    <div class="review-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Rajesh Kumar</h4>
+                                <div class="stars flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
                                 </div>
                             </div>
-                            <span class="review-date">2 days ago</span>
+                            <span class="text-gray-500 text-sm ml-auto">2 days ago</span>
                         </div>
-                        <p class="review-text">Excellent product! Reduced yarn breakage by 40% in our weaving unit. The eco-friendly formulation is a huge plus for our sustainability goals.</p>
+                        <p class="text-gray-700 leading-relaxed">Excellent product! Reduced yarn breakage by 40% in our weaving unit. The eco-friendly formulation is a huge plus for our sustainability goals.</p>
                     </div>
                     
                     <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-info">
-                                <div class="reviewer-avatar">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="reviewer-details">
-                                    <h4>Priya Sharma</h4>
-                                    <div class="review-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Priya Sharma</h4>
+                                <div class="stars flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
                                 </div>
                             </div>
-                            <span class="review-date">1 week ago</span>
+                            <span class="text-gray-500 text-sm ml-auto">1 week ago</span>
                         </div>
-                        <p class="review-text">Great quality and easy to use. Our fabric quality has improved significantly since switching to this sizing agent.</p>
+                        <p class="text-gray-700 leading-relaxed">Great quality and easy to use. Our fabric quality has improved significantly since switching to this sizing agent.</p>
                     </div>
                     
                     <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-info">
-                                <div class="reviewer-avatar">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="reviewer-details">
-                                    <h4>Arun Patel</h4>
-                                    <div class="review-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Arun Patel</h4>
+                                <div class="stars flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
                                 </div>
                             </div>
-                            <span class="review-date">2 weeks ago</span>
+                            <span class="text-gray-500 text-sm ml-auto">2 weeks ago</span>
                         </div>
-                        <p class="review-text">Good product with excellent results. The biodegradable nature makes it perfect for our eco-conscious manufacturing process.</p>
+                        <p class="text-gray-700 leading-relaxed">Good product with excellent results. The biodegradable nature makes it perfect for our eco-conscious manufacturing process.</p>
                     </div>
                 </div>
             </div>
@@ -399,10 +987,138 @@
     </div>
 
     <!-- Footer Component -->
-    <div data-component="footer"></div>
+    <div id="footer-component"></div>
 
-    <script src="js/main.js"></script>
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all transform translate-y-16 opacity-0">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
     <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header component
+            fetch('components/header.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('header-component').innerHTML = html;
+                    
+                    // Initialize header functionality after component loads
+                    const header = document.getElementById('header');
+                    const burgerMenu = document.getElementById('burger-menu');
+                    const navMenu = document.getElementById('nav-menu');
+                    
+                    if (burgerMenu && navMenu) {
+                        burgerMenu.addEventListener('click', function() {
+                            burgerMenu.classList.toggle('active');
+                            navMenu.classList.toggle('active');
+                        });
+                        
+                        // Close menu when clicking on a link
+                        const navLinks = navMenu.querySelectorAll('a');
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function() {
+                                burgerMenu.classList.remove('active');
+                                navMenu.classList.remove('active');
+                            });
+                        });
+                        
+                        // Close menu when clicking outside
+                        document.addEventListener('click', function(event) {
+                            if (!burgerMenu.contains(event.target) && !navMenu.contains(event.target)) {
+                                burgerMenu.classList.remove('active');
+                                navMenu.classList.remove('active');
+                            }
+                        });
+                    }
+                    
+                    // Header scroll effect
+                    if (header) {
+                        window.addEventListener('scroll', function() {
+                            if (window.scrollY > 100) {
+                                header.classList.add('scrolled');
+                            } else {
+                                header.classList.remove('scrolled');
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading header component:', error);
+                });
+
+            // Load footer component
+            fetch('components/footer.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('footer-component').innerHTML = html;
+                    
+                    // Initialize footer functionality after component loads
+                    const newsletterForm = document.querySelector('.newsletter-form');
+                    if (newsletterForm) {
+                        newsletterForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            
+                            // Show success message
+                            const button = this.querySelector('button[type="submit"]');
+                            const originalContent = button.innerHTML;
+                            
+                            button.innerHTML = '<i class="fas fa-check mr-2"></i>Subscribed!';
+                            button.style.background = '#16a34a';
+                            
+                            setTimeout(() => {
+                                button.innerHTML = originalContent;
+                                button.style.background = '';
+                                this.reset();
+                            }, 3000);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading footer component:', error);
+                });
+
+            // Initialize AOS after components are loaded
+            setTimeout(() => {
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    offset: 100
+                });
+            }, 500);
+        });
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading-screen').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('loading-screen').style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Back to top button scroll effect
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('back-to-top');
+            
+            if (window.scrollY > 100) {
+                backToTop.classList.remove('translate-y-16', 'opacity-0');
+            } else {
+                backToTop.classList.add('translate-y-16', 'opacity-0');
+            }
+        });
+
+        // Back to top button
+        document.getElementById('back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Product functionality
         function changeImage(thumbnail, newSrc) {
             // Remove active class from all thumbnails
             document.querySelectorAll('.thumbnail').forEach(thumb => {
@@ -437,12 +1153,12 @@
         // Modal functions
         function openReviewsModal() {
             document.getElementById('reviewsModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
         }
 
         function closeReviewsModal() {
             document.getElementById('reviewsModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore scrolling
+            document.body.style.overflow = 'auto';
         }
 
         // Close modal when clicking outside of it
@@ -458,6 +1174,31 @@
             if (event.key === 'Escape') {
                 closeReviewsModal();
             }
+        });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.card-3d').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'rotateY(5deg) rotateX(5deg) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>

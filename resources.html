@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - Latest News, Blogs & Insights | Bio-Aryavedic</title>
+    <meta name="description" content="Stay updated with the latest sustainable textile innovations, regenerative agriculture insights, and industry news from Bio-Aryavedic. Expert articles on eco-friendly fabric care and environmental impact.">
+    <meta name="keywords" content="sustainable textiles, regenerative agriculture, eco-friendly fabric care, textile innovation, sustainability news, bio-hybrid technology, carbon sequestration, sustainable farming">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bio-aryavedic.com/resources">
+    <meta property="og:title" content="Resources - Latest News, Blogs & Insights | Bio-Aryavedic">
+    <meta property="og:description" content="Stay updated with the latest sustainable textile innovations, regenerative agriculture insights, and industry news from Bio-Aryavedic.">
+    <meta property="og:image" content="https://bio-aryavedic.com/assets/og-resources.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bio-aryavedic.com/resources">
+    <meta property="twitter:title" content="Resources - Latest News, Blogs & Insights | Bio-Aryavedic">
+    <meta property="twitter:description" content="Stay updated with the latest sustainable textile innovations, regenerative agriculture insights, and industry news from Bio-Aryavedic.">
+    <meta property="twitter:image" content="https://bio-aryavedic.com/assets/og-resources.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bio-aryavedic.com/resources">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Bio-Aryavedic Resources",
+        "description": "Latest news, blogs, and insights on sustainable textiles and regenerative agriculture",
+        "url": "https://bio-aryavedic.com/resources",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Bio-Aryavedic",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://bio-aryavedic.com/assets/logo.png"
+            }
+        }
+    }
+    </script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-green: #22c55e;
+            --secondary-green: #16a34a;
+            --accent-blue: #3b82f6;
+            --gradient-1: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            --gradient-2: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-3: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-4: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-gradient-primary {
+            background: var(--gradient-1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(-45deg, #9747ff, #2870f7, #0464e2, #145b6f);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Pulse glow effect */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        /* Smooth hover transforms */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        /* Filter button styles */
+        .filter-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Article card animations */
+        .article-card {
+            transition: all 0.5s ease;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .article-card.hiding {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        /* Tag styles */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag-sustainability { background-color: #dcfce7; color: #166534; }
+        .tag-innovation { background-color: #dbeafe; color: #1e40af; }
+        .tag-agriculture { background-color: #fef3c7; color: #92400e; }
+        .tag-technology { background-color: #f3e8ff; color: #6b21a8; }
+        .tag-research { background-color: #fce7f3; color: #be185d; }
+        .tag-industry { background-color: #e0f2fe; color: #0c4a6e; }
+        .tag-environment { background-color: #ecfdf5; color: #14532d; }
+        .tag-community { background-color: #fff7ed; color: #9a3412; }
+
+        /* Search box styling */
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding-left: 3rem;
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        /* Reading time badge */
+        .reading-time {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Featured article styling */
+        .featured-article {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border: 2px solid rgba(34, 197, 94, 0.2);
+        }
+
+        /* Skeleton loading animation */
+        @keyframes skeleton-loading {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200px 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-primary">
+        <div class="text-center text-white">
+            <img src="assets/logo_symbol.png" alt="Bio-Aryavedic" class="h-48 mx-auto mb-4 float-animation">
+            <p class="text-sm opacity-80">Loading Resources...</p>
+            <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        </div>
+    </div>
+
+    <!-- Header Component -->
+    <div id="header-component"></div>
+
+    <!-- Hero Section -->
+    <section class="py-20" style="background-color: var(--primary-green)">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <h1 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
+                    <span class="gradient-text">Resources</span> & Insights
+                </h1>
+                <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
+                    Stay updated with the latest in sustainable textiles, regenerative agriculture, and environmental innovation
+                </p>
+                
+                <!-- Search Box -->
+                <div class="max-w-md mx-auto search-box">
+                    <input type="text" id="search-input" placeholder="Search articles, news, and insights..." 
+                           class="w-full px-12 py-4 rounded-full border-2 border-white/30 bg-white/90 backdrop-blur-sm focus:outline-none focus:border-white focus:bg-white transition-all">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-3">
+                <button class="filter-btn active px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-green-500 transition-all" data-filter="all">
+                    All Resources
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-green-500 transition-all" data-filter="blog">
+                    Blog Posts
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-green-500 transition-all" data-filter="news">
+                    News
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-green-500 transition-all" data-filter="research">
+                    Research
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-green-500 transition-all" data-filter="case-study">
+                    Case Studies
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Article Section -->
+    <section class="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4 font-display">
+                    Featured <span class="text-green-600">Article</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Don't miss our latest insights and groundbreaking research
+                </p>
+            </div>
+            
+            <div id="featured-article" class="max-w-4xl mx-auto">
+                <!-- Featured article will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Grid Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 font-display">
+                    Latest <span class="text-green-600">Resources</span>
+                </h2>
+                
+                <!-- Sort Options -->
+                <div class="flex items-center space-x-4">
+                    <label class="text-gray-600 font-medium">Sort by:</label>
+                    <select id="sort-select" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+                        <option value="date-desc">Newest First</option>
+                        <option value="date-asc">Oldest First</option>
+                        <option value="title-asc">Title A-Z</option>
+                        <option value="title-desc">Title Z-A</option>
+                        <option value="reading-time-asc">Quick Reads First</option>
+                        <option value="reading-time-desc">Long Reads First</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Articles Grid -->
+            <div id="articles-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Articles will be loaded here -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button id="load-more" class="px-8 py-4 bg-gradient-primary text-white rounded-full font-semibold hover:shadow-lg transition-all hover-lift">
+                    Load More Articles
+                </button>
+            </div>
+            
+            <!-- No Results Message -->
+            <div id="no-results" class="text-center py-16 hidden">
+                <i class="fas fa-search text-6xl text-gray-300 mb-6"></i>
+                <h3 class="text-2xl font-bold text-gray-600 mb-4">No articles found</h3>
+                <p class="text-gray-500">Try adjusting your search terms or filters</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription -->
+    <section class="py-16 bg-gradient-to-r from-green-600 to-blue-600">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6 font-display">
+                    Stay Updated
+                </h2>
+                <p class="text-xl text-white/90 mb-8">
+                    Get the latest insights on sustainable textiles and regenerative agriculture delivered to your inbox
+                </p>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" id="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required
+                           class="flex-1 px-6 py-4 rounded-full border-0 focus:outline-none focus:ring-4 focus:ring-white/30">
+                    <button type="submit" class="px-8 py-4 bg-white text-green-600 rounded-full font-semibold hover:bg-gray-100 transition-all">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Component -->
+    <div id="contact-component"></div>
+
+    <!-- Footer Component -->
+    <div id="footer-component"></div>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all transform translate-y-16 opacity-0">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Resources data - This will be loaded from resources-data.json
+        let resourcesData = [];
+        let displayedArticles = [];
+        let articlesPerPage = 9;
+        let currentPage = 1;
+        let currentFilter = 'all';
+        let currentSort = 'date-desc';
+        let searchTerm = '';
+
+        // Load resources data
+        async function loadResourcesData() {
+            try {
+                const response = await fetch('data/resources-data.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load resources data');
+                }
+                resourcesData = await response.json();
+                initializeResources();
+            } catch (error) {
+                console.error('Error loading resources data:', error);
+                // Fallback to sample data if JSON file doesn't exist
+                loadSampleData();
+            }
+        }
+
+        // Sample data fallback
+        function loadSampleData() {
+            resourcesData = [
+                {
+                    id: 1,
+                    title: "Revolutionary Bio-Hybrid Technology in Textile Manufacturing",
+                    excerpt: "Discover how our innovative bio-hybrid approach is transforming the textile industry with 100% natural and safe formulations.",
+                    content: "Our groundbreaking bio-hybrid technology represents a paradigm shift in textile manufacturing...",
+                    type: "blog",
+                    category: "Innovation",
+                    tags: ["innovation", "technology", "sustainability"],
+                    author: "Dr. Sarah Johnson",
+                    date: "2024-01-15",
+                    readingTime: 8,
+                    image: "assets/images/bio-hybrid-tech.jpg",
+                    featured: true,
+                    seo: {
+                        metaTitle: "Bio-Hybrid Technology in Textiles | Bio-Aryavedic",
+                        metaDescription: "Learn about revolutionary bio-hybrid technology transforming textile manufacturing with natural, safe formulations.",
+                        keywords: ["bio-hybrid technology", "textile manufacturing", "sustainable textiles"]
+                    }
+                },
+                {
+                    id: 2,
+                    title: "Carbon Sequestration: Our 1 Million Tonnes Journey",
+                    excerpt: "How regenerative agriculture practices are helping us achieve unprecedented carbon sequestration targets.",
+                    content: "Through innovative regenerative agriculture techniques and biochar initiatives...",
+                    type: "research",
+                    category: "Environment",
+                    tags: ["environment", "agriculture", "sustainability"],
+                    author: "Prof. Michael Chen",
+                    date: "2024-01-10",
+                    readingTime: 12,
+                    image: "assets/images/carbon-sequestration.jpg",
+                    featured: false
+                },
+                {
+                    id: 3,
+                    title: "Empowering 15,000 Farmers: A Social Impact Story",
+                    excerpt: "The transformative journey of farmer empowerment through sustainable agricultural practices and fair partnerships.",
+                    content: "Our commitment to social impact extends beyond environmental benefits...",
+                    type: "case-study",
+                    category: "Community",
+                    tags: ["community", "agriculture", "sustainability"],
+                    author: "Maria Rodriguez",
+                    date: "2024-01-05",
+                    readingTime: 10,
+                    image: "assets/images/farmer-empowerment.jpg",
+                    featured: false
+                },
+                {
+                    id: 4,
+                    title: "Industry News: Sustainable Textiles Market Growth",
+                    excerpt: "Latest market trends show exponential growth in demand for sustainable textile solutions worldwide.",
+                    content: "The global sustainable textiles market is experiencing unprecedented growth...",
+                    type: "news",
+                    category: "Industry",
+                    tags: ["industry", "sustainability", "research"],
+                    author: "Business Team",
+                    date: "2024-01-03",
+                    readingTime: 5,
+                    image: "assets/images/market-growth.jpg",
+                    featured: false
+                }
+            ];
+            initializeResources();
+        }
+
+        // Initialize resources page
+        function initializeResources() {
+            displayFeaturedArticle();
+            filterAndDisplayArticles();
+            setupEventListeners();
+        }
+
+        // Display featured article
+        function displayFeaturedArticle() {
+            const featuredArticle = resourcesData.find(article => article.featured) || resourcesData[0];
+            if (!featuredArticle) return;
+
+            const featuredContainer = document.getElementById('featured-article');
+            featuredContainer.innerHTML = `
+                <article class="featured-article bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" data-aos="fade-up">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="${featuredArticle.image}" alt="${featuredArticle.title}" 
+                                 class="w-full h-64 md:h-full object-cover">
+                        </div>
+                        <div class="md:w-1/2 p-8">
+                            <div class="flex items-center mb-4">
+                                <span class="tag tag-${featuredArticle.tags[0]}">${featuredArticle.category}</span>
+                                <span class="reading-time ml-auto">${featuredArticle.readingTime} min read</span>
+                            </div>
+                            <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 mb-4 font-display">
+                                ${featuredArticle.title}
+                            </h2>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                ${featuredArticle.excerpt}
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">${featuredArticle.author}</p>
+                                        <p class="text-sm text-gray-500">${formatDate(featuredArticle.date)}</p>
+                                    </div>
+                                </div>
+                                <a href="#article-${featuredArticle.id}" 
+                                   class="px-6 py-3 bg-gradient-primary text-white rounded-full font-semibold hover:shadow-lg transition-all">
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        // Filter and display articles
+        function filterAndDisplayArticles() {
+            let filteredArticles = resourcesData.filter(article => {
+                const matchesFilter = currentFilter === 'all' || article.type === currentFilter;
+                const matchesSearch = searchTerm === '' || 
+                    article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    article.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    article.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+                
+                return matchesFilter && matchesSearch;
+            });
+
+            // Sort articles
+            filteredArticles.sort((a, b) => {
+                switch (currentSort) {
+                    case 'date-desc':
+                        return new Date(b.date) - new Date(a.date);
+                    case 'date-asc':
+                        return new Date(a.date) - new Date(b.date);
+                    case 'title-asc':
+                        return a.title.localeCompare(b.title);
+                    case 'title-desc':
+                        return b.title.localeCompare(a.title);
+                    case 'reading-time-asc':
+                        return a.readingTime - b.readingTime;
+                    case 'reading-time-desc':
+                        return b.readingTime - a.readingTime;
+                    default:
+                        return 0;
+                }
+            });
+
+            displayedArticles = filteredArticles;
+            currentPage = 1;
+            renderArticles();
+        }
+
+        // Render articles
+        function renderArticles() {
+            const articlesGrid = document.getElementById('articles-grid');
+            const noResults = document.getElementById('no-results');
+            const loadMoreBtn = document.getElementById('load-more');
+
+            if (displayedArticles.length === 0) {
+                articlesGrid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                loadMoreBtn.style.display = 'none';
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            
+            const articlesToShow = displayedArticles.slice(0, currentPage * articlesPerPage);
+            
+            articlesGrid.innerHTML = articlesToShow.map(article => `
+                <article class="article-card bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" 
+                         data-aos="zoom-in" data-type="${article.type}" id="article-${article.id}">
+                    <div class="relative">
+                        <img src="${article.image}" alt="${article.title}" 
+                             class="w-full h-48 object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="tag tag-${article.tags[0]}">${article.category}</span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="reading-time">${article.readingTime} min</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 font-display line-clamp-2">
+                            ${article.title}
+                        </h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">
+                            ${article.excerpt}
+                        </p>
+                        <div class="flex flex-wrap mb-4">
+                            ${article.tags.map(tag => `<span class="tag tag-${tag}">${tag}</span>`).join('')}
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-800">${article.author}</p>
+                                    <p class="text-xs text-gray-500">${formatDate(article.date)}</p>
+                                </div>
+                            </div>
+                            <button onclick="openArticleModal(${article.id})" 
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all">
+                                Read More
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            // Show/hide load more button
+            loadMoreBtn.style.display = articlesToShow.length < displayedArticles.length ? 'block' : 'none';
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        // Open article modal (placeholder for future implementation)
+        function openArticleModal(articleId) {
+            const article = resourcesData.find(a => a.id === articleId);
+            if (article) {
+                // For now, just scroll to the article
+                document.getElementById(`article-${articleId}`).scrollIntoView({ behavior: 'smooth' });
+                // Future: Open modal with full article content
+                console.log('Opening article:', article.title);
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    filterAndDisplayArticles();
+                });
+            });
+
+            // Search input
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', function() {
+                searchTerm = this.value;
+                filterAndDisplayArticles();
+            });
+
+            // Sort select
+            const sortSelect = document.getElementById('sort-select');
+            sortSelect.addEventListener('change', function() {
+                currentSort = this.value;
+                filterAndDisplayArticles();
+            });
+
+            // Load more button
+            document.getElementById('load-more').addEventListener('click', function() {
+                currentPage++;
+                renderArticles();
+            });
+
+            // Newsletter form
+            document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const button = this.querySelector('button[type="submit"]');
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>Subscribed!';
+                button.style.background = '#16a34a';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                    this.reset();
+                }, 3000);
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header component
+            fetch('components/header.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('header-component').innerHTML = html;
+                    
+                    // Initialize header functionality
+                    const burger = document.getElementById('burger-menu');
+                    const navMenu = document.getElementById('nav-menu');
+                    const header = document.getElementById('header');
+                    
+                    if (burger && navMenu) {
+                        burger.addEventListener('click', () => {
+                            burger.classList.toggle('active');
+                            navMenu.classList.toggle('active');
+                        });
+                    }
+                    
+                    if (header) {
+                        window.addEventListener('scroll', () => {
+                            if (window.scrollY > 100) {
+                                header.classList.add('scrolled');
+                            } else {
+                                header.classList.remove('scrolled');
+                            }
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading header:', error));
+
+            // Load contact component
+            fetch('components/contact.html')
+                .then(response => response.text())
+                .then(html => document.getElementById('contact-component').innerHTML = html)
+                .catch(error => console.error('Error loading contact:', error));
+
+            // Load footer component
+            fetch('components/footer.html')
+                .then(response => response.text())
+                .then(html => document.getElementById('footer-component').innerHTML = html)
+                .catch(error => console.error('Error loading footer:', error));
+
+            // Initialize AOS
+            setTimeout(() => {
+                AOS.init({
+                    duration: 1000,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 100
+                });
+            }, 100);
+
+            // Load resources data
+            loadResourcesData();
+        });
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        });
+
+        // Back to top functionality
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('back-to-top');
+            
+            if (window.scrollY > 100) {
+                backToTop.classList.remove('translate-y-16', 'opacity-0');
+            } else {
+                backToTop.classList.add('translate-y-16', 'opacity-0');
+            }
+        });
+
+        document.getElementById('back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html> 

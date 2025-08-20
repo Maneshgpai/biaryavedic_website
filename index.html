@@ -300,13 +300,13 @@
 </head>
 <body class="overflow-x-hidden">
     <!-- Loading Screen -->
-    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-primary">
+    <!-- <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-primary">
         <div class="text-center text-white">
             <img src="assets/logo_symbol.png" alt="Bio-Aryavedic" class="h-48 mx-auto mb-4">
             <p class="text-sm opacity-80">Loading Innovation...</p>
             <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Header Component -->
     <div id="header-component"></div>
@@ -521,10 +521,10 @@
                         
                         <!-- Actions -->
                         <div class="flex gap-3">
-                            <button class="flex-1 border-2 border-blue-600 text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all">
+                            <button class="shopify-add-to-cart flex-1 border-2 border-blue-600 text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all" data-sku="BN160">
                                 Add to Cart
                             </button>
-                            <button class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                            <button class="shopify-buy-now flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all" data-sku="BN160">
                                 Buy Now
                             </button>
                         </div>
@@ -594,16 +594,17 @@
                         
                         <!-- Actions -->
                         <div class="flex gap-3">
-                            <button class="flex-1 border-2 border-blue-600 text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all">
+                            <button class="shopify-add-to-cart flex-1 border-2 border-blue-600 text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all" data-sku="BN161">
                                 Add to Cart
                             </button>
-                            <button class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                            <button class="shopify-buy-now flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all" data-sku="BN161">
                                 Buy Now
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="shopify-dynamic-products" class="grid md:grid-cols-2 gap-8 mt-8"></div>
         </div>
     </section>
 
@@ -793,9 +794,16 @@
     <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all transform translate-y-16 opacity-0">
         <i class="fas fa-arrow-up"></i>
     </button>
+    <!-- Shopify cart toggle button -->
+    <button id="shopify-cart-toggle" class="fixed bottom-24 right-8 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all" style="display: none;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="shopify-cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+    </button>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Shopify Buy Button SDK -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
     
     <script>
         // Wait for DOM to be fully loaded
@@ -925,9 +933,11 @@
         // Loading screen
         window.addEventListener('load', function() {
             setTimeout(function() {
-                document.getElementById('loading-screen').style.opacity = '0';
+                const loadingScreenEl = document.getElementById('loading-screen');
+                if (!loadingScreenEl) return;
+                loadingScreenEl.style.opacity = '0';
                 setTimeout(function() {
-                    document.getElementById('loading-screen').style.display = 'none';
+                    loadingScreenEl.style.display = 'none';
                 }, 500);
             }, 1500);
         });
@@ -1124,6 +1134,267 @@
                 window.open('https://www.manoramaonline.com/business/business-news/2025/05/16/albedon-eco-friendly-fabric-stiffener-spray-manorama-online-elevate-business-news-jin.html', '_blank');
             });
         }
+
+        // Shopify Buy Button integration
+        (function() {
+            const SHOPIFY_DOMAIN = 'm0vr7q-we.myshopify.com';
+            const SHOPIFY_STOREFRONT_TOKEN = '1008bb8148450085299ca0cf7811ba2e';
+            const SHOPIFY_COLLECTION_HANDLE = 'website'; // Or use collection ID: gid://shopify/Collection/519270826203
+
+            // Lazy Shopify client initializer
+            let __shopifyClient = null;
+            function ensureClient() {
+                if (__shopifyClient) return __shopifyClient;
+                if (!window.ShopifyBuy) return null;
+                __shopifyClient = window.ShopifyBuy.buildClient({
+                    domain: SHOPIFY_DOMAIN,
+                    storefrontAccessToken: SHOPIFY_STOREFRONT_TOKEN
+                });
+                return __shopifyClient;
+            }
+
+            // Queue for clicks before cart/UI is ready
+            const pendingActionQueue = [];
+
+            function processAction(client, cartInstance, action) {
+                const { sku, qty, redirectToCheckout } = action;
+                function onSuccess() {
+                    if (cartInstance && typeof cartInstance.setActive === 'function') {
+                        if (redirectToCheckout) {
+                            const url = cartInstance.model && cartInstance.model.webUrl;
+                            if (url) {
+                                window.location.href = url;
+                                return;
+                            }
+                            if (cartInstance.checkout && cartInstance.checkout.open) {
+                                cartInstance.checkout.open();
+                                return;
+                            }
+                        }
+                        cartInstance.setActive(true);
+                    }
+                }
+
+                if (cartInstance && typeof cartInstance.addVariant === 'function') {
+                    return fetchVariantIdBySKU(client, sku)
+                        .then(function(variantId) { return cartInstance.addVariant({ id: variantId, quantity: qty }); })
+                        .then(onSuccess)
+                        .catch(function(err) {
+                            console.error('Cart addVariant error:', err);
+                            alert('Sorry, this item is unavailable right now.');
+                        });
+                }
+
+                if (client && client.checkout) {
+                    return client.checkout.create()
+                        .then(function(checkout) {
+                            return fetchVariantIdBySKU(client, sku).then(function(variantId) {
+                                return client.checkout.addLineItems(checkout.id, [{ variantId: variantId, quantity: qty }]);
+                            });
+                        })
+                        .then(function(updatedCheckout) {
+                            if (redirectToCheckout && updatedCheckout && updatedCheckout.webUrl) {
+                                window.location.href = updatedCheckout.webUrl;
+                            } else if (updatedCheckout && updatedCheckout.webUrl) {
+                                window.open(updatedCheckout.webUrl, '_blank');
+                            }
+                        })
+                        .catch(function(err) {
+                            console.error('Checkout fallback error:', err);
+                            alert('Sorry, checkout is unavailable right now.');
+                        });
+                }
+
+                alert('Shop is still loading. Please try again in a moment.');
+                return Promise.resolve();
+            }
+
+            function attachEarlyDelegatedHandlers() {
+                document.addEventListener('click', function(e) {
+                    const btn = e.target.closest('.shopify-add-to-cart, .shopify-buy-now');
+                    if (!btn) return;
+                    const sku = btn.getAttribute('data-sku');
+                    const qty = parseInt(btn.getAttribute('data-qty') || '1', 10);
+                    const redirectToCheckout = btn.classList.contains('shopify-buy-now');
+                    // If the cart is not yet ready, try immediate checkout fallback; otherwise queue
+                    if (!window.shopifyCart) {
+                        if (window.ShopifyBuy) {
+                            processAction(ensureClient(), window.shopifyCart, { sku: sku, qty: qty, redirectToCheckout: redirectToCheckout });
+                        } else {
+                            pendingActionQueue.push({ sku: sku, qty: qty, redirectToCheckout: redirectToCheckout });
+                            if (!window.__shopifyEarlyToastShown) {
+                                window.__shopifyEarlyToastShown = true;
+                                alert('Preparing the cart... it will open shortly.');
+                                setTimeout(function() { window.__shopifyEarlyToastShown = false; }, 3000);
+                            }
+                        }
+                        return;
+                    }
+                });
+            }
+
+            attachEarlyDelegatedHandlers();
+
+            if (!window.ShopifyBuy || SHOPIFY_DOMAIN.includes('YOUR_SHOP_NAME') || SHOPIFY_STOREFRONT_TOKEN.includes('YOUR_STOREFRONT_ACCESS_TOKEN')) {
+                console.warn('Shopify not configured. Set SHOPIFY_DOMAIN and SHOPIFY_STOREFRONT_TOKEN.');
+                return;
+            }
+
+            const client = ensureClient();
+
+            function fetchVariantIdBySKU(clientInstance, sku) {
+                const query = `
+                  query($query: String!) {
+                    productVariants(first: 1, query: $query) {
+                      edges { node { id sku } }
+                    }
+                  }
+                `;
+                return clientInstance.graphQLClient.send(query, { query: 'sku:' + sku }).then(function(res) {
+                    const edges = res && res.data && res.data.productVariants && res.data.productVariants.edges;
+                    if (edges && edges.length > 0) {
+                        return edges[0].node.id;
+                    }
+                    throw new Error('Variant not found for SKU ' + sku);
+                });
+            }
+
+            window.ShopifyBuy.UI.onReady(client).then(function(ui) {
+                ui.createComponent('cart', {
+                    options: {
+                        cart: {
+                            startOpen: false,
+                            styles: { button: { 'background-color': '#2563eb' } }
+                        }
+                    }
+                }).then(function(cart) {
+                    window.shopifyCart = cart;
+
+                    function updateCartBadge() {
+                        const badge = document.getElementById('shopify-cart-count');
+                        if (!badge || !cart.model) return;
+                        const count = cart.model.lineItems.reduce((sum, item) => sum + item.quantity, 0);
+                        badge.textContent = count;
+                    }
+
+                    if (cart.subscribe) {
+                        cart.subscribe('checkout:updated', updateCartBadge);
+                    }
+
+                    const cartToggle = document.getElementById('shopify-cart-toggle');
+                    if (cartToggle) {
+                        cartToggle.addEventListener('click', function() {
+                            cart.setActive(true);
+                        });
+                        cartToggle.style.display = 'block';
+                    }
+
+                    function attachButtonHandlers(root) {
+                        (root || document).querySelectorAll('.shopify-add-to-cart').forEach(function(btn) {
+                            if (btn.__shopifyBound) return;
+                            btn.__shopifyBound = true;
+                            btn.addEventListener('click', function() {
+                                const sku = this.getAttribute('data-sku');
+                                const qty = parseInt(this.getAttribute('data-qty') || '1', 10);
+                                processAction(client, cart, { sku: sku, qty: qty, redirectToCheckout: false })
+                                    .then(updateCartBadge)
+                                    .catch(function(err) { console.error('Add to cart error:', err); });
+                            });
+                        });
+
+                        (root || document).querySelectorAll('.shopify-buy-now').forEach(function(btn) {
+                            if (btn.__shopifyBound) return;
+                            btn.__shopifyBound = true;
+                            btn.addEventListener('click', function() {
+                                const sku = this.getAttribute('data-sku');
+                                const qty = parseInt(this.getAttribute('data-qty') || '1', 10);
+                                processAction(client, cart, { sku: sku, qty: qty, redirectToCheckout: true })
+                                    .then(updateCartBadge)
+                                    .catch(function(err) { console.error('Buy now error:', err); });
+                            });
+                        });
+                    }
+
+                    function renderCollectionProducts(handle) {
+                        if (!handle) return;
+                        const query = `
+                          query($handle: String!) {
+                            collection(handle: $handle) {
+                              id
+                              title
+                              products(first: 12) {
+                                edges {
+                                  node {
+                                    id
+                                    title
+                                    handle
+                                    featuredImage { url altText }
+                                    priceRange { minVariantPrice { amount currencyCode } }
+                                    variants(first: 1) { edges { node { id sku } } }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        `;
+                        client.graphQLClient.send(query, { handle: handle }).then(function(res) {
+                            const container = document.getElementById('shopify-dynamic-products');
+                            if (!container) return;
+                            const edges = res && res.data && res.data.collection && res.data.collection.products && res.data.collection.products.edges || [];
+                            const html = edges.map(function(edge) {
+                                const p = edge.node;
+                                const img = p.featuredImage;
+                                const variantEdge = p.variants && p.variants.edges && p.variants.edges[0];
+                                const sku = variantEdge && variantEdge.node && variantEdge.node.sku || '';
+                                const price = p.priceRange && p.priceRange.minVariantPrice;
+                                const priceText = price ? (price.currencyCode === 'INR' ? '₹' : '') + parseFloat(price.amount).toFixed(0) : '';
+                                return `
+                                    <div class="card-3d bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" data-aos="flip-left">
+                                        <div class="h-48 bg-gradient-to-r from-green-100 to-blue-100 flex items-center justify-center relative">
+                                            ${img ? '<img src="' + img.url + '" alt="' + (img.altText || p.title) + '" class="max-w-full max-h-full object-contain">' : ''}
+                                        </div>
+                                        <div class="p-6">
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">${p.title}</h3>
+                                            <div class="flex items-baseline gap-2 mb-4">
+                                                <span class="text-2xl font-bold text-gray-800">${priceText}</span>
+                                            </div>
+                                            <div class="flex gap-3">
+                                                <button class="shopify-add-to-cart flex-1 border-2 border-blue-600 text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all" data-sku="${sku}">
+                                                    Add to Cart
+                                                </button>
+                                                <button class="shopify-buy-now flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all" data-sku="${sku}">
+                                                    Buy Now
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('');
+                            container.innerHTML = html;
+                            attachButtonHandlers(container);
+                            if (window.AOS && window.AOS.refresh) window.AOS.refresh();
+                        }).catch(function(err) {
+                            console.error('Error loading collection:', err);
+                        });
+                    }
+
+                    // Bind handlers to existing buttons
+                    attachButtonHandlers(document);
+                    // Update badge and toggle
+                    if (typeof updateCartBadge === 'function') updateCartBadge();
+                    const toggle = document.getElementById('shopify-cart-toggle');
+                    if (toggle) toggle.style.display = 'block';
+                    // Render dynamic products
+                    renderCollectionProducts(SHOPIFY_COLLECTION_HANDLE);
+
+                    // Drain any pending early clicks
+                    if (pendingActionQueue.length) {
+                        const queueCopy = pendingActionQueue.splice(0, pendingActionQueue.length);
+                        queueCopy.forEach(function(action) { processAction(client, cart, action).catch(function(e){ console.error(e); }); });
+                    }
+                });
+            });
+        })();
     </script>
 </body>
 </html> 

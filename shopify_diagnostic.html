@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify Diagnostic Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .diagnostic-section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+        }
+        .error { color: #dc3545; background-color: #f8d7da; }
+        .success { color: #155724; background-color: #d4edda; }
+        .warning { color: #856404; background-color: #fff3cd; }
+        .info { color: #0c5460; background-color: #d1ecf1; }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-success { background-color: #28a745; color: white; }
+        .btn-warning { background-color: #ffc107; color: black; }
+    </style>
+</head>
+<body>
+    <h1>Shopify Integration Diagnostic Tool</h1>
+    
+    <div class="diagnostic-section info">
+        <h2>Configuration</h2>
+        <p><strong>Domain:</strong> m0vr7q-we.myshopify.com</p>
+        <p><strong>Token:</strong> 1008bb8148450085299ca0cf7811ba2e</p>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>Step 1: Basic Connectivity Test</h2>
+        <button class="btn btn-primary" onclick="testBasicConnectivity()">Test Basic Connection</button>
+        <div id="connectivity-result"></div>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>Step 2: Token Permissions Test</h2>
+        <button class="btn btn-warning" onclick="testTokenPermissions()">Test Token Permissions</button>
+        <div id="permissions-result"></div>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>Step 3: Shop Information Test</h2>
+        <button class="btn btn-success" onclick="testShopInfo()">Get Shop Information</button>
+        <div id="shop-info-result"></div>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>Step 4: Product Search Test</h2>
+        <button class="btn btn-primary" onclick="testProductSearch()">Search for Products</button>
+        <div id="product-search-result"></div>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>Step 5: SKU-Specific Test</h2>
+        <button class="btn btn-warning" onclick="testSKUSearch()">Search for SKU: BN160</button>
+        <div id="sku-search-result"></div>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>Step 6: Raw GraphQL Test</h2>
+        <button class="btn btn-success" onclick="testRawGraphQL()">Test Raw GraphQL</button>
+        <div id="raw-graphql-result"></div>
+    </div>
+
+    <!-- Shopify Buy Button SDK -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    
+    <script>
+        const SHOPIFY_CONFIG = {
+            domain: 'm0vr7q-we.myshopify.com',
+            storefrontAccessToken: '1008bb8148450085299ca0cf7811ba2e',
+            apiVersion: '2023-10'
+        };
+
+        let shopifyClient = null;
+
+        function logResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            element.innerHTML = `
+                <div class="code-block ${type}">
+                    <strong>[${timestamp}]</strong> ${message}
+                </div>
+            `;
+        }
+
+        function logRawResponse(elementId, title, response, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            element.innerHTML = `
+                <div class="code-block ${type}">
+                    <strong>[${timestamp}] ${title}</strong><br><br>
+                    ${JSON.stringify(response, null, 2)}
+                </div>
+            `;
+        }
+
+        // Initialize client
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!window.ShopifyBuy) {
+                alert('Shopify Buy SDK not loaded!');
+                return;
+            }
+
+            try {
+                shopifyClient = window.ShopifyBuy.buildClient({
+                    domain: SHOPIFY_CONFIG.domain,
+                    storefrontAccessToken: SHOPIFY_CONFIG.storefrontAccessToken,
+                    apiVersion: '2023-10'  // Force newer API version
+                });
+                console.log('Shopify client initialized successfully with API version 2023-10');
+            } catch (error) {
+                alert(`Failed to initialize Shopify client: ${error.message}`);
+            }
+        });
+
+        // Test 1: Basic connectivity
+        function testBasicConnectivity() {
+            logResult('connectivity-result', 'Testing basic connectivity...', 'info');
+            
+            fetch(`https://${SHOPIFY_CONFIG.domain}/api/2023-10/graphql.json`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.storefrontAccessToken
+                },
+                body: JSON.stringify({
+                    query: `{ shop { name } }`
+                })
+            })
+            .then(response => {
+                logRawResponse('connectivity-result', `HTTP Status: ${response.status}`, {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: Object.fromEntries(response.headers.entries())
+                }, response.ok ? 'success' : 'error');
+                return response.json();
+            })
+            .then(data => {
+                logRawResponse('connectivity-result', 'Basic Connectivity Response', data, 
+                    data.errors ? 'error' : 'success');
+            })
+            .catch(error => {
+                logResult('connectivity-result', `Network Error: ${error.message}`, 'error');
+            });
+        }
+
+        // Test 2: Token permissions across different API versions
+        function testTokenPermissions() {
+            logResult('permissions-result', 'Testing token permissions across API versions...', 'info');
+            
+            const apiVersions = ['2021-01', '2022-01', '2023-01', '2023-10', '2024-01'];
+            const testQuery = '{ productVariants(first: 1) { edges { node { id sku } } } }';
+
+            apiVersions.forEach((version, index) => {
+                setTimeout(() => {
+                    fetch(`https://${SHOPIFY_CONFIG.domain}/api/${version}/graphql.json`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.storefrontAccessToken
+                        },
+                        body: JSON.stringify({ query: testQuery })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const currentResult = document.getElementById('permissions-result').innerHTML;
+                        const status = data.errors ? 'error' : 'success';
+                        const message = data.errors ? data.errors[0].message : 'Success - productVariants field exists';
+                        
+                        document.getElementById('permissions-result').innerHTML = currentResult + 
+                            `<div class="code-block ${status}">
+                                <strong>API Version ${version}:</strong><br>
+                                ${message}<br>
+                                ${data.errors ? '' : 'Found ' + (data.data?.productVariants?.edges?.length || 0) + ' variants'}
+                            </div>`;
+                    })
+                    .catch(error => {
+                        const currentResult = document.getElementById('permissions-result').innerHTML;
+                        document.getElementById('permissions-result').innerHTML = currentResult + 
+                            `<div class="code-block error">
+                                <strong>API Version ${version} Network Error:</strong><br>
+                                ${error.message}
+                            </div>`;
+                    });
+                }, index * 500);
+            });
+
+            // Also test basic queries that should work with any token
+            setTimeout(() => {
+                const basicTests = [
+                    { name: 'Shop Access (should always work)', query: '{ shop { name } }' },
+                    { name: 'Products Access (should work)', query: '{ products(first: 1) { edges { node { id title } } } }' }
+                ];
+
+                basicTests.forEach((test, testIndex) => {
+                    setTimeout(() => {
+                        fetch(`https://${SHOPIFY_CONFIG.domain}/api/2023-10/graphql.json`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.storefrontAccessToken
+                            },
+                            body: JSON.stringify({ query: test.query })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            const currentResult = document.getElementById('permissions-result').innerHTML;
+                            document.getElementById('permissions-result').innerHTML = currentResult + 
+                                `<div class="code-block ${data.errors ? 'error' : 'success'}">
+                                    <strong>${test.name}:</strong><br>
+                                    ${data.errors ? data.errors[0].message : 'Success'}
+                                </div>`;
+                        });
+                    }, testIndex * 500);
+                });
+            }, apiVersions.length * 500 + 1000);
+        }
+
+        // Test 3: Shop info using SDK
+        function testShopInfo() {
+            logResult('shop-info-result', 'Getting shop information using SDK...', 'info');
+            
+            if (!shopifyClient) {
+                logResult('shop-info-result', 'Shopify client not initialized!', 'error');
+                return;
+            }
+
+            try {
+                shopifyClient.graphQLClient.send(`
+                    query {
+                        shop {
+                            name
+                            description
+                            primaryDomain {
+                                host
+                                url
+                            }
+                            currencyCode
+                        }
+                    }
+                `).then(response => {
+                    logRawResponse('shop-info-result', 'Shop Information', response, 
+                        response.errors ? 'error' : 'success');
+                }).catch(error => {
+                    logResult('shop-info-result', `SDK Error: ${error.message}`, 'error');
+                });
+            } catch (error) {
+                logResult('shop-info-result', `Exception: ${error.message}`, 'error');
+            }
+        }
+
+        // Test 4: Product search
+        function testProductSearch() {
+            logResult('product-search-result', 'Searching for products...', 'info');
+            
+            if (!shopifyClient) {
+                logResult('product-search-result', 'Shopify client not initialized!', 'error');
+                return;
+            }
+
+            const query = `
+                query {
+                    products(first: 5) {
+                        edges {
+                            node {
+                                id
+                                title
+                                handle
+                                availableForSale
+                                variants(first: 3) {
+                                    edges {
+                                        node {
+                                            id
+                                            sku
+                                            availableForSale
+                                            title
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            `;
+
+            shopifyClient.graphQLClient.send(query).then(response => {
+                logRawResponse('product-search-result', 'Product Search Results', response, 
+                    response.errors ? 'error' : 'success');
+            }).catch(error => {
+                logResult('product-search-result', `Error: ${error.message}`, 'error');
+            });
+        }
+
+        // Test 5: SKU-specific search (Storefront API compatible)
+        function testSKUSearch() {
+            logResult('sku-search-result', 'Searching for SKU: BN160 using Storefront API...', 'info');
+            
+            if (!shopifyClient) {
+                logResult('sku-search-result', 'Shopify client not initialized!', 'error');
+                return;
+            }
+
+            const query = `
+                query($query: String!, $first: Int!) {
+                    products(first: $first, query: $query) {
+                        edges {
+                            node {
+                                id
+                                title
+                                handle
+                                availableForSale
+                                publishedAt
+                                variants(first: 100) {
+                                    edges {
+                                        node {
+                                            id
+                                            sku
+                                            availableForSale
+                                            title
+                                            inventoryQuantity
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            `;
+
+            // Test multiple search strategies
+            const searchStrategies = [
+                { name: 'SKU Search', query: 'sku:BN160', first: 10 },
+                { name: 'Variant SKU Search', query: 'variant_sku:BN160', first: 10 },
+                { name: 'Direct Text Search', query: 'BN160', first: 20 },
+                { name: 'Wildcard Search', query: '*BN160*', first: 50 }
+            ];
+
+            let strategyIndex = 0;
+
+            function testNextStrategy() {
+                if (strategyIndex >= searchStrategies.length) {
+                    logResult('sku-search-result', 'All search strategies completed. Check results above.', 'warning');
+                    return;
+                }
+
+                const strategy = searchStrategies[strategyIndex];
+                const currentResult = document.getElementById('sku-search-result').innerHTML;
+                
+                document.getElementById('sku-search-result').innerHTML = currentResult + 
+                    `<div class="code-block info">
+                        <strong>Testing Strategy ${strategyIndex + 1}: ${strategy.name}</strong><br>
+                        Query: ${strategy.query}, First: ${strategy.first}
+                    </div>`;
+
+                shopifyClient.graphQLClient.send(query, strategy).then(response => {
+                    const currentResult = document.getElementById('sku-search-result').innerHTML;
+                    let resultType = 'info';
+                    let resultText = '';
+                    let foundVariant = null;
+
+                    if (response.errors && response.errors.length > 0) {
+                        resultType = 'error';
+                        resultText = `GraphQL Errors: ${JSON.stringify(response.errors, null, 2)}`;
+                    } else {
+                        const edges = response && response.data && response.data.products && response.data.products.edges;
+                        
+                        if (edges && edges.length > 0) {
+                            resultText = `Found ${edges.length} product(s):\n\n`;
+                            
+                            // Search through all products and variants
+                            for (let i = 0; i < edges.length; i++) {
+                                const product = edges[i].node;
+                                resultText += `Product: "${product.title}" (ID: ${product.id})\n`;
+                                resultText += `  Available: ${product.availableForSale}\n`;
+                                resultText += `  Published: ${product.publishedAt ? 'Yes' : 'No'}\n`;
+                                
+                                const variantEdges = product.variants && product.variants.edges;
+                                if (variantEdges && variantEdges.length > 0) {
+                                    resultText += `  Variants (${variantEdges.length}):\n`;
+                                    
+                                    for (let j = 0; j < variantEdges.length; j++) {
+                                        const variant = variantEdges[j].node;
+                                        resultText += `    - SKU: "${variant.sku}" | Available: ${variant.availableForSale} | ID: ${variant.id}\n`;
+                                        
+                                        if (variant.sku === 'BN160') {
+                                            foundVariant = variant;
+                                            resultType = 'success';
+                                        }
+                                    }
+                                } else {
+                                    resultText += `  No variants found\n`;
+                                }
+                                resultText += `\n`;
+                            }
+                            
+                            if (foundVariant) {
+                                resultText += `🎉 SUCCESS: Found exact SKU match!\n`;
+                                resultText += `Variant ID: ${foundVariant.id}\n`;
+                                resultText += `Available for Sale: ${foundVariant.availableForSale}`;
+                            } else {
+                                resultText += `❌ No exact SKU match found in this strategy`;
+                            }
+                        } else {
+                            resultType = 'warning';
+                            resultText = 'No products found with this search strategy';
+                        }
+                    }
+
+                    document.getElementById('sku-search-result').innerHTML = currentResult + 
+                        `<div class="code-block ${resultType}">
+                            <strong>Strategy ${strategyIndex + 1} Results:</strong><br>
+                            ${resultText.replace(/\n/g, '<br>')}
+                        </div>`;
+
+                    strategyIndex++;
+                    setTimeout(testNextStrategy, 1000); // Wait 1 second before next strategy
+
+                }).catch(error => {
+                    const currentResult = document.getElementById('sku-search-result').innerHTML;
+                    document.getElementById('sku-search-result').innerHTML = currentResult + 
+                        `<div class="code-block error">
+                            <strong>Strategy ${strategyIndex + 1} Error:</strong><br>
+                            ${error.message}
+                        </div>`;
+                    
+                    strategyIndex++;
+                    setTimeout(testNextStrategy, 1000);
+                });
+            }
+
+            testNextStrategy();
+        }
+
+        // Test 6: Raw GraphQL test (Storefront API compatible)
+        function testRawGraphQL() {
+            logResult('raw-graphql-result', 'Testing raw Storefront API GraphQL call...', 'info');
+            
+            // Test with Storefront-compatible query
+            fetch(`https://${SHOPIFY_CONFIG.domain}/api/2023-10/graphql.json`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.storefrontAccessToken
+                },
+                body: JSON.stringify({
+                    query: `
+                        query($query: String!, $first: Int!) {
+                            products(first: $first, query: $query) {
+                                edges {
+                                    node {
+                                        id
+                                        title
+                                        handle
+                                        availableForSale
+                                        publishedAt
+                                        variants(first: 50) {
+                                            edges {
+                                                node {
+                                                    id
+                                                    sku
+                                                    availableForSale
+                                                    title
+                                                    inventoryQuantity
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    `,
+                    variables: { query: 'sku:BN160', first: 10 }
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                let analysisText = 'Raw GraphQL Response:\n\n';
+                
+                if (data.errors && data.errors.length > 0) {
+                    analysisText += 'ERRORS:\n' + JSON.stringify(data.errors, null, 2) + '\n\n';
+                }
+                
+                if (data.data && data.data.products) {
+                    const products = data.data.products.edges;
+                    analysisText += `Found ${products.length} products\n\n`;
+                    
+                    let foundBN160 = false;
+                    products.forEach((productEdge, i) => {
+                        const product = productEdge.node;
+                        analysisText += `Product ${i + 1}: ${product.title}\n`;
+                        analysisText += `  ID: ${product.id}\n`;
+                        analysisText += `  Available: ${product.availableForSale}\n`;
+                        analysisText += `  Published: ${product.publishedAt ? 'Yes' : 'No'}\n`;
+                        
+                        if (product.variants && product.variants.edges) {
+                            analysisText += `  Variants: ${product.variants.edges.length}\n`;
+                            product.variants.edges.forEach((variantEdge, j) => {
+                                const variant = variantEdge.node;
+                                analysisText += `    ${j + 1}. SKU: "${variant.sku}" | Available: ${variant.availableForSale}\n`;
+                                if (variant.sku === 'BN160') {
+                                    foundBN160 = true;
+                                    analysisText += `       ⭐ FOUND TARGET SKU BN160! Variant ID: ${variant.id}\n`;
+                                }
+                            });
+                        }
+                        analysisText += '\n';
+                    });
+                    
+                    if (foundBN160) {
+                        analysisText += '🎉 SUCCESS: Found BN160 SKU in raw GraphQL response!';
+                    } else {
+                        analysisText += '❌ BN160 SKU not found in any products returned.';
+                    }
+                } else {
+                    analysisText += 'No products data in response.';
+                }
+                
+                logRawResponse('raw-graphql-result', 'Analysis', { 
+                    analysis: analysisText,
+                    fullResponse: data 
+                }, data.errors ? 'error' : 'success');
+            })
+            .catch(error => {
+                logResult('raw-graphql-result', `Raw GraphQL Error: ${error.message}`, 'error');
+            });
+        }
+    </script>
+</body>
+</html> 

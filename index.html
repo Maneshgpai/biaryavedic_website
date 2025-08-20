@@ -1148,7 +1148,8 @@
                 if (!window.ShopifyBuy) return null;
                 __shopifyClient = window.ShopifyBuy.buildClient({
                     domain: SHOPIFY_DOMAIN,
-                    storefrontAccessToken: SHOPIFY_STOREFRONT_TOKEN
+                    storefrontAccessToken: SHOPIFY_STOREFRONT_TOKEN,
+                    apiVersion: '2023-10'
                 });
                 return __shopifyClient;
             }
@@ -1181,7 +1182,7 @@
                         .then(onSuccess)
                         .catch(function(err) {
                             console.error('Cart addVariant error:', err);
-                            alert('Sorry, this item is unavailable right now.');
+                            alert('Sorry, this item is unavailable right now. Error: ' + err.message);
                         });
                 }
 
@@ -1201,7 +1202,7 @@
                         })
                         .catch(function(err) {
                             console.error('Checkout fallback error:', err);
-                            alert('Sorry, checkout is unavailable right now.');
+                            alert('Sorry, checkout is unavailable right now. Error: ' + err.message);
                         });
                 }
 
@@ -1243,20 +1244,92 @@
             const client = ensureClient();
 
             function fetchVariantIdBySKU(clientInstance, sku) {
+                console.log('Searching for SKU:', sku);
+                
                 const query = `
-                  query($query: String!) {
-                    productVariants(first: 1, query: $query) {
-                      edges { node { id sku } }
+                  query($query: String!, $first: Int!) {
+                    products(first: $first, query: $query) {
+                      edges {
+                        node {
+                          id
+                          title
+                          handle
+                          availableForSale
+                          variants(first: 100) {
+                            edges {
+                              node {
+                                id
+                                sku
+                                availableForSale
+                                title
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 `;
-                return clientInstance.graphQLClient.send(query, { query: 'sku:' + sku }).then(function(res) {
-                    const edges = res && res.data && res.data.productVariants && res.data.productVariants.edges;
-                    if (edges && edges.length > 0) {
-                        return edges[0].node.id;
+
+                // Try multiple search strategies for finding products by SKU
+                const searchStrategies = [
+                    { query: 'sku:' + sku, first: 10 },
+                    { query: 'variant_sku:' + sku, first: 10 },
+                    { query: sku, first: 20 },
+                    { query: '*' + sku + '*', first: 50 }
+                ];
+
+                function tryStrategy(strategyIndex) {
+                    if (strategyIndex >= searchStrategies.length) {
+                        throw new Error('Variant not found for SKU ' + sku + '. Make sure the product is published to Online Store or Buy Button sales channel.');
                     }
-                    throw new Error('Variant not found for SKU ' + sku);
-                });
+
+                    const strategy = searchStrategies[strategyIndex];
+                    console.log('Trying search strategy:', strategy);
+
+                    return clientInstance.graphQLClient.send(query, strategy).then(function(res) {
+                        console.log('GraphQL response for strategy', strategyIndex, ':', res);
+                        
+                        if (res.errors && res.errors.length > 0) {
+                            console.warn('GraphQL errors:', res.errors);
+                        }
+
+                        const edges = res && res.data && res.data.products && res.data.products.edges;
+                        if (edges && edges.length > 0) {
+                            // Search through all products and their variants to find matching SKU
+                            for (let i = 0; i < edges.length; i++) {
+                                const product = edges[i].node;
+                                const variantEdges = product.variants && product.variants.edges;
+                                
+                                if (variantEdges && variantEdges.length > 0) {
+                                    for (let j = 0; j < variantEdges.length; j++) {
+                                        const variant = variantEdges[j].node;
+                                        if (variant.sku === sku) {
+                                            if (!variant.availableForSale) {
+                                                throw new Error('Product with SKU ' + sku + ' is not available for sale');
+                                            }
+                                            console.log('Found variant:', variant.id, 'for product:', product.title);
+                                            return variant.id;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // If no match found with this strategy, try the next one
+                        return tryStrategy(strategyIndex + 1);
+                    }).catch(function(error) {
+                        console.error('Error with strategy', strategyIndex, ':', error);
+                        // If this strategy failed, try the next one
+                        if (strategyIndex < searchStrategies.length - 1) {
+                            return tryStrategy(strategyIndex + 1);
+                        } else {
+                            throw error;
+                        }
+                    });
+                }
+
+                return tryStrategy(0);
             }
 
             window.ShopifyBuy.UI.onReady(client).then(function(ui) {

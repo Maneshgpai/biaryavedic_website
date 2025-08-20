@@ -802,8 +802,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <!-- Shopify Buy Button SDK -->
-    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    <!-- Modern Cart API 2025-07 - No SDK needed -->
     
     <script>
         // Wait for DOM to be fully loaded
@@ -1135,338 +1134,468 @@
             });
         }
 
-        // Shopify Buy Button integration
+        // Modern Shopify Cart API 2025-07 Integration
         (function() {
-            const SHOPIFY_DOMAIN = 'm0vr7q-we.myshopify.com';
-            const SHOPIFY_STOREFRONT_TOKEN = '1008bb8148450085299ca0cf7811ba2e';
-            const SHOPIFY_COLLECTION_HANDLE = 'website'; // Or use collection ID: gid://shopify/Collection/519270826203
+            const SHOPIFY_CONFIG = {
+                domain: 'm0vr7q-we.myshopify.com',
+                storefrontAccessToken: '1008bb8148450085299ca0cf7811ba2e',
+                apiVersion: '2025-07',
+                collectionHandle: 'website'
+            };
 
-            // Lazy Shopify client initializer
-            let __shopifyClient = null;
-            function ensureClient() {
-                if (__shopifyClient) return __shopifyClient;
-                if (!window.ShopifyBuy) return null;
-                __shopifyClient = window.ShopifyBuy.buildClient({
-                    domain: SHOPIFY_DOMAIN,
-                    storefrontAccessToken: SHOPIFY_STOREFRONT_TOKEN,
-                    apiVersion: '2023-10'
-                });
-                return __shopifyClient;
+            // Global cart state
+            let currentCart = null;
+            let isInitialized = false;
+
+            // Console logging for debugging
+            function debugLog(message, type = 'info') {
+                const prefix = `[Shopify Cart API ${SHOPIFY_CONFIG.apiVersion}]`;
+                if (type === 'error') {
+                    console.error(prefix, message);
+                } else if (type === 'warn') {
+                    console.warn(prefix, message);
+                } else {
+                    console.log(prefix, message);
+                }
             }
 
-            // Queue for clicks before cart/UI is ready
-            const pendingActionQueue = [];
+            // GraphQL request helper
+            async function graphqlRequest(query, variables = {}) {
+                try {
+                    const response = await fetch(`https://${SHOPIFY_CONFIG.domain}/api/${SHOPIFY_CONFIG.apiVersion}/graphql.json`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.storefrontAccessToken
+                        },
+                        body: JSON.stringify({ query, variables })
+                    });
 
-            function processAction(client, cartInstance, action) {
-                const { sku, qty, redirectToCheckout } = action;
-                function onSuccess() {
-                    if (cartInstance && typeof cartInstance.setActive === 'function') {
-                        if (redirectToCheckout) {
-                            const url = cartInstance.model && cartInstance.model.webUrl;
-                            if (url) {
-                                window.location.href = url;
-                                return;
-                            }
-                            if (cartInstance.checkout && cartInstance.checkout.open) {
-                                cartInstance.checkout.open();
-                                return;
-                            }
-                        }
-                        cartInstance.setActive(true);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                     }
-                }
 
-                if (cartInstance && typeof cartInstance.addVariant === 'function') {
-                    return fetchVariantIdBySKU(client, sku)
-                        .then(function(variantId) { return cartInstance.addVariant({ id: variantId, quantity: qty }); })
-                        .then(onSuccess)
-                        .catch(function(err) {
-                            console.error('Cart addVariant error:', err);
-                            alert('Sorry, this item is unavailable right now. Error: ' + err.message);
-                        });
-                }
-
-                if (client && client.checkout) {
-                    return client.checkout.create()
-                        .then(function(checkout) {
-                            return fetchVariantIdBySKU(client, sku).then(function(variantId) {
-                                return client.checkout.addLineItems(checkout.id, [{ variantId: variantId, quantity: qty }]);
-                            });
-                        })
-                        .then(function(updatedCheckout) {
-                            if (redirectToCheckout && updatedCheckout && updatedCheckout.webUrl) {
-                                window.location.href = updatedCheckout.webUrl;
-                            } else if (updatedCheckout && updatedCheckout.webUrl) {
-                                window.open(updatedCheckout.webUrl, '_blank');
-                            }
-                        })
-                        .catch(function(err) {
-                            console.error('Checkout fallback error:', err);
-                            alert('Sorry, checkout is unavailable right now. Error: ' + err.message);
-                        });
-                }
-
-                alert('Shop is still loading. Please try again in a moment.');
-                return Promise.resolve();
-            }
-
-            function attachEarlyDelegatedHandlers() {
-                document.addEventListener('click', function(e) {
-                    const btn = e.target.closest('.shopify-add-to-cart, .shopify-buy-now');
-                    if (!btn) return;
-                    const sku = btn.getAttribute('data-sku');
-                    const qty = parseInt(btn.getAttribute('data-qty') || '1', 10);
-                    const redirectToCheckout = btn.classList.contains('shopify-buy-now');
-                    // If the cart is not yet ready, try immediate checkout fallback; otherwise queue
-                    if (!window.shopifyCart) {
-                        if (window.ShopifyBuy) {
-                            processAction(ensureClient(), window.shopifyCart, { sku: sku, qty: qty, redirectToCheckout: redirectToCheckout });
-                        } else {
-                            pendingActionQueue.push({ sku: sku, qty: qty, redirectToCheckout: redirectToCheckout });
-                            if (!window.__shopifyEarlyToastShown) {
-                                window.__shopifyEarlyToastShown = true;
-                                alert('Preparing the cart... it will open shortly.');
-                                setTimeout(function() { window.__shopifyEarlyToastShown = false; }, 3000);
-                            }
-                        }
-                        return;
+                    const data = await response.json();
+                    
+                    if (data.errors && data.errors.length > 0) {
+                        throw new Error(data.errors[0].message);
                     }
-                });
+
+                    return data.data;
+                } catch (error) {
+                    debugLog(`GraphQL Error: ${error.message}`, 'error');
+                    throw error;
+                }
             }
 
-            attachEarlyDelegatedHandlers();
-
-            if (!window.ShopifyBuy || SHOPIFY_DOMAIN.includes('YOUR_SHOP_NAME') || SHOPIFY_STOREFRONT_TOKEN.includes('YOUR_STOREFRONT_ACCESS_TOKEN')) {
-                console.warn('Shopify not configured. Set SHOPIFY_DOMAIN and SHOPIFY_STOREFRONT_TOKEN.');
-                return;
-            }
-
-            const client = ensureClient();
-
-            function fetchVariantIdBySKU(clientInstance, sku) {
-                console.log('Searching for SKU:', sku);
+            // Find variant ID by SKU using modern Cart API
+            async function findVariantBySKU(sku) {
+                debugLog(`Searching for variant with SKU: ${sku}`);
                 
                 const query = `
-                  query($query: String!, $first: Int!) {
-                    products(first: $first, query: $query) {
-                      edges {
-                        node {
-                          id
-                          title
-                          handle
-                          availableForSale
-                          variants(first: 100) {
+                    query findProductBySKU($query: String!) {
+                        products(first: 10, query: $query) {
                             edges {
-                              node {
-                                id
-                                sku
-                                availableForSale
-                                title
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                `;
-
-                // Try multiple search strategies for finding products by SKU
-                const searchStrategies = [
-                    { query: 'sku:' + sku, first: 10 },
-                    { query: 'variant_sku:' + sku, first: 10 },
-                    { query: sku, first: 20 },
-                    { query: '*' + sku + '*', first: 50 }
-                ];
-
-                function tryStrategy(strategyIndex) {
-                    if (strategyIndex >= searchStrategies.length) {
-                        throw new Error('Variant not found for SKU ' + sku + '. Make sure the product is published to Online Store or Buy Button sales channel.');
-                    }
-
-                    const strategy = searchStrategies[strategyIndex];
-                    console.log('Trying search strategy:', strategy);
-
-                    return clientInstance.graphQLClient.send(query, strategy).then(function(res) {
-                        console.log('GraphQL response for strategy', strategyIndex, ':', res);
-                        
-                        if (res.errors && res.errors.length > 0) {
-                            console.warn('GraphQL errors:', res.errors);
-                        }
-
-                        const edges = res && res.data && res.data.products && res.data.products.edges;
-                        if (edges && edges.length > 0) {
-                            // Search through all products and their variants to find matching SKU
-                            for (let i = 0; i < edges.length; i++) {
-                                const product = edges[i].node;
-                                const variantEdges = product.variants && product.variants.edges;
-                                
-                                if (variantEdges && variantEdges.length > 0) {
-                                    for (let j = 0; j < variantEdges.length; j++) {
-                                        const variant = variantEdges[j].node;
-                                        if (variant.sku === sku) {
-                                            if (!variant.availableForSale) {
-                                                throw new Error('Product with SKU ' + sku + ' is not available for sale');
+                                node {
+                                    id
+                                    title
+                                    handle
+                                    variants(first: 100) {
+                                        edges {
+                                            node {
+                                                id
+                                                sku
+                                                availableForSale
+                                                price {
+                                                    amount
+                                                    currencyCode
+                                                }
                                             }
-                                            console.log('Found variant:', variant.id, 'for product:', product.title);
-                                            return variant.id;
                                         }
                                     }
                                 }
                             }
                         }
-                        
-                        // If no match found with this strategy, try the next one
-                        return tryStrategy(strategyIndex + 1);
-                    }).catch(function(error) {
-                        console.error('Error with strategy', strategyIndex, ':', error);
-                        // If this strategy failed, try the next one
-                        if (strategyIndex < searchStrategies.length - 1) {
-                            return tryStrategy(strategyIndex + 1);
-                        } else {
-                            throw error;
-                        }
-                    });
-                }
+                    }
+                `;
 
-                return tryStrategy(0);
+                const searchStrategies = [`sku:${sku}`, sku, `*${sku}*`];
+                
+                for (const searchQuery of searchStrategies) {
+                    try {
+                        debugLog(`Trying search strategy: "${searchQuery}"`);
+                        const data = await graphqlRequest(query, { query: searchQuery });
+                        
+                        const products = data.products.edges;
+                        debugLog(`Found ${products.length} products`);
+                        
+                        for (const productEdge of products) {
+                            const product = productEdge.node;
+                            const variants = product.variants.edges;
+                            
+                            for (const variantEdge of variants) {
+                                const variant = variantEdge.node;
+                                if (variant.sku === sku) {
+                                    if (!variant.availableForSale) {
+                                        throw new Error(`Product with SKU ${sku} is not available for sale`);
+                                    }
+                                    debugLog(`Found variant: ${variant.id} for product: ${product.title}`);
+                                    return variant.id;
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        debugLog(`Search strategy "${searchQuery}" failed: ${error.message}`, 'error');
+                        continue;
+                    }
+                }
+                
+                throw new Error(`No variant found for SKU: ${sku}. Make sure the product is published to the Online Store sales channel.`);
             }
 
-            window.ShopifyBuy.UI.onReady(client).then(function(ui) {
-                ui.createComponent('cart', {
-                    options: {
-                        cart: {
-                            startOpen: false,
-                            styles: { button: { 'background-color': '#2563eb' } }
+            // Create a new cart using Cart API
+            async function createCart() {
+                debugLog('Creating new cart...');
+                
+                const mutation = `
+                    mutation cartCreate($input: CartInput!) {
+                        cartCreate(input: $input) {
+                            cart {
+                                id
+                                checkoutUrl
+                                totalQuantity
+                                cost {
+                                    totalAmount {
+                                        amount
+                                        currencyCode
+                                    }
+                                }
+                                lines(first: 100) {
+                                    edges {
+                                        node {
+                                            id
+                                            quantity
+                                            merchandise {
+                                                ... on ProductVariant {
+                                                    id
+                                                    sku
+                                                    title
+                                                    product {
+                                                        title
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            userErrors {
+                                field
+                                message
+                            }
                         }
                     }
-                }).then(function(cart) {
-                    window.shopifyCart = cart;
+                `;
 
-                    function updateCartBadge() {
-                        const badge = document.getElementById('shopify-cart-count');
-                        if (!badge || !cart.model) return;
-                        const count = cart.model.lineItems.reduce((sum, item) => sum + item.quantity, 0);
-                        badge.textContent = count;
-                    }
+                const data = await graphqlRequest(mutation, { input: {} });
 
-                    if (cart.subscribe) {
-                        cart.subscribe('checkout:updated', updateCartBadge);
-                    }
+                if (data.cartCreate.userErrors.length > 0) {
+                    throw new Error(data.cartCreate.userErrors[0].message);
+                }
 
-                    const cartToggle = document.getElementById('shopify-cart-toggle');
-                    if (cartToggle) {
-                        cartToggle.addEventListener('click', function() {
-                            cart.setActive(true);
-                        });
-                        cartToggle.style.display = 'block';
-                    }
+                currentCart = data.cartCreate.cart;
+                debugLog(`Cart created with ID: ${currentCart.id}`);
+                updateCartDisplay();
+                return currentCart;
+            }
 
-                    function attachButtonHandlers(root) {
-                        (root || document).querySelectorAll('.shopify-add-to-cart').forEach(function(btn) {
-                            if (btn.__shopifyBound) return;
-                            btn.__shopifyBound = true;
-                            btn.addEventListener('click', function() {
-                                const sku = this.getAttribute('data-sku');
-                                const qty = parseInt(this.getAttribute('data-qty') || '1', 10);
-                                processAction(client, cart, { sku: sku, qty: qty, redirectToCheckout: false })
-                                    .then(updateCartBadge)
-                                    .catch(function(err) { console.error('Add to cart error:', err); });
-                            });
-                        });
-
-                        (root || document).querySelectorAll('.shopify-buy-now').forEach(function(btn) {
-                            if (btn.__shopifyBound) return;
-                            btn.__shopifyBound = true;
-                            btn.addEventListener('click', function() {
-                                const sku = this.getAttribute('data-sku');
-                                const qty = parseInt(this.getAttribute('data-qty') || '1', 10);
-                                processAction(client, cart, { sku: sku, qty: qty, redirectToCheckout: true })
-                                    .then(updateCartBadge)
-                                    .catch(function(err) { console.error('Buy now error:', err); });
-                            });
-                        });
-                    }
-
-                    function renderCollectionProducts(handle) {
-                        if (!handle) return;
-                        const query = `
-                          query($handle: String!) {
-                            collection(handle: $handle) {
-                              id
-                              title
-                              products(first: 12) {
-                                edges {
-                                  node {
-                                    id
-                                    title
-                                    handle
-                                    featuredImage { url altText }
-                                    priceRange { minVariantPrice { amount currencyCode } }
-                                    variants(first: 1) { edges { node { id sku } } }
-                                  }
+            // Add items to cart using Cart API
+            async function addLinesToCart(cartId, lines) {
+                debugLog(`Adding ${lines.length} line(s) to cart...`);
+                
+                const mutation = `
+                    mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+                        cartLinesAdd(cartId: $cartId, lines: $lines) {
+                            cart {
+                                id
+                                checkoutUrl
+                                totalQuantity
+                                cost {
+                                    totalAmount {
+                                        amount
+                                        currencyCode
+                                    }
                                 }
-                              }
+                                lines(first: 100) {
+                                    edges {
+                                        node {
+                                            id
+                                            quantity
+                                            merchandise {
+                                                ... on ProductVariant {
+                                                    id
+                                                    sku
+                                                    title
+                                                    product {
+                                                        title
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                          }
-                        `;
-                        client.graphQLClient.send(query, { handle: handle }).then(function(res) {
-                            const container = document.getElementById('shopify-dynamic-products');
-                            if (!container) return;
-                            const edges = res && res.data && res.data.collection && res.data.collection.products && res.data.collection.products.edges || [];
-                            const html = edges.map(function(edge) {
-                                const p = edge.node;
-                                const img = p.featuredImage;
-                                const variantEdge = p.variants && p.variants.edges && p.variants.edges[0];
-                                const sku = variantEdge && variantEdge.node && variantEdge.node.sku || '';
-                                const price = p.priceRange && p.priceRange.minVariantPrice;
-                                const priceText = price ? (price.currencyCode === 'INR' ? '₹' : '') + parseFloat(price.amount).toFixed(0) : '';
-                                return `
-                                    <div class="card-3d bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" data-aos="flip-left">
-                                        <div class="h-48 bg-gradient-to-r from-green-100 to-blue-100 flex items-center justify-center relative">
-                                            ${img ? '<img src="' + img.url + '" alt="' + (img.altText || p.title) + '" class="max-w-full max-h-full object-contain">' : ''}
-                                        </div>
-                                        <div class="p-6">
-                                            <h3 class="text-xl font-bold text-gray-800 mb-2">${p.title}</h3>
-                                            <div class="flex items-baseline gap-2 mb-4">
-                                                <span class="text-2xl font-bold text-gray-800">${priceText}</span>
-                                            </div>
-                                            <div class="flex gap-3">
-                                                <button class="shopify-add-to-cart flex-1 border-2 border-blue-600 text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all" data-sku="${sku}">
-                                                    Add to Cart
-                                                </button>
-                                                <button class="shopify-buy-now flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all" data-sku="${sku}">
-                                                    Buy Now
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
-                            }).join('');
-                            container.innerHTML = html;
-                            attachButtonHandlers(container);
-                            if (window.AOS && window.AOS.refresh) window.AOS.refresh();
-                        }).catch(function(err) {
-                            console.error('Error loading collection:', err);
-                        });
+                            userErrors {
+                                field
+                                message
+                            }
+                        }
                     }
+                `;
 
-                    // Bind handlers to existing buttons
-                    attachButtonHandlers(document);
-                    // Update badge and toggle
-                    if (typeof updateCartBadge === 'function') updateCartBadge();
-                    const toggle = document.getElementById('shopify-cart-toggle');
-                    if (toggle) toggle.style.display = 'block';
-                    // Render dynamic products
-                    renderCollectionProducts(SHOPIFY_COLLECTION_HANDLE);
+                const data = await graphqlRequest(mutation, { cartId, lines });
 
-                    // Drain any pending early clicks
-                    if (pendingActionQueue.length) {
-                        const queueCopy = pendingActionQueue.splice(0, pendingActionQueue.length);
-                        queueCopy.forEach(function(action) { processAction(client, cart, action).catch(function(e){ console.error(e); }); });
+                if (data.cartLinesAdd.userErrors.length > 0) {
+                    throw new Error(data.cartLinesAdd.userErrors[0].message);
+                }
+
+                currentCart = data.cartLinesAdd.cart;
+                debugLog(`Items added successfully. Cart now has ${currentCart.totalQuantity} items.`);
+                updateCartDisplay();
+                return currentCart;
+            }
+
+            // Update cart display
+            function updateCartDisplay() {
+                const cartCountElement = document.getElementById('shopify-cart-count');
+                const cartToggleElement = document.getElementById('shopify-cart-toggle');
+                
+                if (cartCountElement) {
+                    const count = currentCart ? currentCart.totalQuantity : 0;
+                    cartCountElement.textContent = count;
+                }
+                
+                if (cartToggleElement) {
+                    cartToggleElement.style.display = 'block';
+                }
+            }
+
+            // Add to cart function
+            async function addToCart(sku, quantity = 1) {
+                try {
+                    debugLog(`Starting add to cart for SKU: ${sku}, quantity: ${quantity}`);
+                    
+                    // Find variant
+                    const variantId = await findVariantBySKU(sku);
+                    
+                    // Create cart if doesn't exist
+                    if (!currentCart) {
+                        await createCart();
+                    }
+                    
+                    // Add to cart
+                    await addLinesToCart(currentCart.id, [{
+                        merchandiseId: variantId,
+                        quantity: quantity
+                    }]);
+                    
+                    debugLog(`Successfully added ${quantity}x ${sku} to cart!`);
+                    
+                } catch (error) {
+                    debugLog(`Add to cart failed: ${error.message}`, 'error');
+                    alert(`Failed to add to cart: ${error.message}`);
+                }
+            }
+
+            // Buy now function
+            async function buyNow(sku, quantity = 1) {
+                try {
+                    debugLog(`Starting buy now for SKU: ${sku}, quantity: ${quantity}`);
+                    
+                    // Find variant
+                    const variantId = await findVariantBySKU(sku);
+                    
+                    // Create new cart for buy now
+                    debugLog('Creating dedicated cart for buy now...');
+                    const cart = await createCart();
+                    
+                    // Add item to cart
+                    await addLinesToCart(cart.id, [{
+                        merchandiseId: variantId,
+                        quantity: quantity
+                    }]);
+                    
+                    // Redirect to checkout
+                    if (cart.checkoutUrl) {
+                        debugLog(`Redirecting to checkout: ${cart.checkoutUrl}`);
+                        window.open(cart.checkoutUrl, '_blank');
+                    } else {
+                        throw new Error('No checkout URL available');
+                    }
+                    
+                } catch (error) {
+                    debugLog(`Buy now failed: ${error.message}`, 'error');
+                    alert(`Failed to proceed to checkout: ${error.message}`);
+                }
+            }
+
+            // View cart function
+            function viewCart() {
+                if (currentCart && currentCart.checkoutUrl) {
+                    window.open(currentCart.checkoutUrl, '_blank');
+                } else {
+                    alert('No cart available to view');
+                }
+            }
+
+            // Attach event handlers
+            function attachEventHandlers() {
+                // Add to cart buttons
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.shopify-add-to-cart')) {
+                        e.preventDefault();
+                        const btn = e.target.closest('.shopify-add-to-cart');
+                        const sku = btn.getAttribute('data-sku');
+                        const qty = parseInt(btn.getAttribute('data-qty') || '1', 10);
+                        addToCart(sku, qty);
                     }
                 });
-            });
+
+                // Buy now buttons
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.shopify-buy-now')) {
+                        e.preventDefault();
+                        const btn = e.target.closest('.shopify-buy-now');
+                        const sku = btn.getAttribute('data-sku');
+                        const qty = parseInt(btn.getAttribute('data-qty') || '1', 10);
+                        buyNow(sku, qty);
+                    }
+                });
+
+                // Cart toggle button
+                const cartToggle = document.getElementById('shopify-cart-toggle');
+                if (cartToggle) {
+                    cartToggle.addEventListener('click', function() {
+                        viewCart();
+                    });
+                }
+            }
+
+            // Load dynamic products from collection
+            async function loadCollectionProducts() {
+                if (!SHOPIFY_CONFIG.collectionHandle) return;
+                
+                try {
+                    const query = `
+                        query getCollection($handle: String!) {
+                            collection(handle: $handle) {
+                                id
+                                title
+                                products(first: 12) {
+                                    edges {
+                                        node {
+                                            id
+                                            title
+                                            handle
+                                            featuredImage {
+                                                url
+                                                altText
+                                            }
+                                            priceRange {
+                                                minVariantPrice {
+                                                    amount
+                                                    currencyCode
+                                                }
+                                            }
+                                            variants(first: 1) {
+                                                edges {
+                                                    node {
+                                                        id
+                                                        sku
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    `;
+
+                    const data = await graphqlRequest(query, { handle: SHOPIFY_CONFIG.collectionHandle });
+                    const container = document.getElementById('shopify-dynamic-products');
+                    
+                    if (!container || !data.collection) return;
+
+                    const products = data.collection.products.edges;
+                    const html = products.map(function(edge) {
+                        const product = edge.node;
+                        const img = product.featuredImage;
+                        const variant = product.variants.edges[0]?.node;
+                        const sku = variant?.sku || '';
+                        const price = product.priceRange.minVariantPrice;
+                        const priceText = price.currencyCode === 'INR' ? '₹' + parseFloat(price.amount).toFixed(0) : '$' + parseFloat(price.amount).toFixed(2);
+
+                        return `
+                            <div class="card-3d bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" data-aos="flip-left">
+                                <div class="h-48 bg-gradient-to-r from-green-100 to-blue-100 flex items-center justify-center relative">
+                                    ${img ? `<img src="${img.url}" alt="${img.altText || product.title}" class="max-w-full max-h-full object-contain">` : ''}
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">${product.title}</h3>
+                                    <div class="flex items-baseline gap-2 mb-4">
+                                        <span class="text-2xl font-bold text-gray-800">${priceText}</span>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <button class="shopify-add-to-cart flex-1 border-2 border-blue-600 text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all" data-sku="${sku}">
+                                            Add to Cart
+                                        </button>
+                                        <button class="shopify-buy-now flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all" data-sku="${sku}">
+                                            Buy Now
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    container.innerHTML = html;
+                    
+                    // Refresh AOS animations if available
+                    if (window.AOS && window.AOS.refresh) {
+                        window.AOS.refresh();
+                    }
+
+                } catch (error) {
+                    debugLog(`Error loading collection products: ${error.message}`, 'error');
+                }
+            }
+
+            // Initialize the Cart API integration
+            function initialize() {
+                if (isInitialized) return;
+                isInitialized = true;
+
+                debugLog('Initializing Cart API integration...');
+                
+                // Attach event handlers
+                attachEventHandlers();
+                
+                // Update cart display
+                updateCartDisplay();
+                
+                // Load dynamic products
+                loadCollectionProducts();
+                
+                debugLog('Cart API integration initialized successfully');
+            }
+
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initialize);
+            } else {
+                initialize();
+            }
         })();
     </script>
 </body>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
 import { FaArrowRight } from "react-icons/fa";
+import BuyNowButton from "./BuyNowButton";
 
 interface ProductCardProps {
   id: string;
@@ -121,12 +122,7 @@ export default function ProductCard({
         {/* Actions */}
         <div className="flex gap-3 mt-6">
           <AddToCartButton sku={sku} />
-          <button className="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
-            <span>Buy Now</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </button>
+          <BuyNowButton sku={sku} />
         </div>
       </div>
     </div>

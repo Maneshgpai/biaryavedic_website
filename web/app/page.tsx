@@ -13,8 +13,11 @@ import {
   FaWater,
   FaIndustry
 } from "react-icons/fa";
+import { getProducts } from "@/data/products";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts();
+
   return (
     <main>
       <Hero />
@@ -91,279 +94,154 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
+            {products.map((product) => (
             <ProductCard
-              id="bn160"
-              name="B2B Eco-Friendly Fabric Sizing Agent"
-              description="Revolutionizing the fabric sizing process for a green future. Our industrial solution forms a uniform layer of protective coating over warp yarn, minimizes yarn breakage during weaving, and improves yarn strength to resist mechanical stress."
-              price={2500}
-              originalPrice={3200}
-              discount={22}
-              rating={4}
-              reviewCount={18}
-              sku="BN160"
-              volume="5L"
-              application="Industrial Weaving"
-              image="/assets/images/product_BN160.webp"
-              category="B2B"
-              categoryColor="from-white to-blue-600"
-              detailsLink="/products/b2b"
-            />
-            
-            <ProductCard
-              id="bn161"
-              name="Eco-Friendly Instant Fabric Stiffener Spray"
-              description="Busy mornings, crisp outfits. Transform your ironing experience with our eco-friendly instant fabric stiffener spray. Perfect for time-saving solutions during morning rush before school or work."
-              price={530}
-              originalPrice={650}
-              discount={18}
-              rating={4.3}
-              reviewCount={23}
-              sku="BN161"
-              volume="450ml"
-              application="3-in-1 Antimicrobial"
-              image="/assets/images/product_BN161.webp"
-              category="B2C"
-              categoryColor="from-white to-green-600"
-              detailsLink="/products/b2c"
-            />
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+                originalPrice={product.originalPrice}
+                discount={product.discount}
+                rating={product.rating}
+                reviewCount={product.reviewCount}
+                sku={product.sku}
+                volume={product.volume}
+                application={product.application}
+                image={product.image}
+                category={product.category}
+                categoryColor={product.categoryColor}
+                detailsLink={product.detailsLink}
+              />
+            ))}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white overflow-hidden">
-        <div className="container mx-auto px-6 mb-12" data-aos="fade-up">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center text-gray-800 mb-6 font-display">
-            Why Choose <span className="text-green-600">Bio-Aryavedic</span>
-          </h2>
-        </div>
-        
-        <div className="features-carousel">
-          <div className="features-track">
-            {/* First set of cards */}
-            <div className="feature-card bg-gradient-to-br from-white to-green-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaLeaf className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">100% Natural</h3>
-              <p className="text-gray-600">All our products are made from natural, biodegradable ingredients that are safe for you and the environment.</p>
-            </div>
-            
-            <div className="feature-card bg-gradient-to-br from-white to-blue-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaFlask className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Advanced Science</h3>
-              <p className="text-gray-600">Leveraging cutting-edge nanotechnology and biochemistry for superior cleaning performance.</p>
-            </div>
-            
-            <div className="feature-card bg-gradient-to-br from-white to-purple-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaAward className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Proven Results</h3>
-              <p className="text-gray-600">Trusted by thousands of customers and dozens of business partners for consistent, reliable results.</p>
-            </div>
-            
-            <div className="feature-card bg-gradient-to-br from-white to-orange-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaRecycle className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Sustainable</h3>
-              <p className="text-gray-600">Contributing to UN SDG goals through eco-friendly practices and sustainable manufacturing.</p>
-            </div>
-            
-            {/* Duplicate set for seamless loop */}
-            <div className="feature-card bg-gradient-to-br from-white to-green-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaLeaf className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">100% Natural</h3>
-              <p className="text-gray-600">All our products are made from natural, biodegradable ingredients that are safe for you and the environment.</p>
-            </div>
-            
-            <div className="feature-card bg-gradient-to-br from-white to-blue-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaFlask className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Advanced Science</h3>
-              <p className="text-gray-600">Leveraging cutting-edge nanotechnology and biochemistry for superior cleaning performance.</p>
-            </div>
-            
-            <div className="feature-card bg-gradient-to-br from-white to-purple-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaAward className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Proven Results</h3>
-              <p className="text-gray-600">Trusted by thousands of customers and dozens of business partners for consistent, reliable results.</p>
-            </div>
-            
-            <div className="feature-card bg-gradient-to-br from-white to-orange-50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <FaRecycle className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Sustainable</h3>
-              <p className="text-gray-600">Contributing to UN SDG goals through eco-friendly practices and sustainable manufacturing.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SDG Goals Section */}
-      <section id="sustainability" className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16" data-aos="fade-up">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
-              Supporting <span className="text-green-600">UN SDG Goals</span>
+              Why Choose <span className="text-green-600">Bio-Aryavedic</span>?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our commitment to sustainability aligns with multiple United Nations Sustainable Development Goals.
+              Experience the perfect blend of traditional wisdom and cutting-edge technology for superior fabric care.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="100">
-              <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
-                <FaLeaf className="text-white text-xl" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center group" data-aos="fade-up" data-aos-delay="100">
+              <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <FaLeaf className="text-white text-3xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Climate Action</h3>
-              <p className="text-gray-600">Reducing carbon footprint through sustainable manufacturing and eco-friendly products.</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">100% Natural</h3>
+              <p className="text-gray-600">Made from natural ingredients that are safe for you and the environment.</p>
             </div>
             
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="200">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
-                <FaWater className="text-white text-xl" />
+            <div className="text-center group" data-aos="fade-up" data-aos-delay="200">
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <FaFlask className="text-white text-3xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Clean Water</h3>
-              <p className="text-gray-600">Protecting water resources through biodegradable formulations and responsible usage.</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Advanced Technology</h3>
+              <p className="text-gray-600">Cutting-edge nanotechnology for superior cleaning and protection.</p>
             </div>
             
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="300">
-              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
-                <FaIndustry className="text-white text-xl" />
+            <div className="text-center group" data-aos="fade-up" data-aos-delay="300">
+              <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <FaAward className="text-white text-3xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Innovation</h3>
-              <p className="text-gray-600">Driving industry innovation through responsible manufacturing and sustainable practices.</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Quality Assured</h3>
+              <p className="text-gray-600">Rigorous testing ensures consistent quality and performance.</p>
+            </div>
+            
+            <div className="text-center group" data-aos="fade-up" data-aos-delay="400">
+              <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <FaRecycle className="text-white text-3xl" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Sustainable</h3>
+              <p className="text-gray-600">Eco-friendly formulations that protect our planet for future generations.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Recognition Section */}
-      <section className="py-20 bg-gray-900 text-white overflow-hidden">
+      {/* Innovation Section */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 font-display">
-              Recognition & <span className="text-green-400">Awards</span>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-right" data-aos-duration="1000">
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
+                Innovation in <span className="text-blue-600">Every Drop</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Our commitment to excellence and sustainability has been recognized by industry leaders.
-            </p>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Our research-driven approach combines traditional Ayurvedic principles with modern nanotechnology to create fabric care solutions that are both effective and environmentally responsible.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaWater className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Nano-Enhanced Formula</h3>
+                    <p className="text-gray-600">Microscopic particles penetrate fabric fibers for deeper cleaning and longer-lasting protection.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaLeaf className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Ayurvedic Wisdom</h3>
+                    <p className="text-gray-600">Time-tested natural ingredients provide gentle yet effective fabric care without harsh chemicals.</p>
+                  </div>
           </div>
           
-          {/* Moving Banner */}
-          <div className="relative overflow-hidden h-32 bg-gray-800 rounded-lg border border-green-500/20">
-            <div className="flex items-center h-full animate-scroll">
-              <div className="flex items-center gap-12 min-w-full">
-                <Image 
-                  src="/assets/images/manage-logo.webp" 
-                  alt="MANAGE Logo" 
-                  width={200} 
-                  height={120} 
-                  quality={95}
-                  priority
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/abi-logo.webp" 
-                  alt="ABI Logo" 
-                  width={200} 
-                  height={121} 
-                  quality={95}
-                  priority
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/kau-logo.webp" 
-                  alt="Kerala Agricultural University Logo" 
-                  width={200} 
-                  height={149} 
-                  quality={95}
-                  priority
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/ksm-logo.webp" 
-                  alt="Kerala Startup Mission Logo" 
-                  width={200} 
-                  height={120} 
-                  quality={95}
-                  priority
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/iim-vizag-logo.webp" 
-                  alt="IIM Visakhapatnam Logo" 
-                  width={133} 
-                  height={133} 
-                  quality={95}
-                  priority
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                {/* Duplicate for seamless loop */}
-                <Image 
-                  src="/assets/images/manage-logo.webp" 
-                  alt="MANAGE Logo" 
-                  width={200} 
-                  height={120} 
-                  quality={95}
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/abi-logo.webp" 
-                  alt="ABI Logo" 
-                  width={200} 
-                  height={121} 
-                  quality={95}
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/kau-logo.webp" 
-                  alt="Kerala Agricultural University Logo" 
-                  width={200} 
-                  height={149} 
-                  quality={95}
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/ksm-logo.webp" 
-                  alt="Kerala Startup Mission Logo" 
-                  width={200} 
-                  height={120} 
-                  quality={95}
-                  priority
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
-                <Image 
-                  src="/assets/images/iim-vizag-logo.webp" 
-                  alt="IIM Visakhapatnam Logo" 
-                  width={133} 
-                  height={133} 
-                  quality={95}
-                  priority
-                  sizes="(max-width: 768px) 100px, 160px"
-                  className="opacity-80 hover:opacity-100 transition-opacity h-16 w-auto object-contain crisp-edges" 
-                />
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaIndustry className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Scalable Solutions</h3>
+                    <p className="text-gray-600">From household use to industrial applications, our products adapt to any scale of operation.</p>
+                  </div>
+                </div>
               </div>
+            </div>
+            
+            <div data-aos="fade-left" data-aos-duration="1000" className="relative">
+              <div className="relative z-10 bg-white rounded-2xl p-8 shadow-2xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-6">Research & Development</h3>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700">Natural Ingredients</span>
+                    <span className="text-green-600 font-bold">95%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-500 h-2 rounded-full" style={{width: '95%'}}></div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700">Biodegradability</span>
+                    <span className="text-blue-600 font-bold">98%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-blue-500 h-2 rounded-full" style={{width: '98%'}}></div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700">Effectiveness</span>
+                    <span className="text-purple-600 font-bold">99%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-purple-500 h-2 rounded-full" style={{width: '99%'}}></div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-blue-200 rounded-full opacity-50"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-200 rounded-full opacity-30"></div>
             </div>
           </div>
         </div>

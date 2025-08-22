@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { ShopifyCartProvider } from "@/hooks/useShopifyCart";
+import CartNotifications from "./CartNotifications";
 
 export default function RootClient({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -14,5 +16,10 @@ export default function RootClient({ children }: { children: React.ReactNode }) 
       disable: 'mobile'
     });
   }, []);
-  return <>{children}</>;
+  return (
+    <ShopifyCartProvider>
+      {children}
+      <CartNotifications />
+    </ShopifyCartProvider>
+  );
 } 

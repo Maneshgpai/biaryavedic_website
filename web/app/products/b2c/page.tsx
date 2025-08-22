@@ -1,18 +1,32 @@
+"use client";
+
 import Contact from "@/components/Contact";
 import ProductCard from "@/components/ProductCard";
-import { FaLeaf, FaShieldAlt, FaBolt, FaClock } from "react-icons/fa";
+import { 
+  FaHome, 
+  FaClock, 
+  FaShieldAlt, 
+  FaHeart,
+  FaLeaf,
+  FaStar,
+  FaDollarSign,
+  FaTruck
+} from "react-icons/fa";
+import { getProductsByCategory } from "@/data/products";
 
 export default function B2CPage() {
+  const b2cProducts = getProductsByCategory("B2C");
+
   return (
     <main>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-r from-[#1b5c70] to-[#19495a]">
+      <section className="py-20 bg-gradient-to-r from-green-600 to-green-700">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 font-display">
-            B2C <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">Products</span>
+            B2C <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">Products</span>
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Premium fabric care solutions for your home. Natural, safe, and effective products for everyday use.
+            Premium fabric care solutions for modern households. Experience the perfect blend of convenience and quality.
           </p>
         </div>
       </section>
@@ -25,28 +39,31 @@ export default function B2CPage() {
               Home Fabric Care <span className="text-green-600">Solutions</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Transform your daily fabric care routine with our eco-friendly, effective solutions designed for modern homes.
+              Transform your fabric care routine with our eco-friendly, time-saving solutions designed for busy lifestyles.
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ProductCard
-              id="bn161"
-              name="Eco-Friendly Instant Fabric Stiffener Spray"
-              description="Busy mornings, crisp outfits. Transform your ironing experience with our eco-friendly instant fabric stiffener spray. Perfect for time-saving solutions during morning rush before school or work."
-              price={530}
-              originalPrice={650}
-              discount={18}
-              rating={4.3}
-              reviewCount={23}
-              sku="BN161"
-              volume="450ml"
-              application="3-in-1 Antimicrobial"
-              image="/assets/images/product_BN161.webp"
-              category="B2C"
-              categoryColor="from-white to-green-600"
-              detailsLink="/products/b2c"
-            />
+            {b2cProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+                originalPrice={product.originalPrice}
+                discount={product.discount}
+                rating={product.rating}
+                reviewCount={product.reviewCount}
+                sku={product.sku}
+                volume={product.volume}
+                application={product.application}
+                image={product.image}
+                category={product.category}
+                categoryColor={product.categoryColor}
+                detailsLink={product.detailsLink}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -56,75 +73,116 @@ export default function B2CPage() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
-              Why Choose Our <span className="text-green-600">B2C Products</span>
+              Perfect for <span className="text-green-600">Modern Homes</span>
             </h2>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaLeaf className="text-white text-2xl" />
+                <FaHome className="text-white text-2xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">100% Natural</h3>
-              <p className="text-gray-600">Made from plant-based ingredients, safe for your family and the environment.</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Household Use</h3>
+              <p className="text-gray-600">Perfect for everyday fabric care needs in modern households and apartments.</p>
             </div>
             
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaShieldAlt className="text-white text-2xl" />
+                <FaClock className="text-white text-2xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Gentle & Safe</h3>
-              <p className="text-gray-600">Dermatologically tested, suitable for sensitive skin and children&apos;s clothes.</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Time-Saving</h3>
+              <p className="text-gray-600">Quick application and fast-acting formulas for busy morning routines.</p>
             </div>
             
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaBolt className="text-white text-2xl" />
+                <FaShieldAlt className="text-white text-2xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Powerful Results</h3>
-              <p className="text-gray-600">Advanced bio-enzyme technology delivers superior cleaning and care performance.</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Safe & Gentle</h3>
+              <p className="text-gray-600">Family-safe formulations that are gentle on fabrics and skin.</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaClock className="text-white text-2xl" />
+              <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FaHeart className="text-white text-2xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Time-Saving</h3>
-              <p className="text-gray-600">Quick and easy application for busy lifestyles, with long-lasting results.</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Fabric Care</h3>
+              <p className="text-gray-600">Extends fabric life while maintaining softness and color vibrancy.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How to Use Section */}
+      {/* Benefits Section */}
       <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
-              How to <span className="text-green-600">Use</span>
+              B2C <span className="text-green-600">Benefits</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Simple steps to get the best results from our fabric care products
-            </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">1</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Apply</h3>
-              <p className="text-gray-600">Spray or apply the product evenly on the fabric surface or add to washing machine as directed.</p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaLeaf className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Eco-Friendly</h3>
+                    <p className="text-gray-600">Biodegradable formulations that are safe for your family and the environment.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaStar className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Premium Quality</h3>
+                    <p className="text-gray-600">Professional-grade results in convenient home-use packaging.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaDollarSign className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Value for Money</h3>
+                    <p className="text-gray-600">Concentrated formulas provide excellent value with long-lasting results.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaTruck className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fast Delivery</h3>
+                    <p className="text-gray-600">Quick doorstep delivery across India with secure packaging.</p>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
-              <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">2</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Wait</h3>
-              <p className="text-gray-600">Allow the bio-active ingredients to work for the recommended time for optimal results.</p>
-            </div>
-            
-            <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
-              <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">3</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Enjoy</h3>
-              <p className="text-gray-600">Experience fresh, clean, and well-cared fabrics with long-lasting protection and fragrance.</p>
+            <div className="bg-white rounded-2xl p-8 shadow-lg">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">Customer Reviews</h3>
+              <div className="space-y-6">
+                <div className="border-l-4 border-green-500 pl-4">
+                  <p className="text-gray-600 mb-2">&ldquo;Amazing product! My clothes feel so much better and the spray works instantly.&rdquo;</p>
+                  <p className="text-sm text-gray-500">- Priya S., Mumbai</p>
+                </div>
+                <div className="border-l-4 border-blue-500 pl-4">
+                  <p className="text-gray-600 mb-2">&ldquo;Perfect for busy mornings. No more wrinkled shirts for office!&rdquo;</p>
+                  <p className="text-sm text-gray-500">- Rajesh K., Bangalore</p>
+                </div>
+                <div className="border-l-4 border-purple-500 pl-4">
+                  <p className="text-gray-600 mb-2">&ldquo;Eco-friendly and effective. Highly recommend for all families.&rdquo;</p>
+                  <p className="text-sm text-gray-500">- Meera R., Delhi</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

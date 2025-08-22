@@ -12,8 +12,33 @@ import {
   FaCogs,
   FaHandshake
 } from "react-icons/fa";
+import { getProducts, getProductsByCategory } from "@/data/products";
+import { useEffect, useState } from "react";
+import type { Product } from "@/data/products";
 
 export default function B2BPage() {
+  const [b2bProducts, setB2bProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const allProducts = await getProducts();
+        const filtered = getProductsByCategory("B2B", allProducts);
+        setB2bProducts(filtered);
+      } catch (error) {
+        console.error('Error fetching B2B products:', error);
+        // Fallback to static data
+        const staticProducts = await import("@/data/products").then(m => m.STATIC_PRODUCTS);
+        setB2bProducts(getProductsByCategory("B2B", staticProducts));
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
   return (
     <main>
       {/* Hero Section */}
@@ -41,23 +66,43 @@ export default function B2BPage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ProductCard
-              id="bn160"
-              name="B2B Eco-Friendly Fabric Sizing Agent"
-              description="Revolutionizing the fabric sizing process for a green future. Our industrial solution forms a uniform layer of protective coating over warp yarn, minimizes yarn breakage during weaving, and improves yarn strength to resist mechanical stress."
-              price={2500}
-              originalPrice={3200}
-              discount={22}
-              rating={4.2}
-              reviewCount={18}
-              sku="BN160"
-              volume="5L"
-              application="Industrial Weaving"
-              image="/assets/images/product_BN160.webp"
-              category="B2B"
-              categoryColor="from-white to-blue-600"
-              detailsLink="/products/b2b"
-            />
+            {loading ? (
+              // Loading skeleton
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden animate-pulse">
+                  <div className="h-48 bg-gray-200"></div>
+                  <div className="p-6 space-y-4">
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                    <div className="space-y-2">
+                      <div className="h-3 bg-gray-200 rounded"></div>
+                      <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              b2bProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  originalPrice={product.originalPrice}
+                  discount={product.discount}
+                  rating={product.rating}
+                  reviewCount={product.reviewCount}
+                  sku={product.sku}
+                  volume={product.volume}
+                  application={product.application}
+                  image={product.image}
+                  category={product.category}
+                  categoryColor={product.categoryColor}
+                  detailsLink={product.detailsLink}
+                />
+              ))
+            )}
           </div>
         </div>
       </section>

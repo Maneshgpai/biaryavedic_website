@@ -5,7 +5,13 @@ const nextConfig: NextConfig = {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    domains: [],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com',
+        pathname: '/**',
+      },
+    ],
     unoptimized: false,
   },
   async redirects() {
@@ -18,6 +24,12 @@ const nextConfig: NextConfig = {
       { source: "/product_b2c.html", destination: "/products/b2c", permanent: true },
       { source: "/product_b2b.html", destination: "/products/b2b", permanent: true },
     ];
+  },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = { type: 'memory' };
+    }
+    return config;
   },
 };
 

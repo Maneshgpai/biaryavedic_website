@@ -58,7 +58,7 @@ export default function Header() {
 
   const handleCartMouseLeave = () => {
     if (cartHoverTimerRef.current) clearTimeout(cartHoverTimerRef.current);
-    cartHoverTimerRef.current = setTimeout(() => setShowCartPopover(false), 200);
+    cartHoverTimerRef.current = setTimeout(() => setShowCartPopover(false), 150);
   };
 
   const shopDomain = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN;
@@ -191,79 +191,80 @@ export default function Header() {
             >
               <FaShoppingCart />
               <span id="shopify-cart-count" className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">{cartCount}</span>
-              {showCartPopover && (
-                <div
-                  className="absolute right-0 mt-3 w-96 bg-white border border-gray-200 shadow-2xl rounded-xl overflow-hidden z-50"
-                  onMouseEnter={handleCartMouseEnter}
-                  onMouseLeave={handleCartMouseLeave}
-                >
-                  <div className="max-h-96 overflow-auto">
-                    {lines.length === 0 ? (
-                      <div className="p-4 text-sm text-gray-600">Your cart is empty.</div>
-                    ) : (
-                      <ul className="divide-y divide-gray-100">
-                        {lines.map((line) => {
-                          const img = line.merchandise.image?.url || line.merchandise.product?.featuredImage?.url || "/assets/images/placeholder.png";
-                          const title = line.merchandise.product?.title || line.merchandise.title || "Item";
-                          const unitPrice = line.cost?.amountPerQuantity?.amount || line.merchandise.price?.amount || "";
-                          const currency = line.cost?.amountPerQuantity?.currencyCode || line.merchandise.price?.currencyCode || subtotal?.currencyCode || "INR";
-                          const lineSubtotal = line.cost?.subtotalAmount?.amount || "";
-                          return (
-                            <li key={line.id} className="p-3 flex items-center gap-3">
-                              <Image src={img} alt={title} width={56} height={56} className="rounded-md object-cover w-14 h-14" />
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-medium text-gray-900 truncate">{title}</div>
-                                <div className="text-xs text-gray-600">Unit: {currency} {unitPrice}</div>
-                                <div className="mt-2 flex items-center gap-2">
-                                  <button className="px-2 py-1 text-sm border rounded" onClick={() => updateQuantity(line.id, Math.max(1, line.quantity - 1))}>-</button>
-                                  <input
-                                    type="number"
-                                    min={1}
-                                    value={line.quantity}
-                                    onChange={(e) => {
-                                      const val = parseInt(e.target.value || "1", 10);
-                                      updateQuantity(line.id, isNaN(val) ? 1 : Math.max(1, val));
-                                    }}
-                                    className="w-14 text-center border rounded py-1 text-sm"
-                                  />
-                                  <button className="px-2 py-1 text-sm border rounded" onClick={() => updateQuantity(line.id, line.quantity + 1)}>+</button>
-                                  <button className="ml-3 text-xs text-red-600 hover:underline" onClick={() => removeLine(line.id)}>Remove</button>
-                                </div>
-                              </div>
-                              <div className="text-sm font-semibold text-gray-900 whitespace-nowrap">{currency} {lineSubtotal}</div>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    )}
-                  </div>
-                  <div className="p-3 border-t border-gray-100">
-                    <div className="flex items-center justify-between text-sm mb-3">
-                      <span className="text-gray-600">Subtotal</span>
-                      <span className="font-semibold">{subtotal ? `${subtotal.currencyCode} ${subtotal.amount}` : "—"}</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-2">
-                      <button
-                        className="text-sm text-gray-600 hover:text-gray-800 hover:underline"
-                        onClick={async (e) => { e.preventDefault(); await clear(); }}
-                      >
-                        Clear Cart
-                      </button>
-                      <button
-                        className="ml-auto bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg"
-                        onClick={(e) => { e.preventDefault(); goToCheckout(); }}
-                      >
-                        Checkout
-                      </button>
-                    </div>
-                    <div className="mt-2 text-[11px] text-gray-500">Taxes and shipping calculated at checkout.</div>
-                  </div>
-                </div>
-              )}
             </button>
           </li>
         </ul>
       </nav>
+
+      {showCartPopover && (
+        <div
+          className="fixed right-4 top-16 w-80 bg-white border border-gray-200 shadow-2xl rounded-xl overflow-hidden z-[1000]"
+          onMouseEnter={handleCartMouseEnter}
+          onMouseLeave={handleCartMouseLeave}
+        >
+          <div className="max-h-80 overflow-auto">
+            {lines.length === 0 ? (
+              <div className="p-4 text-sm text-gray-600">Your cart is empty.</div>
+            ) : (
+              <ul className="divide-y divide-gray-100">
+                {lines.map((line) => {
+                  const img = line.merchandise.image?.url || line.merchandise.product?.featuredImage?.url || "/assets/images/placeholder.png";
+                  const title = line.merchandise.product?.title || line.merchandise.title || "Item";
+                  const unitPrice = line.cost?.amountPerQuantity?.amount || line.merchandise.price?.amount || "";
+                  const currency = line.cost?.amountPerQuantity?.currencyCode || line.merchandise.price?.currencyCode || subtotal?.currencyCode || "INR";
+                  const lineSubtotal = line.cost?.subtotalAmount?.amount || "";
+                  return (
+                    <li key={line.id} className="p-3 flex items-center gap-3">
+                      <Image src={img} alt={title} width={40} height={40} className="rounded object-cover w-10 h-10" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-gray-900 truncate">{title}</div>
+                        <div className="text-[11px] text-gray-600">{unitPrice && `${currency} ${unitPrice}`}</div>
+                        <div className="mt-1 flex items-center gap-2">
+                          <button className="px-2 py-0.5 text-xs border rounded" onClick={() => updateQuantity(line.id, Math.max(1, line.quantity - 1))}>-</button>
+                          <input
+                            type="number"
+                            min={1}
+                            value={line.quantity}
+                            onChange={(e) => {
+                              const val = parseInt(e.target.value || "1", 10);
+                              updateQuantity(line.id, isNaN(val) ? 1 : Math.max(1, val));
+                            }}
+                            className="w-12 text-center border rounded py-0.5 text-xs"
+                          />
+                          <button className="px-2 py-0.5 text-xs border rounded" onClick={() => updateQuantity(line.id, line.quantity + 1)}>+</button>
+                          <button className="ml-2 text-[11px] text-red-600 hover:underline" onClick={() => removeLine(line.id)}>Remove</button>
+                        </div>
+                      </div>
+                      <div className="text-sm font-semibold text-gray-900 whitespace-nowrap">{currency} {lineSubtotal}</div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+          <div className="p-3 border-t border-gray-100">
+            <div className="flex items-center justify-between text-sm mb-2">
+              <span className="text-gray-600">Subtotal</span>
+              <span className="font-semibold">{subtotal ? `${subtotal.currencyCode} ${subtotal.amount}` : "—"}</span>
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <button
+                className="text-xs text-gray-600 hover:text-gray-800 hover:underline"
+                onClick={async (e) => { e.preventDefault(); await clear(); }}
+              >
+                Clear Cart
+              </button>
+              <button
+                className="ml-auto bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg"
+                onClick={(e) => { e.preventDefault(); goToCheckout(); }}
+              >
+                Checkout
+              </button>
+            </div>
+            <div className="mt-1 text-[10px] text-gray-500">Taxes and shipping calculated at checkout.</div>
+          </div>
+        </div>
+      )}
 
       {showEmptyCartNotice && (
         <div className="fixed z-50 left-1/2 -translate-x-1/2 bottom-4 w-auto max-w-sm md:max-w-md md:bottom-auto md:top-20 md:right-6 md:left-auto md:translate-x-0">

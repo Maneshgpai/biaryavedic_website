@@ -229,7 +229,7 @@ export default function Header() {
                               const val = parseInt(e.target.value || "1", 10);
                               updateQuantity(line.id, isNaN(val) ? 1 : Math.max(1, val));
                             }}
-                            className="w-12 text-center border rounded py-0.5 text-xs"
+                            className="w-12 text-center border rounded py-0.5 text-xs text-gray-900"
                           />
                           <button className="px-2 py-0.5 text-xs border rounded" onClick={() => updateQuantity(line.id, line.quantity + 1)}>+</button>
                           <button className="ml-2 text-[11px] text-red-600 hover:underline" onClick={() => removeLine(line.id)}>Remove</button>

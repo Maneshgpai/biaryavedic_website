@@ -7,16 +7,16 @@ import {
   loadRelatedArticles,
   loadPrevNext,
   normalizeImageSrc,
-  type Article,
 } from "@/lib/resources";
 
 interface PageProps {
   params: { id: string };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const id = Number(params.id);
-  const article = await loadArticleById(id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const articleId = Number(id);
+  const article = await loadArticleById(articleId);
   if (!article) return {};
   return {
     title: article.seo?.metaTitle ?? article.title,
@@ -30,16 +30,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function ArticlePage({ params }: PageProps) {
-  const id = Number(params.id);
-  if (Number.isNaN(id)) return notFound();
+export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const numericId = Number(id);
+  if (Number.isNaN(numericId)) return notFound();
 
-  const article = await loadArticleById(id);
+  const article = await loadArticleById(numericId);
   if (!article) return notFound();
 
   const [related, { prev, next }] = await Promise.all([
     loadRelatedArticles(article, 6),
-    loadPrevNext(id),
+    loadPrevNext(numericId),
   ]);
 
   return (

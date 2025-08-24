@@ -10,6 +10,7 @@ import {
   FaShieldAlt,
   FaHeart
 } from "react-icons/fa";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -38,17 +39,17 @@ export default function Footer() {
             <div className="group">
               <h4 className="text-xl font-semibold mb-6 text-white relative">Products<div className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 group-hover:w-full transition-all duration-300"></div></h4>
               <ul className="space-y-3">
-                <li><a href="/products/b2c" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>B2C Solutions</a></li>
-                <li><a href="/products/b2b" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>B2B Enterprise</a></li>
+                <li><Link href="/products/b2c" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>B2C Solutions</Link></li>
+                <li><Link href="/products/b2b" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>B2B Enterprise</Link></li>
               </ul>
             </div>
             <div className="group">
               <h4 className="text-xl font-semibold mb-6 text-white relative">Company<div className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 group-hover:w-full transition-all duration-300"></div></h4>
               <ul className="space-y-3">
-                <li><a href="/about" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>About Us</a></li>
+                <li><Link href="/about" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>About Us</Link></li>
                 <li><a href="https://www.linkedin.com/company/aryavedicnaturals/jobs/" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Careers</a></li>
-                <li><a href="/resources" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Press</a></li>
-                <li><a href="/about#contact-component" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Contact</a></li>
+                <li><Link href="/resources" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Press</Link></li>
+                <li><Link href="/about#contact-component" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Contact</Link></li>
               </ul>
             </div>
             <div className="group">

@@ -162,10 +162,25 @@ export default function Header() {
           </Link>
         </div>
 
-        <div className={`burger-menu${menuOpen ? " active" : ""}`} id="burger-menu" onClick={() => setMenuOpen((v) => !v)}>
-          <span></span>
-          <span></span>
-          <span></span>
+        {/* Mobile header controls */}
+        <div className="mobile-header-controls md:hidden flex items-center gap-3">
+          <button
+            onClick={handleCartClick}
+            onMouseEnter={handleCartMouseEnter}
+            onMouseLeave={handleCartMouseLeave}
+            className="icon-link relative"
+            title="Shopping Cart"
+            aria-label="Cart"
+          >
+            <FaShoppingCart />
+            <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">{cartCount}</span>
+          </button>
+          
+          <div className={`burger-menu${menuOpen ? " active" : ""}`} id="burger-menu" onClick={() => setMenuOpen((v) => !v)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
 
         <ul className={`nav-menu${menuOpen ? " active" : ""}`} id="nav-menu" onClick={() => setMenuOpen(false)}>
@@ -180,7 +195,8 @@ export default function Header() {
           </li>
           <li><Link href="/impact">Impact</Link></li>
           <li><Link href="/resources">Resources</Link></li>
-          <li className="icon-links">
+          {/* Desktop cart icon */}
+          <li className="icon-links hidden md:flex">
             <button
               onClick={handleCartClick}
               onMouseEnter={handleCartMouseEnter}

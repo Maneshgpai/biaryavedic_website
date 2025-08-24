@@ -1,7 +1,8 @@
 "use client";
 
 import Contact from "@/components/Contact";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { FaSearch, FaUser } from "react-icons/fa";
 import Image from "next/image";
 
@@ -9,6 +10,7 @@ interface Article {
   id: number;
   title: string;
   excerpt: string;
+  content: string;
   type: string;
   category: string;
   tags: string[];
@@ -23,13 +25,17 @@ export default function ResourcesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentFilter, setCurrentFilter] = useState("all");
   const [currentSort, setCurrentSort] = useState("date-desc");
+  const [articles, setArticles] = useState<Article[]>([]);
 
-  // Sample articles data
-  const articles: Article[] = [
+  // Fallback sample data (used only if fetching JSON fails)
+  const fallbackArticles: Article[] = [
     {
       id: 1,
       title: "Revolutionary Bio-Hybrid Technology in Textile Manufacturing",
-      excerpt: "Discover how our innovative bio-hybrid approach is transforming the textile industry with 100% natural and safe formulations.",
+      excerpt:
+        "Discover how our innovative bio-hybrid approach is transforming the textile industry with 100% natural and safe formulations.",
+      content:
+        "Discover how our innovative bio-hybrid approach is transforming the textile industry with 100% natural and safe formulations.",
       type: "blog",
       category: "Innovation",
       tags: ["innovation", "technology", "sustainability"],
@@ -37,54 +43,112 @@ export default function ResourcesPage() {
       date: "2024-01-15",
       readingTime: 8,
       image: "/assets/images/innovation.webp",
-      featured: true
+      featured: true,
     },
     {
       id: 2,
       title: "Carbon Sequestration: Our 1 Million Tonnes Journey",
-      excerpt: "How regenerative agriculture practices are helping us achieve unprecedented carbon sequestration targets.",
+      excerpt:
+        "How regenerative agriculture practices are helping us achieve unprecedented carbon sequestration targets.",
+      content:
+        "How regenerative agriculture practices are helping us achieve unprecedented carbon sequestration targets.",
       type: "research",
       category: "Environment",
       tags: ["environment", "agriculture", "sustainability"],
       author: "Prof. Michael Chen",
       date: "2024-01-10",
       readingTime: 12,
-      image: "/assets/images/feature-image.webp"
+      image: "/assets/images/feature-image.webp",
     },
     {
       id: 3,
       title: "Empowering 15,000 Farmers: A Social Impact Story",
-      excerpt: "The transformative journey of farmer empowerment through sustainable agricultural practices and fair partnerships.",
+      excerpt:
+        "The transformative journey of farmer empowerment through sustainable agricultural practices and fair partnerships.",
+      content:
+        "The transformative journey of farmer empowerment through sustainable agricultural practices and fair partnerships.",
       type: "case-study",
       category: "Community",
       tags: ["community", "agriculture", "sustainability"],
       author: "Maria Rodriguez",
       date: "2024-01-05",
       readingTime: 10,
-      image: "/assets/images/old_woman.webp"
+      image: "/assets/images/old_woman.webp",
     },
     {
       id: 4,
       title: "Industry News: Sustainable Textiles Market Growth",
-      excerpt: "Latest market trends show exponential growth in demand for sustainable textile solutions worldwide.",
+      excerpt:
+        "Latest market trends show exponential growth in demand for sustainable textile solutions worldwide.",
+      content:
+        "Latest market trends show exponential growth in demand for sustainable textile solutions worldwide.",
       type: "news",
       category: "Industry",
       tags: ["industry", "sustainability", "research"],
       author: "Business Team",
       date: "2024-01-03",
       readingTime: 5,
-      image: "/assets/images/b2b_industry.webp"
-    }
+      image: "/assets/images/b2b_industry.webp",
+    },
   ];
 
-  const filteredArticles = articles.filter(article => {
-    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = currentFilter === "all" || article.type === currentFilter;
-    return matchesSearch && matchesFilter;
-  });
+  useEffect(() => {
+    let isCancelled = false;
 
-  const featuredArticle = articles.find(article => article.featured);
+    async function loadArticles() {
+      try {
+        const response = await fetch("/data/resources-data.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("Failed to load resources data");
+        const data: Article[] = await response.json();
+        if (!isCancelled) setArticles(data);
+      } catch (error) {
+        if (!isCancelled) setArticles(fallbackArticles);
+      }
+    }
+
+    loadArticles();
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  const normalizeImageSrc = (src: string) => (src.startsWith("/") ? src : `/${src}`);
+
+  const filteredAndSortedArticles = useMemo(() => {
+    const filtered = articles.filter((article) => {
+      const matchesSearch =
+        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesFilter = currentFilter === "all" || article.type === currentFilter;
+      return matchesSearch && matchesFilter;
+    });
+
+    const sorted = [...filtered].sort((a, b) => {
+      switch (currentSort) {
+        case "date-desc":
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        case "date-asc":
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        case "title-asc":
+          return a.title.localeCompare(b.title);
+        case "title-desc":
+          return b.title.localeCompare(a.title);
+        case "reading-time-asc":
+          return a.readingTime - b.readingTime;
+        case "reading-time-desc":
+          return b.readingTime - a.readingTime;
+        default:
+          return 0;
+      }
+    });
+
+    return sorted;
+  }, [articles, searchTerm, currentFilter, currentSort]);
+
+  const featuredArticle = useMemo(
+    () => articles.find((a) => a.featured) || articles[0],
+    [articles]
+  );
 
   return (
     <main>
@@ -154,7 +218,7 @@ export default function ResourcesPage() {
               <div className="grid lg:grid-cols-2 gap-0">
                 <div className="h-64 lg:h-auto bg-gray-200">
                   <Image
-                    src={featuredArticle.image}
+                    src={normalizeImageSrc(featuredArticle.image)}
                     alt={featuredArticle.title}
                     width={400}
                     height={300}
@@ -182,9 +246,9 @@ export default function ResourcesPage() {
                         <p className="text-gray-500 text-sm">{new Date(featuredArticle.date).toLocaleDateString()}</p>
                       </div>
                     </div>
-                    <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all">
+                    <Link href={`/resources/${featuredArticle.id}`} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all">
                       Read More
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -207,7 +271,7 @@ export default function ResourcesPage() {
               <select
                 value={currentSort}
                 onChange={(e) => setCurrentSort(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 text-gray-700 bg-white"
               >
                 <option value="date-desc">Newest First</option>
                 <option value="date-asc">Oldest First</option>
@@ -221,11 +285,11 @@ export default function ResourcesPage() {
           
           {/* Articles Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredArticles.map((article) => (
+            {filteredAndSortedArticles.map((article) => (
               <div key={article.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                 <div className="h-48 bg-gray-200">
                   <Image
-                    src={article.image}
+                    src={normalizeImageSrc(article.image)}
                     alt={article.title}
                     width={300}
                     height={200}
@@ -258,16 +322,16 @@ export default function ResourcesPage() {
                         <p className="text-xs text-gray-500">{new Date(article.date).toLocaleDateString()}</p>
                       </div>
                     </div>
-                    <button className="text-green-600 hover:text-green-700 font-semibold text-sm">
+                    <Link href={`/resources/${article.id}`} className="text-green-600 hover:text-green-700 font-semibold text-sm">
                       Read More →
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             ))}
           </div>
           
-          {filteredArticles.length === 0 && (
+          {filteredAndSortedArticles.length === 0 && (
             <div className="text-center py-16">
               <FaSearch className="text-6xl text-gray-300 mb-6 mx-auto" />
               <h3 className="text-2xl font-bold text-gray-600 mb-4">No articles found</h3>

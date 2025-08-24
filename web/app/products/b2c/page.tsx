@@ -20,10 +20,10 @@ export default function B2CPage() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-green-700">
+      <section className="py-20 bg-gradient-to-r from-[#1b5c70] to-[#19495a]">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 font-display">
-            B2C <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">Products</span>
+            B2C <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">Products</span>
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
             Premium fabric care solutions for modern households. Experience the perfect blend of convenience and quality.

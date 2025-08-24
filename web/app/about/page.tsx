@@ -138,7 +138,7 @@ export default function AboutPage() {
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <FaCheck className="text-green-500 mr-2 mt-1 text-sm" />
-                      <span className="text-gray-600 text-sm">Led the development of 15+ bio-hybrid fabric care formulations</span>
+                      <span className="text-gray-600 text-sm">Led a corporate team of 15+ for many years</span>
                     </li>
                     <li className="flex items-start">
                       <FaCheck className="text-green-500 mr-2 mt-1 text-sm" />
@@ -147,10 +147,6 @@ export default function AboutPage() {
                     <li className="flex items-start">
                       <FaCheck className="text-green-500 mr-2 mt-1 text-sm" />
                       <span className="text-gray-600 text-sm">Reduced carbon footprint by 60% through innovative packaging</span>
-                    </li>
-                    <li className="flex items-start">
-                      <FaCheck className="text-green-500 mr-2 mt-1 text-sm" />
-                      <span className="text-gray-600 text-sm">Received &quot;Green Innovation Award&quot; 2023</span>
                     </li>
                     <li className="flex items-start">
                       <FaCheck className="text-green-500 mr-2 mt-1 text-sm" />
@@ -183,23 +179,19 @@ export default function AboutPage() {
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <FaCheck className="text-blue-500 mr-2 mt-1 text-sm" />
-                      <span className="text-gray-600 text-sm">Pioneered nanotechnology integration in fabric care</span>
+                      <span className="text-gray-600 text-sm">Pioneered Bi enzyme technology development</span>
                     </li>
                     <li className="flex items-start">
                       <FaCheck className="text-blue-500 mr-2 mt-1 text-sm" />
-                      <span className="text-gray-600 text-sm">Secured ₹50M in funding for R&D initiatives</span>
+                      <span className="text-gray-600 text-sm">Secured ₹40L in seed funding for major angel investors</span>
                     </li>
                     <li className="flex items-start">
                       <FaCheck className="text-blue-500 mr-2 mt-1 text-sm" />
-                      <span className="text-gray-600 text-sm">Developed 8 patented bio-enzyme formulations</span>
+                      <span className="text-gray-600 text-sm">Developed patented bio-enzyme formulations</span>
                     </li>
                     <li className="flex items-start">
                       <FaCheck className="text-blue-500 mr-2 mt-1 text-sm" />
-                      <span className="text-gray-600 text-sm">Expanded market presence to 12 states</span>
-                    </li>
-                    <li className="flex items-start">
-                      <FaCheck className="text-blue-500 mr-2 mt-1 text-sm" />
-                      <span className="text-gray-600 text-sm">Named &quot;Innovation Leader&quot; by Startup India 2023</span>
+                      <span className="text-gray-600 text-sm">Corporate leadership experience for multiple years</span>
                     </li>
                   </ul>
                 </div>

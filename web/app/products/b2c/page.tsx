@@ -221,7 +221,7 @@ export default function B2CPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Eco-Friendly</h3>
               <p className="text-gray-700 leading-relaxed">
-                Transform your ironing experience with our eco-friendly instant fabric stiffener spray that's safe for your family and the environment.
+                Transform your ironing experience with our eco-friendly instant fabric stiffener spray that&apos;s safe for your family and the environment.
               </p>
             </div>
 
@@ -280,7 +280,7 @@ export default function B2CPage() {
                   Safe & Gentle
                 </h3>
                 <p className="text-gray-600">
-                  Eco-friendly formulation that's gentle on all fabric types while providing superior stiffening and protection.
+                  Eco-friendly formulation that&apos;s gentle on all fabric types while providing superior stiffening and protection.
                 </p>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-md">

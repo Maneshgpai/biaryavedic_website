@@ -25,12 +25,8 @@ const nextConfig: NextConfig = {
       { source: "/product_b2b.html", destination: "/products/b2b", permanent: true },
     ];
   },
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.cache = { type: 'memory' };
-    }
-    return config;
-  },
+  // Turbopack is now the default bundler in Next.js 16
+  // Removed webpack config as Turbopack handles caching more efficiently
 };
 
 export default nextConfig;

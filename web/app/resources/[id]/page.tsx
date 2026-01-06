@@ -9,10 +9,6 @@ import {
   normalizeImageSrc,
 } from "@/lib/resources";
 
-interface PageProps {
-  params: { id: string };
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const articleId = Number(id);

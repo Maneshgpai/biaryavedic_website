@@ -13,10 +13,10 @@ import {
   FaWater,
   FaIndustry
 } from "react-icons/fa";
-import { getProducts } from "@/data/products";
+import { STATIC_PRODUCTS } from "@/data/products";
 
-export default async function Home() {
-  const products = await getProducts();
+export default function Home() {
+  const products = STATIC_PRODUCTS;
 
   return (
     <main>

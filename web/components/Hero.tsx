@@ -16,13 +16,21 @@ export default function Hero() {
 
   useEffect(() => {
     const animateCounters = () => {
-      const targets = { customers: 1000, products: 50, partners: 25, years: 5 };
-      const duration = 2000;
-      const steps = 60;
-      const stepTime = duration / steps;
+      const targets = { customers: 500, products: 2, partners: 2, years: 3 };
+      // Base duration in milliseconds - adjust based on target value
+      const baseDuration = 2000;
+      // Calculate steps based on target value for smooth animation
+      // Larger numbers need more steps for smooth counting effect
+      const calculateSteps = (target: number) => {
+        if (target <= 5) return 30; // Small numbers: 30 steps
+        if (target <= 50) return 60; // Medium numbers: 60 steps
+        return 100; // Large numbers: 100 steps for smooth animation
+      };
 
       Object.keys(targets).forEach((key) => {
         const target = targets[key as keyof typeof targets];
+        const steps = calculateSteps(target);
+        const stepTime = baseDuration / steps;
         let current = 0;
         const increment = target / steps;
 
@@ -125,11 +133,11 @@ export default function Hero() {
               <p className="text-gray-600 font-semibold">Happy Customers</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">{counters.products}+</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">{counters.products}</div>
               <p className="text-gray-600 font-semibold">Products Developed</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-orange-600 mb-2">{counters.partners}+</div>
+              <div className="text-4xl font-bold text-orange-600 mb-2">{counters.partners}</div>
               <p className="text-gray-600 font-semibold">Business Partners</p>
             </div>
             <div className="text-center">

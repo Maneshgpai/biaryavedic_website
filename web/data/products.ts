@@ -14,6 +14,7 @@ export interface Product {
   volume: string;
   application: string;
   image: string;
+  images?: string[]; // Additional images for product gallery
   category: "B2B" | "B2C";
   categoryColor: string;
   detailsLink: string;
@@ -24,7 +25,7 @@ export const STATIC_PRODUCTS: Product[] = [
   {
     id: "bn160",
     sku: "BN160",
-    name: "B2B Eco-Friendly Fabric Sizing Agent",
+    name: "Eco-Friendly Fabric Sizing & Finishing Agent",
     description: "Revolutionizing the fabric sizing process for a green future. Our industrial solution forms a uniform layer of protective coating over warp yarn, minimizes yarn breakage during weaving, and improves yarn strength to resist mechanical stress.",
     price: 2300,
     originalPrice: 3200,
@@ -33,7 +34,14 @@ export const STATIC_PRODUCTS: Product[] = [
     reviewCount: 18,
     volume: "5L",
     application: "Industrial Weaving",
-    image: "/assets/images/product_BN160.webp",
+    image: "/assets/images/product_BN160_1.webp",
+    images: [
+      "/assets/images/product_BN160_1.webp",
+      "/assets/images/product_BN160_2.webp",
+      "/assets/images/product_BN160_3.webp",
+      "/assets/images/product_BN160_4.webp",
+      "/assets/images/product_BN160_5.webp"
+    ],
     category: "B2B",
     categoryColor: "from-white to-blue-600",
     detailsLink: "/products/b2b"
@@ -50,7 +58,17 @@ export const STATIC_PRODUCTS: Product[] = [
     reviewCount: 23,
     volume: "450ml",
     application: "3-in-1 Antimicrobial",
-    image: "/assets/images/product_BN161.webp",
+    image: "/assets/images/product_BN161_1.webp",
+    images: [
+      "/assets/images/product_BN161_1.webp",
+      "/assets/images/product_BN161_2.webp",
+      "/assets/images/product_BN161_3.webp",
+      "/assets/images/product_BN161_4.webp",
+      "/assets/images/product_BN161_5.webp",
+      "/assets/images/product_BN161_6.webp",
+      "/assets/images/product_BN161_7.webp",
+      "/assets/images/product_BN161_8.webp",
+    ],
     category: "B2C",
     categoryColor: "from-white to-green-600",
     detailsLink: "/products/b2c"

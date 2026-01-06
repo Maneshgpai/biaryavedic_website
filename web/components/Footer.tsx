@@ -58,8 +58,8 @@ export default function Footer() {
                 <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Help Center</a></li>
                 <li><a href="mailto:info@aryavedicnaturals.com" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Contact Us</a></li>
                 <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Shipping Info</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Returns & Exchanges</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Warranty</a></li>
+                {/* <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Returns & Exchanges</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Warranty</a></li> */}
               </ul>
             </div>
           </div>
@@ -99,11 +99,9 @@ export default function Footer() {
               <p className="text-emerald-400 text-sm font-medium flex items-center space-x-1"><span>Made with</span><FaHeart className="text-emerald-400 animate-pulse" /><span>for a sustainable future</span></p>
             </div>
             <div className="flex items-center space-x-6">
-              <a href="#privacy" className="text-gray-400 hover:text-emerald-300 transition-colors duration-300 text-sm font-medium">Privacy Policy</a>
+              <Link href="/privacy" className="text-gray-400 hover:text-emerald-300 transition-colors duration-300 text-sm font-medium">Terms of Service</Link>
               <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-              <a href="#terms" className="text-gray-400 hover:text-emerald-300 transition-colors duration-300 text-sm font-medium">Terms of Service</a>
-              <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-              <a href="#cookies" className="text-gray-400 hover:text-emerald-300 transition-colors duration-300 text-sm font-medium">Cookie Policy</a>
+              <Link href="/cookies" className="text-gray-400 hover:text-emerald-300 transition-colors duration-300 text-sm font-medium">Cookie Policy</Link>
             </div>
           </div>
         </div>

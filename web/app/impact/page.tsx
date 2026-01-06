@@ -21,7 +21,7 @@ export default function ImpactPage() {
       <section className="py-20 bg-gradient-to-r from-[#1b5c70] to-[#19495a]">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold text-white font-display">
-            Our <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">Impact</span>
+            Our <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">Future </span>Impact
           </h1>
         </div>
       </section>
@@ -29,13 +29,13 @@ export default function ImpactPage() {
       {/* Impact Statistics Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {/* Farmers Engaged */}
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="100">
               <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <FaUsers className="text-white text-2xl" />
               </div>
-              <div className="text-4xl font-bold text-green-600 mb-2">15,000</div>
+              <div className="text-4xl font-bold text-green-600 mb-2">11,155</div>
               <p className="text-gray-700 font-semibold">Farmers Engaged</p>
               <div className="mt-4 bg-green-200 h-2 rounded-full overflow-hidden">
                 <div className="bg-green-500 h-full rounded-full w-3/4"></div>
@@ -47,7 +47,7 @@ export default function ImpactPage() {
               <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <FaGlobe className="text-white text-2xl" />
               </div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">25,000</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">12,487</div>
               <p className="text-gray-700 font-semibold">Hectares of Land</p>
               <div className="mt-4 bg-blue-200 h-2 rounded-full overflow-hidden">
                 <div className="bg-blue-500 h-full rounded-full w-3/5"></div>
@@ -55,7 +55,7 @@ export default function ImpactPage() {
             </div>
             
             {/* Cotton Bales */}
-            <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="300">
+            {/* <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="300">
               <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <FaSeedling className="text-white text-2xl" />
               </div>
@@ -64,14 +64,14 @@ export default function ImpactPage() {
               <div className="mt-4 bg-orange-200 h-2 rounded-full overflow-hidden">
                 <div className="bg-orange-500 h-full rounded-full w-5/6"></div>
               </div>
-            </div>
+            </div> */}
             
             {/* Carbon Credits */}
             <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="400">
               <div className="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <FaLeaf className="text-white text-2xl" />
               </div>
-              <div className="text-4xl font-bold text-purple-600 mb-2">12,000</div>
+              <div className="text-4xl font-bold text-purple-600 mb-2">10,478</div>
               <p className="text-gray-700 font-semibold">Carbon Credits Issued</p>
               <div className="mt-4 bg-purple-200 h-2 rounded-full overflow-hidden">
                 <div className="bg-purple-500 h-full rounded-full w-7/10"></div>

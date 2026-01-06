@@ -195,6 +195,13 @@ export default function Header() {
           </li>
           <li><Link href="/impact">Impact</Link></li>
           <li><Link href="/resources">Resources</Link></li>
+          <li className="dropdown">
+            <a href="#" className="dropdown-toggle">Privacy</a>
+            <ul className="dropdown-menu">
+              <li><Link href="/privacy">Terms & Conditions</Link></li>
+              <li><Link href="/cookies">Cookie Policy</Link></li>
+            </ul>
+          </li>
           {/* Desktop cart icon */}
           <li className="icon-links hidden md:flex">
             <button

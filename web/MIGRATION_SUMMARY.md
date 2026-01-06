@@ -66,7 +66,7 @@ The static HTML Bio-Aryavedic website has been successfully migrated to a modern
 - **BN166** - Fabric Freshener & Odor Eliminator (₹290)
 
 ### B2B Products (6 Products)
-- **BN160** - B2B Eco-Friendly Fabric Sizing Agent (₹2,500)
+- **BN160** - B2B Eco-Friendly Fabric Sizing & Finishing Agent (₹2,500)
 - **BN170** - Industrial Fabric Desizing Agent (₹2,800)
 - **BN171** - Commercial Laundry Detergent (₹1,800)
 - **BN172** - Textile Finishing Agent (₹3,200)

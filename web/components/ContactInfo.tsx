@@ -1,6 +1,6 @@
 "use client";
 
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaWhatsapp } from "react-icons/fa";
 
 /**
  * Reusable Contact Information component
@@ -26,6 +26,18 @@ export default function ContactInfo() {
               <p className="text-gray-600 text-base font-medium">+91-830-40-82080</p>
               <p className="text-sm text-gray-500">Mon-Fri, 9AM-6PM IST</p>
             </div>
+            {/* WhatsApp Quick Contact Button */}
+            <a
+              href="https://wa.me/918304082080"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 px-4 py-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] rounded-xl flex items-center gap-2 shadow-lg hover:shadow-[#25D366]/40 transition-all duration-300 hover:scale-105 group/wa"
+              aria-label="Contact us on WhatsApp"
+              title="Chat with us on WhatsApp"
+            >
+              <FaWhatsapp className="text-white text-lg group-hover/wa:scale-110 transition-transform duration-300" />
+              <span className="text-white font-semibold text-sm whitespace-nowrap">Chat</span>
+            </a>
           </div>
 
           {/* Email */}

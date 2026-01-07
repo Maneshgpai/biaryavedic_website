@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// Verify reCAPTCHA token
-async function verifyRecaptcha(token: string): Promise<boolean> {
+// Verify reCAPTCHA Enterprise v3 token
+async function verifyRecaptcha(token: string): Promise<{ success: boolean; score?: number; error?: string }> {
   try {
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     
     if (!secretKey) {
       console.error('reCAPTCHA secret key not configured');
-      return false;
+      return { success: false, error: 'Secret key not configured' };
     }
 
+    // For reCAPTCHA Enterprise v3, use the siteverify endpoint
+    // Note: For Enterprise, you may also use the Assessment API for more detailed results
     const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
       method: 'POST',
       headers: {
@@ -20,10 +22,30 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
     });
 
     const data = await response.json();
-    return data.success === true;
+    
+    // Log detailed response for debugging
+    if (!data.success) {
+      console.error('reCAPTCHA verification failed:', {
+        success: data.success,
+        'error-codes': data['error-codes'],
+        challenge_ts: data.challenge_ts,
+        hostname: data.hostname
+      });
+    }
+    
+    // For v3, also check the score (0.0 to 1.0, where 1.0 is likely human, 0.0 is likely bot)
+    // Typical threshold is 0.5, but adjust based on your needs
+    const score = data.score !== undefined ? data.score : 1.0;
+    const minScore = 0.5; // Adjust this threshold as needed
+    
+    return {
+      success: data.success === true && score >= minScore,
+      score: score,
+      error: data['error-codes'] ? data['error-codes'].join(', ') : undefined
+    };
   } catch (error) {
     console.error('reCAPTCHA verification error:', error);
-    return false;
+    return { success: false, error: 'Verification request failed' };
   }
 }
 
@@ -48,10 +70,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
-    if (!isRecaptchaValid) {
+    const recaptchaResult = await verifyRecaptcha(recaptchaToken);
+    if (!recaptchaResult.success) {
+      // Provide more detailed error message for debugging
+      const errorMessage = recaptchaResult.error 
+        ? `reCAPTCHA verification failed: ${recaptchaResult.error}. Please try again.`
+        : recaptchaResult.score !== undefined && recaptchaResult.score < 0.5
+        ? 'reCAPTCHA score too low. Please verify you are human and try again.'
+        : 'reCAPTCHA verification failed. Please try again.';
+      
       return NextResponse.json(
-        { error: 'reCAPTCHA verification failed. Please try again.' },
+        { error: errorMessage },
         { status: 400 }
       );
     }

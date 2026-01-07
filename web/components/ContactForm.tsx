@@ -1,9 +1,20 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import toast from "react-hot-toast";
-import ReCAPTCHA from "react-google-recaptcha";
+
+// Declare grecaptcha type for TypeScript
+declare global {
+  interface Window {
+    grecaptcha: {
+      enterprise: {
+        ready: (callback: () => void) => void;
+        execute: (siteKey: string, options: { action: string }) => Promise<string>;
+      };
+    };
+  }
+}
 
 interface FormData {
   firstName: string;
@@ -33,8 +44,21 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
+
+  // Check if reCAPTCHA is loaded
+  useEffect(() => {
+    const checkRecaptcha = () => {
+      if (window.grecaptcha && window.grecaptcha.enterprise) {
+        setRecaptchaLoaded(true);
+      } else {
+        // Retry after a short delay if not loaded yet
+        setTimeout(checkRecaptcha, 100);
+      }
+    };
+    checkRecaptcha();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -44,8 +68,39 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
     }));
   };
 
-  const handleRecaptchaChange = (token: string | null) => {
-    setRecaptchaToken(token);
+  // Execute reCAPTCHA v3 and get token
+  const getRecaptchaToken = async (): Promise<string | null> => {
+    if (!recaptchaSiteKey) {
+      console.error("reCAPTCHA site key is not configured");
+      toast.error("reCAPTCHA is not configured. Please contact support.");
+      return null;
+    }
+
+    if (!recaptchaLoaded || !window.grecaptcha?.enterprise) {
+      toast.error("reCAPTCHA is still loading. Please try again.");
+      return null;
+    }
+
+    try {
+      return new Promise((resolve) => {
+        window.grecaptcha.enterprise.ready(async () => {
+          try {
+            const token = await window.grecaptcha.enterprise.execute(recaptchaSiteKey, {
+              action: 'contact_form_submit'
+            });
+            resolve(token);
+          } catch (error) {
+            console.error("Error executing reCAPTCHA:", error);
+            toast.error("Failed to verify reCAPTCHA. Please try again.");
+            resolve(null);
+          }
+        });
+      });
+    } catch (error) {
+      console.error("Error getting reCAPTCHA token:", error);
+      toast.error("Failed to verify reCAPTCHA. Please try again.");
+      return null;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,15 +112,23 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
       return;
     }
 
-    // reCAPTCHA validation
-    if (!recaptchaToken) {
-      toast.error("Please complete the reCAPTCHA verification");
+    // Check if reCAPTCHA is configured
+    if (!recaptchaSiteKey) {
+      toast.error("reCAPTCHA is not configured. Please contact support.");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
+      // Get reCAPTCHA token
+      const recaptchaToken = await getRecaptchaToken();
+      
+      if (!recaptchaToken) {
+        setIsSubmitting(false);
+        return;
+      }
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -88,11 +151,6 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
           subject: defaultSubject,
           message: "",
         });
-        // Reset reCAPTCHA
-        setRecaptchaToken(null);
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset();
-        }
         // Call success callback if provided
         if (onSuccess) {
           onSuccess();
@@ -100,20 +158,10 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
       } else {
         const errorData = await response.json();
         toast.error(errorData.error || "Failed to send message. Please try again.");
-        // Reset reCAPTCHA on error
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset();
-        }
-        setRecaptchaToken(null);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Network error. Please check your connection and try again.");
-      // Reset reCAPTCHA on error
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
-      }
-      setRecaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -218,17 +266,12 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
               ></textarea>
             </div>
             
-            {/* reCAPTCHA */}
-            <div className="flex justify-center">
-              <div className="transform scale-95 hover:scale-100 transition-transform duration-300">
-                <ReCAPTCHA
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                  onChange={handleRecaptchaChange}
-                  ref={recaptchaRef}
-                  theme="light"
-                />
+            {/* reCAPTCHA v3 is invisible and runs automatically on submit */}
+            {!recaptchaSiteKey && (
+              <div className="text-center text-red-500 text-sm py-2">
+                ⚠️ reCAPTCHA is not configured. Contact form may not work properly.
               </div>
-            </div>
+            )}
             
             <button
               type="submit"

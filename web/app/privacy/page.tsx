@@ -69,7 +69,7 @@ export default function PrivacyPage() {
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-800 mb-4">6. Prices & payment</h3>
                   <p className="text-gray-700 leading-relaxed mb-2">
-                    a. Prices displayed include [applicable taxes / exclude taxes — choose one]. Shipping/handling fees are added at checkout.
+                    a. Prices displayed include applicable taxes. Shipping/handling fees are added at checkout.
                   </p>
                   <p className="text-gray-700 leading-relaxed">
                     b. Payment methods accepted: [Credit/Debit cards, UPI, Netbanking, Wallets, COD — list]. All payments are subject to payment provider terms.

@@ -94,7 +94,7 @@ export default function Footer() {
         <div className="border-t border-slate-700/50 pt-8">
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
             <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
-              <p className="text-gray-300 text-center sm:text-left">&copy; 2025 Bio-Aryavedic Naturals. All rights reserved.</p>
+              <p className="text-gray-300 text-center sm:text-left">&copy; 2026 Bio-Aryavedic Naturals. All rights reserved.</p>
               <div className="hidden sm:block w-1 h-1 bg-gray-500 rounded-full"></div>
               <p className="text-emerald-400 text-sm font-medium flex items-center space-x-1"><span>Made with</span><FaHeart className="text-emerald-400 animate-pulse" /><span>for a sustainable future</span></p>
             </div>

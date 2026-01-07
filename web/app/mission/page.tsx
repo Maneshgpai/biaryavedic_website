@@ -1,3 +1,5 @@
+"use client";
+
 import Contact from "@/components/Contact";
 import Image from "next/image";
 import { FaWater, FaLeaf, FaRecycle } from "react-icons/fa";

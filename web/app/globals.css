@@ -673,3 +673,20 @@ html {
     display: none !important;
   }
 }
+
+/* Ensure AOS elements are visible on mobile when AOS is disabled */
+@media (max-width: 768px) {
+  [data-aos] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  
+  /* Override any AOS hiding classes on mobile */
+  [data-aos].aos-animate,
+  [data-aos]:not(.aos-animate) {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+}

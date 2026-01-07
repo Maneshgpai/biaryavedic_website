@@ -5,6 +5,7 @@ import {
   FaTwitter, 
   FaLinkedin, 
   FaInstagram,
+  FaYoutube,
   FaEnvelope,
   FaPaperPlane,
   FaShieldAlt,
@@ -28,10 +29,10 @@ export default function Footer() {
             </div>
             <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-md">Revolutionizing fabric care with sustainable, technology-driven solutions for a better tomorrow.</p>
             <div className="flex space-x-3">
-              <a href="#" className="group w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center hover:from-emerald-500 hover:to-teal-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-500/25"><FaFacebook className="text-white group-hover:scale-110 transition-transform duration-300" /></a>
-              <a href="#" className="group w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center hover:from-emerald-500 hover:to-teal-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-500/25"><FaTwitter className="text-white group-hover:scale-110 transition-transform duration-300" /></a>
+              <a href="https://www.facebook.com/ARYAVEDICNATURALS" target="_blank" rel="noopener noreferrer" className="group w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center hover:from-emerald-500 hover:to-teal-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-500/25"><FaFacebook className="text-white group-hover:scale-110 transition-transform duration-300" /></a>
               <a href="https://www.linkedin.com/company/aryavedicnaturals/" target="_blank" rel="noopener noreferrer" className="group w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center hover:from-emerald-500 hover:to-teal-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-500/25"><FaLinkedin className="text-white group-hover:scale-110 transition-transform duration-300" /></a>
-              <a href="#" className="group w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center hover:from-emerald-500 hover:to-teal-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-500/25"><FaInstagram className="text-white group-hover:scale-110 transition-transform duration-300" /></a>
+              <a href="https://www.instagram.com/aryavedicnaturals" target="_blank" rel="noopener noreferrer" className="group w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center hover:from-emerald-500 hover:to-teal-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-500/25"><FaInstagram className="text-white group-hover:scale-110 transition-transform duration-300" /></a>
+              <a href="https://www.youtube.com/@AryavedicNaturals" target="_blank" rel="noopener noreferrer" className="group w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center hover:from-emerald-500 hover:to-teal-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-emerald-500/25"><FaYoutube className="text-white group-hover:scale-110 transition-transform duration-300" /></a>
             </div>
           </div>
 

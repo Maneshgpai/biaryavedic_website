@@ -7,8 +7,8 @@ import { FaShoppingCart, FaPlay } from "react-icons/fa";
 export default function Hero() {
   const [counters, setCounters] = useState({
     customers: 0,
+    patents: 0,
     products: 0,
-    partners: 0,
     years: 0
   });
 
@@ -16,7 +16,7 @@ export default function Hero() {
 
   useEffect(() => {
     const animateCounters = () => {
-      const targets = { customers: 500, products: 2, partners: 2, years: 3 };
+      const targets = { customers: 1500, products: 2, patents: 2, years: 3 };
       // Base duration in milliseconds - adjust based on target value
       const baseDuration = 2000;
       // Calculate steps based on target value for smooth animation
@@ -133,12 +133,12 @@ export default function Hero() {
               <p className="text-gray-600 font-semibold">Happy Customers</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">{counters.products}</div>
-              <p className="text-gray-600 font-semibold">Products Developed</p>
+              <div className="text-4xl font-bold text-orange-600 mb-2">{counters.patents}</div>
+              <p className="text-gray-600 font-semibold">Patents Filed</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-orange-600 mb-2">{counters.partners}</div>
-              <p className="text-gray-600 font-semibold">Business Partners</p>
+              <div className="text-4xl font-bold text-blue-600 mb-2">{counters.products}</div>
+              <p className="text-gray-600 font-semibold">Products Developed</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-bold text-purple-600 mb-2">{counters.years}</div>

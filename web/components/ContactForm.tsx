@@ -169,8 +169,8 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
 
   return (
     <div className="relative">
-      {/* Glassmorphism Form Container */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 lg:p-10 border border-white/30 relative overflow-hidden">
+      {/* Glassmorphism Form Container - Improved mobile padding */}
+      <div className="bg-white/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 xl:p-10 border border-white/30 relative overflow-hidden">
         {/* Decorative Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-green-400 to-blue-400 rounded-full -translate-y-20 translate-x-20"></div>
@@ -178,71 +178,76 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
         </div>
 
         <div className="relative z-10">
-          <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-800 mb-3 font-display">Send us a Message</h3>
-            <p className="text-gray-600">We&apos;d love to hear about your sustainability goals</p>
+          {/* Header - Compact on mobile */}
+          <div className="text-center mb-4 sm:mb-6 lg:mb-8">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-display">Send us a Message</h3>
+            <p className="text-gray-600 text-sm sm:text-base">We&apos;d love to hear about your sustainability goals</p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid md:grid-cols-2 gap-6">
+          <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+            {/* Name fields - Stack on mobile, side-by-side on tablet+ */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div className="space-y-2">
-                <label className="block text-gray-700 font-semibold text-sm uppercase tracking-wide">First Name *</label>
+                <label className="block text-gray-700 font-semibold text-xs sm:text-sm uppercase tracking-wide">First Name *</label>
                 <input
                   type="text"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full px-5 py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md text-base"
                   placeholder="John"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <label className="block text-gray-700 font-semibold text-sm uppercase tracking-wide">Last Name *</label>
+                <label className="block text-gray-700 font-semibold text-xs sm:text-sm uppercase tracking-wide">Last Name *</label>
                 <input
                   type="text"
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full px-5 py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md text-base"
                   placeholder="Doe"
                   required
                 />
               </div>
             </div>
             
+            {/* Email - Improved mobile input */}
             <div className="space-y-2">
-              <label className="block text-gray-700 font-semibold text-sm uppercase tracking-wide">Email Address *</label>
+              <label className="block text-gray-700 font-semibold text-xs sm:text-sm uppercase tracking-wide">Email Address *</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md text-base"
                 placeholder="john@example.com"
                 required
               />
             </div>
             
+            {/* Phone - Improved mobile input */}
             <div className="space-y-2">
-              <label className="block text-gray-700 font-semibold text-sm uppercase tracking-wide">Phone Number</label>
+              <label className="block text-gray-700 font-semibold text-xs sm:text-sm uppercase tracking-wide">Phone Number</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md text-base"
                 placeholder="+91-830-40-82080"
               />
             </div>
             
+            {/* Subject - Improved mobile select */}
             <div className="space-y-2">
-              <label className="block text-gray-700 font-semibold text-sm uppercase tracking-wide">Subject</label>
+              <label className="block text-gray-700 font-semibold text-xs sm:text-sm uppercase tracking-wide">Subject</label>
               <select
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 text-gray-800 font-medium shadow-sm hover:shadow-md"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 text-gray-800 font-medium shadow-sm hover:shadow-md text-base"
               >
                 <option value="">Choose a topic</option>
                 <option value="b2c">B2C Products</option>
@@ -253,14 +258,15 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
               </select>
             </div>
             
+            {/* Message - Improved mobile textarea */}
             <div className="space-y-2">
-              <label className="block text-gray-700 font-semibold text-sm uppercase tracking-wide">Message *</label>
+              <label className="block text-gray-700 font-semibold text-xs sm:text-sm uppercase tracking-wide">Message *</label>
               <textarea
                 rows={5}
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md resize-none"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300 placeholder-gray-500 text-gray-800 font-medium shadow-sm hover:shadow-md resize-none text-base"
                 placeholder="Tell us about your sustainability goals and how we can help..."
                 required
               ></textarea>
@@ -273,13 +279,14 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
               </div>
             )}
             
+            {/* Submit Button - Larger touch target on mobile */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`group relative w-full py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 overflow-hidden ${
+              className={`group relative w-full py-4 sm:py-4 px-8 rounded-xl sm:rounded-2xl font-semibold text-base sm:text-lg transition-all duration-300 overflow-hidden touch-manipulation ${
                 isSubmitting
                   ? "bg-gray-400 text-gray-600 cursor-not-allowed"
-                  : "bg-gradient-to-r from-green-600 to-blue-600 text-white hover:from-green-700 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
+                  : "bg-gradient-to-r from-green-600 to-blue-600 text-white hover:from-green-700 hover:to-blue-700 shadow-lg hover:shadow-xl active:scale-95 sm:hover:scale-[1.02] sm:active:scale-[0.98]"
               }`}
             >
               {/* Button Shimmer Effect */}
@@ -303,9 +310,9 @@ export default function ContactForm({ onSuccess, defaultSubject = "" }: ContactF
             </button>
           </form>
 
-          {/* Trust Indicators */}
-          <div className="mt-8 pt-6 border-t border-gray-200/50">
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
+          {/* Trust Indicators - Better mobile layout */}
+          <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200/50">
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
               <span className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 Secure & Private

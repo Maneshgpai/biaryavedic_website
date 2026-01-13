@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { 
   FaFacebook, 
   FaTwitter, 
@@ -12,8 +13,11 @@ import {
   FaHeart
 } from "react-icons/fa";
 import Link from "next/link";
+import ContactModal from "./ContactModal";
 
 export default function Footer() {
+  // State to control Contact Modal visibility
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
     <footer className="relative bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 text-white overflow-hidden">
       <div className="absolute inset-0 opacity-5">
@@ -50,17 +54,19 @@ export default function Footer() {
                 <li><Link href="/about" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>About Us</Link></li>
                 <li><a href="https://www.linkedin.com/company/aryavedicnaturals/jobs/" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Careers</a></li>
                 <li><Link href="/resources" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Press</Link></li>
-                <li><Link href="/about#contact-component" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Contact</Link></li>
               </ul>
             </div>
             <div className="group">
               <h4 className="text-xl font-semibold mb-6 text-white relative">Support<div className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 group-hover:w-full transition-all duration-300"></div></h4>
               <ul className="space-y-3">
-                <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Help Center</a></li>
-                <li><a href="mailto:info@aryavedicnaturals.com" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Contact Us</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Shipping Info</a></li>
-                {/* <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Returns & Exchanges</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link"><span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Warranty</a></li> */}
+              <li>
+                <button 
+                  onClick={() => setIsContactModalOpen(true)} 
+                  className="text-gray-300 hover:text-emerald-300 transition-colors duration-300 flex items-center group/link w-full text-left"
+                >
+                  <span className="w-0 group-hover/link:w-2 h-0.5 bg-emerald-400 mr-0 group-hover/link:mr-3 transition-all duration-300"></span>Contact
+                </button>
+              </li>
               </ul>
             </div>
           </div>
@@ -110,6 +116,12 @@ export default function Footer() {
 
       <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-teal-500/10 to-transparent rounded-full blur-3xl"></div>
+
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </footer>
   );
 } 

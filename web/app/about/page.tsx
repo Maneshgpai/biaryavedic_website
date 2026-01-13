@@ -16,36 +16,75 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Company Overview Section */}
-      <section className="py-20 bg-white">
+      {/* Page Title Section */}
+      {/* <section className="py-8 md:py-10 bg-gray-50">
+        <div className="container mx-auto px-4 md:px-6 text-center" data-aos="fade-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 font-display">
+            Rooted in Tradition, <span className="text-green-600">Driven by Science</span>
+          </h2>
+        </div>
+      </section> */}
+
+      {/* Company Overview Content Section */}
+      <section className="py-24 bg-white overflow-hidden">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div data-aos="fade-right" data-aos-duration="1000">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
-                Innovation Meets <span className="text-green-600">Tradition</span>
-              </h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                We believe in the power of nature enhanced by science. Our products are designed to provide superior fabric care while maintaining the highest standards of environmental responsibility. Through our innovative formulations, we&apos;re setting new benchmarks in the sustainable fabric care industry.
-              </p>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Our bio-hybrid technology represents the perfect fusion of traditional Ayurvedic wisdom with cutting-edge nanotechnology. This unique combination allows us to create products that are not only highly effective but also completely safe for both users and the environment.
+          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+
+            {/* Left side: Text Content */}
+            <div className="lg:w-3/5" data-aos="fade-right" data-aos-duration="1000">
+              <div className="space-y-8">
+                <div className="relative pl-8 border-l-4 border-green-500/30">
+                  <p className="text-xl text-gray-700 font-medium leading-relaxed">
+                    Bio-Aryavedic Naturals Pvt. Ltd. is a purpose-driven innovation company committed to transforming the way textiles are cared for by making the process safe, sustainable, and environmentally responsible. Rooted in traditional Indian wisdom and strengthened by modern science, we develop plant-based, green textile care solutions that protect people, fabrics, and the planet.
+                  </p>
+                </div>
+                
+                <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
+                  <p>
+                    Founded with the vision of reducing pollution caused by conventional chemical-based fabric care and textile finishing processes, Aryavedic Naturals works at the intersection of biotechnology, materials science, and sustainability. Our innovations focus on replacing petroleum-derived and toxic chemical agents with renewable, biodegradable alternatives sourced from nature.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side: Sticky Image */}
+            <div className="lg:w-2/5 lg:sticky lg:top-0 lg:self-start" data-aos="fade-left" data-aos-duration="1000">
+              <div className="relative">
+                <div className="relative z-10 overflow-hidden rounded-3xl shadow-2xl">
+                  <Image
+                    src="/assets/images/innovation.webp"
+                    alt="Scientific research in laboratory setting with researchers using microscope and natural ingredients"
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+                </div>
+                
+                {/* Decorative accents */}
+                <div className="absolute -z-10 -top-12 -right-12 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+                <div className="absolute -z-10 -bottom-12 -left-12 w-48 h-48 bg-blue-100 rounded-full blur-3xl opacity-60 animate-pulse" style={{animationDelay: '-2s'}}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Full-width content below columns */}
+          <div className="mt-12 lg:mt-16 space-y-6 text-lg text-gray-600 leading-relaxed" data-aos="fade-up">
+            <div className="bg-green-50/50 p-8 rounded-2xl border border-green-100 shadow-sm">
+              <p className="text-gray-800">
+                At the heart of our work is <span className="font-bold text-green-700 italic text-xl">albedon</span>, a patented cassava plant&ndash;based biopolymer textile care solution. Developed through years of research and validation, albedon provides stiffening, conditioning, and antimicrobial protection through a single application, while forming a gentle protective coating on fabrics. Beyond fabric care, it carries a unique photocatalytic capability that helps break down surrounding air pollutants and greenhouse gases under visible light, contributing to cleaner indoor environments and reduced carbon burden.
               </p>
             </div>
             
-            <div data-aos="fade-left" data-aos-duration="1000" className="relative">
-              <div className="relative z-10">
-                <Image
-                  src="/assets/images/innovation.jpg"
-                  alt="Scientific research in laboratory setting with researchers using microscope and natural ingredients"
-                  width={500}
-                  height={400}
-                  className="rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300"
-                />
-              </div>
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-green-200 rounded-full opacity-50 animate-bounce"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-200 rounded-full opacity-30 animate-bounce" style={{animationDelay: '-3s'}}></div>
-            </div>
+            <p>
+              Our approach follows a farm-to-fabric model, creating value for farmers by responsibly sourcing cassava while delivering advanced green technology to households, institutions, and the textile industry. By minimizing chemical discharge into water systems and reducing exposure risks for users and workers, our solutions support healthier living and cleaner ecosystems.
+            </p>
+            <p>
+              Aryavedic Naturals is also deeply committed to social impact and gender inclusion. As a women-led innovation-driven enterprise, we aim to build technologies that simplify daily life especially for working families while contributing positively to climate action and sustainable economic growth.
+            </p>
+            <p className="font-medium text-gray-800 italic">
+              Every product we create reflects our belief that innovation must be ethical, science-led, and planet-first. Through continuous research, responsible manufacturing, and collaborative partnerships, Aryavedic Naturals strives to redefine textile care for a greener and healthier future.
+            </p>
           </div>
         </div>
       </section>
@@ -83,7 +122,7 @@ export default function AboutPage() {
                   <FaLightbulb className="text-white text-3xl" />
                 </div>
                 <div>
-                  <h3 className="text-4xl font-bold text-blue-600 mb-2">50+</h3>
+                  <h3 className="text-4xl font-bold text-blue-600 mb-2">2</h3>
                   <p className="text-gray-700 font-semibold">Patents Filed</p>
                 </div>
               </div>

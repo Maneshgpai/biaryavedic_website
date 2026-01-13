@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Contact from "@/components/Contact";
 import { 
   FaUsers, 
@@ -13,7 +14,8 @@ import {
   FaRecycle,
   FaChartLine,
   FaHandshake,
-  FaBuilding
+  FaBuilding,
+  FaArrowRight
 } from "react-icons/fa";
 
 export default function ImpactPage() {
@@ -271,6 +273,24 @@ export default function ImpactPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SDG Commitment CTA */}
+      <section className="py-20 bg-[#1b5c70] text-white">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-display" data-aos="fade-up">Dedicated to Global Goals</h2>
+          <p className="text-xl text-blue-100 max-w-2xl mx-auto mb-10" data-aos="fade-up" data-aos-delay="100">
+            Learn more about how our technologies and practices align with the United Nations Sustainable Development Goals.
+          </p>
+          <div data-aos="fade-up" data-aos-delay="200">
+            <Link 
+              href="/impact/sdgs" 
+              className="inline-flex items-center gap-2 bg-white text-[#1b5c70] px-8 py-4 rounded-full font-bold hover:bg-blue-50 transition-colors shadow-lg"
+            >
+              Explore our SDG Commitment <FaArrowRight />
+            </Link>
           </div>
         </div>
       </section>

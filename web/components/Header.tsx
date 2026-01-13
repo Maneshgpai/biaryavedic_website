@@ -12,6 +12,7 @@ export default function Header() {
   const [showEmptyCartNotice, setShowEmptyCartNotice] = useState(false);
   const [showCartPopover, setShowCartPopover] = useState(false);
   const [isCustomerLoggedIn, setIsCustomerLoggedIn] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cartHoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loginWindowRef = useRef<Window | null>(null);
@@ -157,8 +158,21 @@ export default function Header() {
       <nav className="nav-container">
         <div className="logo">
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/assets/logo_symbol.png" alt="Bio-Aryavedic Symbol" width={48} height={48} className="h-12 w-auto" />
-            <Image src="/assets/logo_text.png" alt="Bio-Aryavedic" width={220} height={40} className="h-10 w-auto" />
+            {/* Show light logos when at top, dark logos when scrolled */}
+            <Image 
+              src={scrolled ? "/assets/logo_symbol_dark.png" : "/assets/logo_symbol_light.png"} 
+              alt="Bio-Aryavedic Symbol" 
+              width={48} 
+              height={48} 
+              className="h-12 w-auto" 
+            />
+            <Image 
+              src={scrolled ? "/assets/logo_text_dark.png" : "/assets/logo_text_light.png"} 
+              alt="Bio-Aryavedic" 
+              width={220} 
+              height={40} 
+              className="h-10 w-auto" 
+            />
           </Link>
         </div>
 
@@ -176,30 +190,98 @@ export default function Header() {
             <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">{cartCount}</span>
           </button>
           
-          <div className={`burger-menu${menuOpen ? " active" : ""}`} id="burger-menu" onClick={() => setMenuOpen((v) => !v)}>
+          <div className={`burger-menu${menuOpen ? " active" : ""}`} id="burger-menu" onClick={() => {
+            setMenuOpen((v) => !v);
+            setOpenDropdown(null); // Reset dropdowns when opening/closing menu
+          }}>
             <span></span>
             <span></span>
             <span></span>
           </div>
         </div>
 
-        <ul className={`nav-menu${menuOpen ? " active" : ""}`} id="nav-menu" onClick={() => setMenuOpen(false)}>
-          <li><Link href="/mission">Our Mission</Link></li>
-          <li><Link href="/about">About Us</Link></li>
+        <ul className={`nav-menu${menuOpen ? " active" : ""}`} id="nav-menu">
+          {/* Mobile menu header with cart and close button */}
+          <div className="mobile-menu-header md:hidden">
+            <button
+              onClick={handleCartClick}
+              onMouseEnter={handleCartMouseEnter}
+              onMouseLeave={handleCartMouseLeave}
+              className="mobile-cart-button relative"
+              title="Shopping Cart"
+              aria-label="Cart"
+            >
+              <FaShoppingCart />
+              {cartCount > 0 && (
+                <span className="cart-badge">{cartCount}</span>
+              )}
+            </button>
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                setOpenDropdown(null); // Reset dropdowns when closing menu
+              }}
+              className="mobile-close-button"
+              aria-label="Close menu"
+            >
+              <span className="close-line"></span>
+              <span className="close-line"></span>
+            </button>
+          </div>
+
+          {/* Navigation items */}
+          <li><Link href="/mission" onClick={() => setMenuOpen(false)}>Our Mission</Link></li>
+          <li><Link href="/about" onClick={() => setMenuOpen(false)}>About Us</Link></li>
           <li className="dropdown">
-            <a href="#" className="dropdown-toggle">Products</a>
-            <ul className="dropdown-menu">
-              <li><Link href="/products/b2b">B2B Products</Link></li>
-              <li><Link href="/products/b2c">B2C Products</Link></li>
+            <a 
+              href="#" 
+              className="dropdown-toggle" 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOpenDropdown(openDropdown === 'products' ? null : 'products');
+              }}
+            >
+              Products
+            </a>
+            <ul className={`dropdown-menu${openDropdown === 'products' ? ' active' : ''}`} onClick={(e) => e.stopPropagation()}>
+              <li><Link href="/products/b2b" onClick={() => setMenuOpen(false)}>B2B Products</Link></li>
+              <li><Link href="/products/b2c" onClick={() => setMenuOpen(false)}>B2C Products</Link></li>
             </ul>
           </li>
-          <li><Link href="/impact">Impact</Link></li>
-          <li><Link href="/resources">Resources</Link></li>
           <li className="dropdown">
-            <a href="#" className="dropdown-toggle">Privacy</a>
-            <ul className="dropdown-menu">
-              <li><Link href="/privacy">Terms & Conditions</Link></li>
-              <li><Link href="/cookies">Cookie Policy</Link></li>
+            <a 
+              href="#" 
+              className="dropdown-toggle" 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOpenDropdown(openDropdown === 'impact' ? null : 'impact');
+              }}
+            >
+              Impact
+            </a>
+            <ul className={`dropdown-menu${openDropdown === 'impact' ? ' active' : ''}`} onClick={(e) => e.stopPropagation()}>
+              <li><Link href="/impact" onClick={() => setMenuOpen(false)}>Impact Overview</Link></li>
+              <li><Link href="/impact/sdgs" onClick={() => setMenuOpen(false)}>SDGs Commitment</Link></li>
+            </ul>
+          </li>
+          <li><Link href="/resources" onClick={() => setMenuOpen(false)}>Resources</Link></li>
+          <li className="dropdown">
+            <a 
+              href="#" 
+              className="dropdown-toggle" 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOpenDropdown(openDropdown === 'privacy' ? null : 'privacy');
+              }}
+            >
+              Privacy
+            </a>
+            <ul className={`dropdown-menu${openDropdown === 'privacy' ? ' active' : ''}`} onClick={(e) => e.stopPropagation()}>
+              <li><Link href="/privacy" onClick={() => setMenuOpen(false)}>Terms & Conditions</Link></li>
+              <li><Link href="/cookies" onClick={() => setMenuOpen(false)}>Cookie Policy</Link></li>
             </ul>
           </li>
           {/* Desktop cart icon */}
@@ -268,7 +350,7 @@ export default function Header() {
           <div className="p-3 border-t border-gray-100">
             <div className="flex items-center justify-between text-sm mb-2">
               <span className="text-gray-600">Subtotal</span>
-              <span className="font-semibold">{subtotal ? `${subtotal.currencyCode} ${subtotal.amount}` : "—"}</span>
+              <span className="font-semibold">{subtotal ? `${subtotal.currencyCode} ${subtotal.amount}` : "-"}</span>
             </div>
             <div className="flex items-center justify-between gap-2">
               <button

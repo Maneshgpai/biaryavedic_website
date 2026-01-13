@@ -18,7 +18,7 @@ export default function PrivacyPage() {
             
             {/* Section A: Terms & Conditions */}
             <div className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6 font-display">A. TERMS & CONDITIONS — Bio-Aryavedic Naturals Pvt. Ltd.</h2>
+              <h2 className="text-3xl font-bold text-gray-800 mb-6 font-display">A. TERMS & CONDITIONS - Bio-Aryavedic Naturals Pvt. Ltd.</h2>
               <p className="text-gray-600 mb-8">Effective date: 11 June 2025</p>
 
               <div className="space-y-8">
@@ -52,7 +52,7 @@ export default function PrivacyPage() {
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-800 mb-4">4. Products & descriptions</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    We try to describe products and images accurately. Product information (including ingredients, features such as &quot;antimicrobial&quot; or &quot;photocatalytic&quot;) is as provided on the product page. Any performance/health claims are subject to applicable regulations — customers must follow label instructions. We reserve the right to limit quantities and to discontinue or modify products at any time.
+                    We try to describe products and images accurately. Product information (including ingredients, features such as &quot;antimicrobial&quot; or &quot;photocatalytic&quot;) is as provided on the product page. Any performance/health claims are subject to applicable regulations - customers must follow label instructions. We reserve the right to limit quantities and to discontinue or modify products at any time.
                   </p>
                 </div>
 
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
                     a. Prices displayed include applicable taxes. Shipping/handling fees are added at checkout.
                   </p>
                   <p className="text-gray-700 leading-relaxed">
-                    b. Payment methods accepted: [Credit/Debit cards, UPI, Netbanking, Wallets, COD — list]. All payments are subject to payment provider terms.
+                    b. Payment methods accepted: [Credit/Debit cards, UPI, Netbanking, Wallets, COD - list]. All payments are subject to payment provider terms.
                   </p>
                 </div>
 
@@ -160,8 +160,8 @@ export default function PrivacyPage() {
 
             {/* Section B: Privacy Policy */}
             <div className="mb-12 border-t border-gray-200 pt-12">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6 font-display">B. PRIVACY POLICY — Summary & Key Terms</h2>
-              <p className="text-gray-600 mb-8">Effective date: 11 June 2025 — Read full policy on the Site.</p>
+              <h2 className="text-3xl font-bold text-gray-800 mb-6 font-display">B. PRIVACY POLICY - Summary & Key Terms</h2>
+              <p className="text-gray-600 mb-8">Effective date: 11 June 2025 - Read full policy on the Site.</p>
 
               <div className="space-y-8">
                 <div>
@@ -257,7 +257,7 @@ export default function PrivacyPage() {
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-800 mb-4">1. Shipping area</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    We ship to addresses in [India / Worldwide — specify]. International shipments may be subject to customs duties and import taxes payable by the recipient.
+                    We ship to addresses in [India / Worldwide - specify]. International shipments may be subject to customs duties and import taxes payable by the recipient.
                   </p>
                 </div>
 
@@ -292,7 +292,7 @@ export default function PrivacyPage() {
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-800 mb-4">1. Right to cancel</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    You may cancel an order before it is dispatched. Once dispatched, cancellation may not be possible — follow returns procedure.
+                    You may cancel an order before it is dispatched. Once dispatched, cancellation may not be possible - follow returns procedure.
                   </p>
                 </div>
 

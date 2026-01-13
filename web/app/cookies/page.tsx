@@ -20,9 +20,8 @@ export default function CookiePolicyPage() {
             
             {/* Introduction */}
             <div className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6 font-display">Cookie Policy — Bio-Aryavedic Naturals Pvt. Ltd.</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                This Cookie Policy explains how Bio-Aryavedic Naturals Pvt. Ltd. (&quot;we&quot;, &quot;our&quot;, &quot;Company&quot;) uses cookies and similar tracking technologies on our website www.aryavedicnaturals.com (the &quot;Site&quot;). This policy should be read in conjunction with our <Link href="/privacy" className="text-emerald-600 hover:text-emerald-700">Privacy Policy</Link> and <Link href="/privacy" className="text-emerald-600 hover:text-emerald-700">Terms & Conditions</Link>.
+                This Cookie Policy explains how Bio-Aryavedic Naturals Pvt. Ltd. (&quot;we&quot;, &quot;our&quot;, &quot;Company&quot;) uses cookies and similar tracking technologies on our website www.aryavedicnaturals.com (the &quot;Site&quot;). This policy should be read in conjunction with our <Link href="/privacy" className="text-emerald-600 hover:text-emerald-700">Terms & Conditions</Link>.
               </p>
               <p className="text-gray-600 text-sm italic">
                 This policy complies with applicable data protection laws including the General Data Protection Regulation (GDPR) for European users, the Information Technology Act, 2000 and Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 for Indian users, and relevant US state privacy laws including the California Consumer Privacy Act (CCPA).

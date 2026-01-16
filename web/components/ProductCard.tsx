@@ -1,3 +1,13 @@
+/**
+ * Product Card Component
+ * 
+ * Displays a product with:
+ * - Image gallery
+ * - Product details (name, price, rating, etc.)
+ * - Add to Cart / Buy Now buttons (for B2C)
+ * - Contact Us button (for B2B)
+ */
+
 "use client";
 
 import { useState } from "react";
@@ -18,6 +28,7 @@ interface ProductCardProps {
   rating: number;
   reviewCount: number;
   sku: string;
+  variantId?: string;  // Optional: for direct cart operations
   volume: string;
   application: string;
   image: string;
@@ -35,16 +46,16 @@ export default function ProductCard({
   rating,
   reviewCount,
   sku,
+  variantId,
   volume,
   application,
   image,
   category,
-  categoryColor,
   detailsLink,
 }: ProductCardProps) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
-  // Render star rating component
+  // Render star rating
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -69,7 +80,7 @@ export default function ProductCard({
       data-aos="flip-left" 
       data-aos-delay="100"
     >
-      {/* Image Section with Enhanced Design */}
+      {/* Image Section */}
       <div className={`relative h-56 bg-gradient-to-br ${categoryGradient} overflow-hidden`}>
         {/* Decorative background pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -192,8 +203,8 @@ export default function ProductCard({
             </button>
           ) : (
             <>
-              <AddToCartButton sku={sku} />
-              <BuyNowButton sku={sku} />
+              <AddToCartButton sku={sku} variantId={variantId} />
+              <BuyNowButton sku={sku} variantId={variantId} />
             </>
           )}
         </div>
@@ -209,4 +220,4 @@ export default function ProductCard({
       )}
     </div>
   );
-} 
+}

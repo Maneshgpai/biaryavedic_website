@@ -1,10 +1,35 @@
+/**
+ * Buy Now Button Component
+ * 
+ * Button that adds a product to cart and immediately redirects to Shopify checkout.
+ * Supports both SKU-based and variantId-based cart additions.
+ * Using variantId is more efficient as it avoids SKU lookup.
+ * 
+ * The checkout flow is handled by Shopify where users can:
+ * - Log in to their account
+ * - Create a new account
+ * - Checkout as guest
+ */
+
 "use client";
 
 import { useState } from "react";
 import { useShopifyCart } from "@/hooks/useShopifyCart";
 
-export default function BuyNowButton({ sku, quantity = 1 }: { sku: string; quantity?: number }) {
-  const { addSku, goToCheckout } = useShopifyCart();
+interface BuyNowButtonProps {
+  sku: string;
+  variantId?: string;  // Optional: if provided, skips SKU lookup
+  quantity?: number;
+  className?: string;
+}
+
+export default function BuyNowButton({ 
+  sku, 
+  variantId, 
+  quantity = 1,
+  className 
+}: BuyNowButtonProps) {
+  const { addSku, addVariant, goToCheckout, isLoading: cartLoading } = useShopifyCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,7 +38,14 @@ export default function BuyNowButton({ sku, quantity = 1 }: { sku: string; quant
       setLoading(true);
       setError(null);
 
-      await addSku(sku, quantity);
+      // Use variantId if available (faster), otherwise fall back to SKU lookup
+      if (variantId) {
+        await addVariant(variantId, quantity);
+      } else {
+        await addSku(sku, quantity);
+      }
+      
+      // Redirect to Shopify checkout (handles login/guest checkout)
       await goToCheckout();
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Failed to proceed to checkout");
@@ -22,14 +54,16 @@ export default function BuyNowButton({ sku, quantity = 1 }: { sku: string; quant
     }
   };
 
+  const isDisabled = loading || cartLoading;
+
   return (
     <div className="inline-flex flex-col items-start gap-1 flex-1">
       <button
         onClick={handleClick}
-        disabled={loading}
-        className="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+        disabled={isDisabled}
+        className={className || "flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed w-full"}
       >
-        {loading ? (
+        {isDisabled ? (
           <>
             <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -49,4 +83,4 @@ export default function BuyNowButton({ sku, quantity = 1 }: { sku: string; quant
       {error && <span className="text-sm text-red-600 mt-1">{error}</span>}
     </div>
   );
-} 
+}

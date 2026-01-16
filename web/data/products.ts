@@ -1,6 +1,18 @@
-import { getProductsByType } from "@/lib/shopify/admin";
-import { transformShopifyProducts } from "@/lib/shopify/productTransformer";
+/**
+ * Product Data Module
+ * 
+ * This module provides:
+ * - Product type definitions
+ * - Static fallback products (when Shopify is unavailable)
+ * - Dynamic product fetching from Shopify Storefront API
+ * - SKU to Variant ID mapping for efficient cart operations
+ */
 
+import { shopifyRequest, isShopifyConfigured, type ShopifyProduct } from "@/lib/shopify/client";
+import { GET_PRODUCTS } from "@/lib/shopify/queries";
+import { transformShopifyProducts, buildSkuToVariantMap } from "@/lib/shopify/productTransformer";
+
+// Product interface used throughout the application
 export interface Product {
   id: string;
   sku: string;
@@ -14,10 +26,12 @@ export interface Product {
   volume: string;
   application: string;
   image: string;
-  images?: string[]; // Additional images for product gallery
+  images?: string[];
   category: "B2B" | "B2C";
   categoryColor: string;
   detailsLink: string;
+  // Variant ID for direct cart operations (avoids SKU lookup)
+  variantId?: string;
 }
 
 // Static fallback data for when Shopify API is unavailable
@@ -75,44 +89,118 @@ export const STATIC_PRODUCTS: Product[] = [
   }
 ];
 
-// Dynamic product fetching from Shopify Admin API
-export async function getProducts(): Promise<Product[]> {
-  try {
-    // Try to fetch from Shopify Admin API
-    const [b2bProducts, b2cProducts] = await Promise.all([
-      getProductsByType("B2B"),
-      getProductsByType("B2C")
-    ]);
+// Cache for SKU to Variant ID mapping
+let skuToVariantCache: Map<string, string> | null = null;
+let productCache: Product[] | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache TTL
 
-    const allShopifyProducts = [...b2bProducts, ...b2cProducts];
+/**
+ * Fetch products from Shopify Storefront API
+ * Falls back to static products if Shopify is not configured or unavailable
+ */
+export async function getProducts(): Promise<Product[]> {
+  // Return cached products if still valid
+  if (productCache && Date.now() - cacheTimestamp < CACHE_TTL) {
+    return productCache;
+  }
+
+  // Check if Shopify is configured
+  if (!isShopifyConfigured()) {
+    console.info('Shopify not configured, using static product data');
+    return STATIC_PRODUCTS;
+  }
+
+  try {
+    // Fetch all products from Shopify
+    const data = await shopifyRequest<{
+      products: { edges: Array<{ node: ShopifyProduct }> };
+    }>(GET_PRODUCTS, { first: 50 });
+
+    const shopifyProducts = data.products.edges.map(edge => edge.node);
     
-    if (allShopifyProducts.length > 0) {
-      return transformShopifyProducts(allShopifyProducts);
+    if (shopifyProducts.length > 0) {
+      // Transform and cache products
+      productCache = transformShopifyProducts(shopifyProducts);
+      
+      // Build and cache SKU to Variant ID mapping
+      skuToVariantCache = buildSkuToVariantMap(shopifyProducts);
+      
+      cacheTimestamp = Date.now();
+      return productCache;
     }
     
-    // Fallback to static data
+    // No products found in Shopify, use static fallback
+    console.warn('No products found in Shopify, using static data');
     return STATIC_PRODUCTS;
   } catch (error) {
-    console.warn('Failed to fetch products from Shopify API, using static data:', error);
+    console.error('Failed to fetch products from Shopify:', error);
     return STATIC_PRODUCTS;
   }
 }
 
-// Backward compatibility - use static data for immediate access
-export const PRODUCTS = STATIC_PRODUCTS;
+/**
+ * Fetch products by category (B2B or B2C)
+ */
+export async function getProductsByCategory(category: "B2B" | "B2C"): Promise<Product[]> {
+  const allProducts = await getProducts();
+  return allProducts.filter(product => product.category === category);
+}
 
-// Helper functions
-export const getProductBySku = (sku: string, products: Product[] = STATIC_PRODUCTS): Product | undefined => {
-  return products.find(product => product.sku === sku);
-};
+/**
+ * Get a single product by SKU
+ */
+export async function getProductBySku(sku: string): Promise<Product | undefined> {
+  const products = await getProducts();
+  return products.find(product => 
+    product.sku.toLowerCase() === sku.toLowerCase()
+  );
+}
 
-export const getProductsByCategory = (category: "B2B" | "B2C", products: Product[] = STATIC_PRODUCTS): Product[] => {
-  return products.filter(product => product.category === category);
-};
+/**
+ * Get a single product by handle/ID
+ */
+export async function getProductByHandle(handle: string): Promise<Product | undefined> {
+  const products = await getProducts();
+  return products.find(product => product.id === handle);
+}
 
-export const getProductNames = (products: Product[] = STATIC_PRODUCTS): Record<string, string> => {
+/**
+ * Get Variant ID from SKU using the cached mapping
+ * This eliminates the need for repeated API calls to find variants
+ */
+export async function getVariantIdFromSku(sku: string): Promise<string | null> {
+  // Ensure products are loaded (which also populates the SKU cache)
+  await getProducts();
+  
+  if (!skuToVariantCache) {
+    return null;
+  }
+  
+  // Try exact match first, then lowercase
+  return skuToVariantCache.get(sku) || 
+         skuToVariantCache.get(sku.toLowerCase()) || 
+         null;
+}
+
+/**
+ * Get product names mapping for notifications
+ */
+export function getProductNames(products: Product[] = STATIC_PRODUCTS): Record<string, string> {
   return products.reduce((acc, product) => {
     acc[product.sku] = product.name;
     return acc;
   }, {} as Record<string, string>);
-}; 
+}
+
+/**
+ * Clear the product cache (useful for development/testing)
+ */
+export function clearProductCache(): void {
+  productCache = null;
+  skuToVariantCache = null;
+  cacheTimestamp = 0;
+}
+
+// Export static products for backward compatibility
+export const PRODUCTS = STATIC_PRODUCTS;

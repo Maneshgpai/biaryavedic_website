@@ -1,4 +1,14 @@
-"use client";
+/**
+ * Home Page
+ * 
+ * Main landing page with:
+ * - Hero section
+ * - About section
+ * - Products section (dynamically loaded from Shopify)
+ * - Features section
+ * - Innovation section
+ * - Contact section
+ */
 
 import Contact from "@/components/Contact";
 import Hero from "@/components/Hero";
@@ -16,8 +26,37 @@ import {
   FaIndustry
 } from "react-icons/fa";
 import { STATIC_PRODUCTS } from "@/data/products";
+// NOTE: Uncomment the line below when ready to fetch products from Shopify
+// import { getProducts } from "@/data/products";
+
+/**
+ * SHOPIFY PRODUCT FETCHING (Currently Disabled)
+ * 
+ * Reason: Using static products for now because:
+ * 1. Shopify storefront is new and doesn't have customer reviews yet
+ * 2. Some products (B2B) require "Contact for Price" instead of direct purchase
+ * 3. Static data allows better control over product presentation
+ * 
+ * To enable Shopify product fetching in the future:
+ * 1. Uncomment the getProducts import above
+ * 2. Uncomment the loadProducts function below
+ * 3. Change the Home component to use: const products = await loadProducts();
+ */
+
+// async function loadProducts() {
+//   try {
+//     const products = await getProducts();
+//     return products;
+//   } catch (error) {
+//     console.error('Failed to load products:', error);
+//     return STATIC_PRODUCTS;
+//   }
+// }
 
 export default function Home() {
+  // Using static products for consistent presentation and reviews
+  // To use Shopify products: change to `const products = await loadProducts();`
+  // and make this function async again
   const products = STATIC_PRODUCTS;
 
   return (
@@ -97,7 +136,7 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-8">
             {products.map((product) => (
-            <ProductCard
+              <ProductCard
                 key={product.id}
                 id={product.id}
                 name={product.name}
@@ -108,6 +147,7 @@ export default function Home() {
                 rating={product.rating}
                 reviewCount={product.reviewCount}
                 sku={product.sku}
+                variantId={product.variantId}
                 volume={product.volume}
                 application={product.application}
                 image={product.image}
@@ -175,7 +215,7 @@ export default function Home() {
             <div data-aos="fade-right" data-aos-duration="1000">
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-display">
                 Innovation in <span className="text-blue-600">Every Drop</span>
-            </h2>
+              </h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 Our research-driven approach combines traditional Ayurvedic principles with modern nanotechnology to create fabric care solutions that are both effective and environmentally responsible.
               </p>
@@ -199,8 +239,8 @@ export default function Home() {
                     <h3 className="text-xl font-bold text-gray-800 mb-2">Ayurvedic Wisdom</h3>
                     <p className="text-gray-600">Time-tested natural ingredients provide gentle yet effective fabric care without harsh chemicals.</p>
                   </div>
-          </div>
-          
+                </div>
+                
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
                     <FaIndustry className="text-white" />

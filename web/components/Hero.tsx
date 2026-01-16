@@ -12,7 +12,7 @@ export default function Hero() {
     years: 0
   });
 
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
 
   useEffect(() => {
     const animateCounters = () => {
@@ -112,7 +112,7 @@ export default function Hero() {
         </div>
 
         {/* Scroll Indicator - Fixed positioning */}
-        {showScrollIndicator && (
+        {/* {showScrollIndicator && (
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 transition-opacity duration-300" data-aos="fade-up" data-aos-delay="600" data-aos-offset="30">
             <div className="flex flex-col items-center animate-bounce">
               <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
@@ -121,7 +121,7 @@ export default function Hero() {
               <p className="text-sm mt-2 opacity-80 text-white whitespace-nowrap">Scroll to explore</p>
             </div>
           </div>
-        )}
+        )} */}
       </section>
 
       {/* Stats Section */}

@@ -1,10 +1,30 @@
+/**
+ * Add to Cart Button Component
+ * 
+ * Button that adds a product to the Shopify cart.
+ * Supports both SKU-based and variantId-based cart additions.
+ * Using variantId is more efficient as it avoids SKU lookup.
+ */
+
 "use client";
 
 import { useState } from "react";
 import { useShopifyCart } from "@/hooks/useShopifyCart";
 
-export default function AddToCartButton({ sku, quantity = 1 }: { sku: string; quantity?: number }) {
-  const { addSku } = useShopifyCart();
+interface AddToCartButtonProps {
+  sku: string;
+  variantId?: string;  // Optional: if provided, skips SKU lookup
+  quantity?: number;
+  className?: string;
+}
+
+export default function AddToCartButton({ 
+  sku, 
+  variantId, 
+  quantity = 1,
+  className 
+}: AddToCartButtonProps) {
+  const { addSku, addVariant, isLoading: cartLoading } = useShopifyCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -12,7 +32,13 @@ export default function AddToCartButton({ sku, quantity = 1 }: { sku: string; qu
     try {
       setLoading(true);
       setError(null);
-      await addSku(sku, quantity);
+      
+      // Use variantId if available (faster), otherwise fall back to SKU lookup
+      if (variantId) {
+        await addVariant(variantId, quantity);
+      } else {
+        await addSku(sku, quantity);
+      }
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Failed to add to cart");
     } finally {
@@ -20,14 +46,16 @@ export default function AddToCartButton({ sku, quantity = 1 }: { sku: string; qu
     }
   };
 
+  const isDisabled = loading || cartLoading;
+
   return (
     <div className="inline-flex flex-col items-start gap-1">
       <button 
         onClick={handleClick} 
-        disabled={loading} 
-        className="bg-white border-2 border-green-600 text-green-600 hover:bg-green-50 hover:border-green-700 hover:text-green-700 disabled:opacity-60 disabled:cursor-not-allowed px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 min-w-[140px]"
+        disabled={isDisabled} 
+        className={className || "bg-white border-2 border-green-600 text-green-600 hover:bg-green-50 hover:border-green-700 hover:text-green-700 disabled:opacity-60 disabled:cursor-not-allowed px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 min-w-[140px]"}
       >
-        {loading ? (
+        {isDisabled ? (
           <>
             <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -47,4 +75,4 @@ export default function AddToCartButton({ sku, quantity = 1 }: { sku: string; qu
       {error && <span className="text-sm text-red-600 mt-1">{error}</span>}
     </div>
   );
-} 
+}
